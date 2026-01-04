@@ -15,6 +15,50 @@
     <div style="max-width: 1200px; margin: 0 auto; z-index: 2; position: relative">
       <!-- Logo/Brand -->
       <div style="margin-bottom: 2rem">
+        <!-- SVG Logo -->
+        <div style="text-align: center; margin-bottom: 1rem">
+          <svg
+            width="80"
+            height="80"
+            viewBox="0 0 80 80"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="filter: drop-shadow(0 4px 8px rgba(239, 68, 68, 0.3))"
+          >
+            <!-- Outer Ring -->
+            <circle
+              cx="40"
+              cy="40"
+              r="35"
+              stroke="#ef4444"
+              stroke-width="3"
+              fill="none"
+              opacity="0.3"
+            />
+            <!-- Heartbeat Wave -->
+            <path
+              d="M15 40 L25 40 L30 25 L35 55 L40 30 L45 40 L55 40 L60 35 L65 45 L70 40"
+              stroke="#ef4444"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"
+            />
+            <!-- Inner Pulse -->
+            <circle cx="40" cy="40" r="8" fill="#ef4444" opacity="0.6">
+              <animate attributeName="r" values="8;12;8" dur="2s" repeatCount="indefinite" />
+              <animate
+                attributeName="opacity"
+                values="0.6;0.2;0.6"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+            </circle>
+            <!-- Center Dot -->
+            <circle cx="40" cy="40" r="3" fill="#ffffff" />
+          </svg>
+        </div>
+
         <h1
           style="
             font-size: 4rem;
@@ -1347,12 +1391,6 @@
           AI-powered fitness intelligence that helps you unlock your athletic potential with
           advanced VO2 max calculations and personalized insights.
         </p>
-        <div style="display: flex; gap: 0.5rem">
-          <span style="color: rgba(255, 255, 255, 0.6); font-size: 0.875rem">Built with</span>
-          <span style="color: #ef4444; font-weight: 600; font-size: 0.875rem">⚡ Speed</span>
-          <span style="color: rgba(255, 255, 255, 0.6); font-size: 0.875rem">by</span>
-          <span style="color: #6b7280; font-weight: 600; font-size: 0.875rem">🐆 Cline</span>
-        </div>
       </div>
 
       <!-- Links -->
@@ -1405,7 +1443,7 @@
       "
     >
       <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.7); margin-bottom: 0.5rem">
-        Made with ⌨ typing by Joe Alongi • Built with ⚡ speed by Cline and 🐆 AI
+        Crafted in by Joe Alongi with warp velocity by Cline and Grok Code Fast
       </div>
       <div style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 0.5rem">
         © {{ getCurrentYear() }} Airwave. All rights reserved.
@@ -1426,7 +1464,7 @@
           onmouseover="this.style.color='#dc2626'"
           onmouseout="this.style.color='#ef4444'"
         >
-          🚂 Powered by Railway
+          Powered by Railway
         </a>
       </div>
     </div>
