@@ -130,7 +130,8 @@
       <!-- Results Panel -->
       <div style="display: flex; flex-direction: column; gap: 1.5rem">
         <!-- VO2 Max Results -->
-        <div *ngIf="workoutResult" class="card" style="padding: 1.5rem">
+        @if (workoutResult) {
+        <div class="card" style="padding: 1.5rem">
           <h3
             style="
               font-size: 1.25rem;
@@ -145,14 +146,12 @@
             Workout Results
           </h3>
 
-          <div *ngIf="workoutResult.error" style="color: var(--error-color); font-size: 0.875rem">
+          @if (workoutResult.error) {
+          <div style="color: var(--error-color); font-size: 0.875rem">
             ⚠️ {{ workoutResult.error }}
           </div>
-
-          <div
-            *ngIf="!workoutResult.error"
-            style="display: flex; flex-direction: column; gap: 1rem"
-          >
+          } @else {
+          <div style="display: flex; flex-direction: column; gap: 1rem">
             <div
               style="
                 background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
@@ -204,7 +203,9 @@
               </div>
             </div>
           </div>
+          }
         </div>
+        }
 
         <!-- API Status -->
         <div class="card" style="padding: 1.5rem">
