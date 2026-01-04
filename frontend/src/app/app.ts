@@ -28,17 +28,36 @@ export class App implements OnInit {
   };
 
   ngOnInit() {
-    this.api.getHealth().subscribe((data) => {
-      this.healthData = data;
+    this.api.getHealth().subscribe({
+      next: (data) => {
+        this.healthData = data;
+      },
+      error: (error) => {
+        console.warn('Backend health check failed:', error);
+        this.healthData = null;
+      },
     });
-    this.api.getNorseTest().subscribe((data) => {
-      this.norseData = data;
+    this.api.getNorseTest().subscribe({
+      next: (data) => {
+        this.norseData = data;
+      },
+      error: (error) => {
+        console.warn('Norse SNN check failed:', error);
+        this.norseData = null;
+      },
     });
   }
 
   submitWorkout() {
-    this.api.postWorkout(this.workout).subscribe((result) => {
-      this.workoutResult = result;
+    this.api.postWorkout(this.workout).subscribe({
+      next: (result) => {
+        this.workoutResult = result;
+      },
+      error: (error) => {
+        console.error('Failed to submit workout:', error);
+        // Could show user-friendly error message here
+        this.workoutResult = { error: 'Unable to submit workout. Backend may be unreachable.' };
+      },
     });
   }
 
