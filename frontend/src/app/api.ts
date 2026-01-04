@@ -17,4 +17,12 @@ export class Api {
   getNorseTest(): Observable<any> {
     return this.http.get(this.baseUrl + 'norse-test/');
   }
+
+  postWorkout(workout: any): Observable<any> {
+    return this.http.post(this.baseUrl + 'workouts/', workout);
+  }
+
+  getWorkouts(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl + 'workouts/');
+  }
 }

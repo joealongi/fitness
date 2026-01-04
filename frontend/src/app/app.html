@@ -181,9 +181,65 @@
 </style>
 
 <main>
-  <h1>Fitness App</h1>
+  <h1>{{ title() }}</h1>
+  <p>Log your workout to estimate VO2 max and learn its benefits.</p>
+
+  <form (ngSubmit)="submitWorkout()">
+    <label
+      >Activity Type:
+      <select [(ngModel)]="workout.activity_type" name="activity_type">
+        <option value="run">Run</option>
+        <option value="cycle">Cycle</option>
+        <option value="walk">Walk</option>
+      </select> </label
+    ><br />
+
+    <label
+      >Duration (minutes):
+      <input type="number" [(ngModel)]="workout.duration" name="duration" required /> </label
+    ><br />
+
+    <label
+      >Distance (km):
+      <input type="number" step="0.1" [(ngModel)]="workout.distance" name="distance" /> </label
+    ><br />
+
+    <label
+      >Avg Heart Rate (bpm):
+      <input type="number" [(ngModel)]="workout.heart_rate_avg" name="heart_rate_avg" /> </label
+    ><br />
+
+    <label
+      >Max Heart Rate (bpm):
+      <input type="number" [(ngModel)]="workout.heart_rate_max" name="heart_rate_max" /> </label
+    ><br />
+
+    <label
+      >Intensity:
+      <select [(ngModel)]="workout.intensity" name="intensity">
+        <option value="low">Low</option>
+        <option value="moderate">Moderate</option>
+        <option value="high">High</option>
+      </select> </label
+    ><br />
+
+    <button type="submit">Log Workout</button>
+  </form>
+
+  <div *ngIf="workoutResult">
+    <h2>Workout Logged</h2>
+    <p>
+      Estimated VO2 Max:
+      {{
+        workoutResult.vo2max_estimate ? (workoutResult.vo2max_estimate | number : '1.1-1') : 'N/A'
+      }}
+      mL/kg/min
+    </p>
+    <p>{{ workoutResult.benefits }}</p>
+  </div>
+
   <div *ngIf="healthData">
-    <h2>Health Check</h2>
+    <h2>API Health</h2>
     <pre>{{ healthData | json }}</pre>
   </div>
   <div *ngIf="norseData">
