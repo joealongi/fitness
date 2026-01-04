@@ -227,6 +227,61 @@ POST /api/norse-vo2/
 
 Advanced VO2 max estimation using SNN.
 
+## 💳 Stripe Payment Integration
+
+Airwave includes premium subscription features powered by Stripe:
+
+### Subscription Plans
+
+- **Free**: Basic VO2 max calculations, limited workouts
+- **Premium** ($9.99/month): Advanced AI insights, unlimited workouts, priority support
+- **Pro** ($19.99/month): All Premium features + custom workout plans, nutrition tracking, progress analytics
+
+### Payment Features
+
+- ✅ **Secure Payment Processing** with Stripe Elements
+- ✅ **Subscription Management** with automatic billing
+- ✅ **Webhook Handling** for real-time updates
+- ✅ **Receipt Generation** and transaction history
+- ✅ **Multiple Payment Methods** (cards, digital wallets)
+- ✅ **PCI Compliance** through Stripe's secure infrastructure
+
+### Setting Up Stripe
+
+1. **Create Stripe Account** at [stripe.com](https://stripe.com)
+
+2. **Get API Keys** from Stripe Dashboard:
+
+   ```bash
+   # Add to your .env file
+   STRIPE_PUBLIC_KEY=pk_test_your_publishable_key
+   STRIPE_SECRET_KEY=sk_test_your_secret_key
+   STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
+   ```
+
+3. **Configure Webhooks** in Stripe Dashboard:
+   - Endpoint URL: `https://your-backend-domain/api/payments/webhook/`
+   - Events: `customer.subscription.*`, `payment_intent.succeeded`
+
+### Payment API Endpoints
+
+```
+POST /api/payments/create-intent/
+# Create payment intent for subscription
+
+POST /api/payments/webhook/
+# Stripe webhook endpoint (no auth required)
+
+GET /api/subscription/status/
+# Get current user's subscription status
+
+GET /api/subscription/plans/
+# Get available subscription plans
+
+POST /api/subscription/cancel/
+# Cancel subscription (end of period)
+```
+
 ## 🔄 MCP Integration
 
 Airwave includes MCP tools for external AI capabilities:
@@ -405,7 +460,7 @@ Airwave is designed for easy deployment to modern cloud platforms. This guide co
 
 ### Railway Deployment (Recommended) ⭐
 
-Railway provides the easiest full-stack deployment with built-in PostgreSQL and automatic SSL. **This is a monorepo with multiple services** - deploy each service as a separate Railway project.
+**⚠️ IMPORTANT**: This is a **monorepo with multiple services**. You must deploy each service as a **separate Railway project**. Do NOT deploy the entire repository as one project.
 
 #### Step-by-Step Deployment
 
@@ -416,14 +471,20 @@ npm install -g @railway/cli
 railway login
 ```
 
-2. **Deploy Backend Service:**
+2. **Deploy Backend Service (First):**
 
 ```bash
-cd backend
+# Create new Railway project for backend
 railway init airwave-backend
+# Select "Empty Project" when prompted
+
+# Link to backend directory
+railway link --project airwave-backend
+
+# Deploy backend
 railway up
 
-# Set environment variables for backend
+# Set environment variables
 railway variables set DEBUG=False
 railway variables set SECRET_KEY=$(python -c "import secrets; print(secrets.token_urlsafe(32))")
 railway variables set FIELD_ENCRYPTION_KEY=$(python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())")
@@ -434,31 +495,46 @@ railway run python manage.py migrate
 railway run python manage.py createsuperuser
 ```
 
-3. **Deploy Frontend Service:**
+3. **Deploy Frontend Service (Second):**
 
 ```bash
-cd ../frontend  # from backend directory
+# Create new Railway project for frontend
 railway init airwave-frontend
+# Select "Empty Project" when prompted
+
+# Link to frontend directory
+railway link --project airwave-frontend
+
+# Deploy frontend
 railway up
 
-# Set API URL (use your backend Railway URL)
+# Set API URL (replace with your actual backend URL from Railway dashboard)
 railway variables set VITE_API_URL=https://airwave-backend-production.up.railway.app
 ```
 
-4. **Deploy MCP Server (Optional):**
+4. **Deploy MCP Server (Optional - Third):**
 
 ```bash
-cd ../mcp-airwave  # from frontend directory
+# Create new Railway project for MCP
 railway init airwave-mcp
+# Select "Empty Project" when prompted
+
+# Link to MCP directory
+railway link --project airwave-mcp
+
+# Deploy MCP server
 railway up
 ```
 
 #### Update CORS Settings
 
-After deployment, update backend CORS settings with your frontend URL:
+After both backend and frontend are deployed, update backend CORS settings:
 
 ```bash
-# In backend Railway project
+# Switch to backend project
+railway link --project airwave-backend
+
+# Set CORS to allow frontend
 railway variables set CORS_ALLOWED_ORIGINS=https://airwave-frontend-production.up.railway.app
 railway variables set CSRF_TRUSTED_ORIGINS=https://airwave-frontend-production.up.railway.app
 ```

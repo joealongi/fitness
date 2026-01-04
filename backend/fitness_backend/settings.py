@@ -33,6 +33,27 @@ FIELD_ENCRYPTION_KEY = os.getenv('FIELD_ENCRYPTION_KEY', 'dv7TALqJ4fC-EredSfnHN0
 # Encrypted Model Fields Configuration
 ENCRYPTED_FIELD_KEY = FIELD_ENCRYPTION_KEY
 
+# STRIPE SETTINGS
+STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY', 'pk_test_your_stripe_public_key')
+STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY', 'sk_test_your_stripe_secret_key')
+STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET', 'whsec_your_webhook_secret')
+
+# Subscription plans (in cents)
+SUBSCRIPTION_PLANS = {
+    'premium': {
+        'name': 'Premium',
+        'price': 999,  # $9.99
+        'interval': 'month',
+        'features': ['Advanced AI insights', 'Unlimited workouts', 'Priority support']
+    },
+    'pro': {
+        'name': 'Pro',
+        'price': 1999,  # $19.99
+        'interval': 'month',
+        'features': ['All Premium features', 'Custom workout plans', 'Nutrition tracking', 'Progress analytics']
+    }
+}
+
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 
