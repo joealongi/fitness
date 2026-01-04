@@ -256,9 +256,17 @@ export class App implements OnInit, OnDestroy {
 
   // Scroll to authentication section
   scrollToAuth() {
-    const authSection = document.querySelector('.auth-section');
+    const authSection = document.querySelector('#auth-section');
     if (authSection) {
       authSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // Scroll to demo section
+  scrollToDemo() {
+    const demoSection = document.querySelector('#demo-section');
+    if (demoSection) {
+      demoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 

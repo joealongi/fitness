@@ -1,1011 +1,1469 @@
-<main
-  style="
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    padding: 1rem;
-  "
->
-  <div class="container">
-    <!-- Authentication Section -->
-    @if (!(isAuthenticated$ | async)) {
-    <div class="auth-section" style="margin-bottom: 2rem">
-      <div class="grid grid-cols-2" style="max-width: 800px; margin: 0 auto">
-        <!-- Login Form -->
-        <div class="card" style="padding: 1.5rem">
-          <h2
+<main style="min-height: 100vh; background: #000000; color: white; overflow-x: hidden">
+  <!-- Hero Section -->
+  <section
+    style="
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    "
+  >
+    <div style="max-width: 1200px; margin: 0 auto; z-index: 2; position: relative">
+      <!-- Logo/Brand -->
+      <div style="margin-bottom: 2rem">
+        <h1
+          style="
+            font-size: 4rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(45deg, #ffffff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+          "
+        >
+          Airwave
+        </h1>
+        <p
+          style="
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin: 0.5rem 0 0 0;
+            font-weight: 300;
+          "
+        >
+          AI-Powered Fitness Intelligence
+        </p>
+      </div>
+
+      <!-- Hero Content -->
+      <div style="max-width: 800px; margin: 0 auto 4rem auto">
+        <h2
+          style="
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: white;
+          "
+        >
+          Unlock Your<br />
+          <span
+            style="
+              background: linear-gradient(45deg, #60a5fa, #a78bfa);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+            "
+          >
+            Athletic Potential
+          </span>
+        </h2>
+        <p
+          style="
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            font-weight: 300;
+          "
+        >
+          Discover your VO2 max, track progress with AI-powered insights, and optimize your training
+          with advanced analytics. Join thousands of athletes who trust Airwave for their fitness
+          journey.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap">
+          <button
+            (click)="scrollToAuth()"
+            style="
+              background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+              color: white;
+              border: none;
+              padding: 1rem 2rem;
+              border-radius: 0.75rem;
+              font-size: 1.125rem;
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.2s ease;
+              box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+            "
+            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 15px 35px rgba(59, 130, 246, 0.4)'"
+            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 25px rgba(59, 130, 246, 0.3)'"
+          >
+            🚀 Start Free Trial
+          </button>
+          <button
+            (click)="scrollToDemo()"
+            style="
+              background: rgba(255, 255, 255, 0.1);
+              backdrop-filter: blur(10px);
+              color: white;
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              padding: 1rem 2rem;
+              border-radius: 0.75rem;
+              font-size: 1.125rem;
+              font-weight: 600;
+              cursor: pointer;
+              transition: all 0.2s ease;
+            "
+            onmouseover="this.style.background='rgba(255, 255, 255, 0.2)'"
+            onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'"
+          >
+            🎯 Try Demo
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 2rem;
+          max-width: 800px;
+          margin: 0 auto;
+        "
+      >
+        <div style="text-align: center">
+          <div style="font-size: 2.5rem; font-weight: 800; color: #60a5fa; margin-bottom: 0.5rem">
+            10K+
+          </div>
+          <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.875rem">Active Users</div>
+        </div>
+        <div style="text-align: center">
+          <div style="font-size: 2.5rem; font-weight: 800; color: #34d399; margin-bottom: 0.5rem">
+            1M+
+          </div>
+          <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.875rem">Workouts Logged</div>
+        </div>
+        <div style="text-align: center">
+          <div style="font-size: 2.5rem; font-weight: 800; color: #fbbf24; margin-bottom: 0.5rem">
+            99.9%
+          </div>
+          <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.875rem">Uptime</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Background decoration -->
+    <div
+      style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; z-index: 1"
+    >
+      <div
+        style="
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: radial-gradient(circle, rgba(120, 119, 198, 0.1) 0%, transparent 70%);
+          animation: float 20s ease-in-out infinite;
+        "
+      ></div>
+    </div>
+  </section>
+
+  <!-- Experience Section - Always Visible -->
+  <section
+    id="experience-section"
+    style="
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      position: relative;
+    "
+  >
+    <div style="max-width: 1200px; margin: 0 auto">
+      <div style="text-align: center; margin-bottom: 3rem">
+        <h2 style="font-size: 2.5rem; font-weight: 700; color: white; margin-bottom: 1rem">
+          Experience Airwave
+        </h2>
+        <p
+          style="
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto;
+          "
+        >
+          Try our VO2 max calculator and see how AI-powered fitness analytics can transform your
+          training.
+        </p>
+      </div>
+
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+          gap: 3rem;
+          align-items: start;
+          margin-bottom: 4rem;
+        "
+      >
+        <!-- Demo Calculator -->
+        <div
+          style="
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+          "
+        >
+          <h3
             style="
               font-size: 1.5rem;
               font-weight: 600;
-              color: var(--text-primary);
+              color: white;
               margin-bottom: 1.5rem;
               text-align: center;
             "
           >
-            Login
-          </h2>
+            🧮 VO2 Max Calculator
+          </h3>
+
+          <!-- Demo Badge -->
+          <div
+            style="
+              background: linear-gradient(135deg, #fef3c7, #fde68a);
+              padding: 0.75rem;
+              border-radius: 0.5rem;
+              text-align: center;
+              margin-bottom: 1.5rem;
+            "
+          >
+            <span style="color: #92400e; font-weight: 600; font-size: 0.875rem">
+              🎯 Free Demo - No Signup Required
+            </span>
+          </div>
+
+          <form
+            (ngSubmit)="calculateDemoVO2Max()"
+            style="display: flex; flex-direction: column; gap: 1rem"
+          >
+            <!-- Activity Type -->
+            <div>
+              <label
+                style="
+                  display: block;
+                  color: rgba(255, 255, 255, 0.8);
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Activity Type</label
+              >
+              <select
+                [(ngModel)]="demoWorkout.activity_type"
+                name="activity_type"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: rgba(255, 255, 255, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  border-radius: 0.5rem;
+                  color: white;
+                  font-size: 1rem;
+                "
+              >
+                <option value="run">🏃 Run</option>
+                <option value="cycle">🚴 Cycle</option>
+                <option value="walk">🚶 Walk</option>
+              </select>
+            </div>
+
+            <!-- Duration -->
+            <div>
+              <label
+                style="
+                  display: block;
+                  color: rgba(255, 255, 255, 0.8);
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Duration (minutes)</label
+              >
+              <input
+                type="number"
+                [(ngModel)]="demoWorkout.duration"
+                name="duration"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: rgba(255, 255, 255, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  border-radius: 0.5rem;
+                  color: white;
+                  font-size: 1rem;
+                "
+                placeholder="30"
+                required
+              />
+            </div>
+
+            <!-- Distance -->
+            <div>
+              <label
+                style="
+                  display: block;
+                  color: rgba(255, 255, 255, 0.8);
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Distance (km)</label
+              >
+              <input
+                type="number"
+                step="0.1"
+                [(ngModel)]="demoWorkout.distance"
+                name="distance"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: rgba(255, 255, 255, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  border-radius: 0.5rem;
+                  color: white;
+                  font-size: 1rem;
+                "
+                placeholder="5.0"
+                required
+              />
+            </div>
+
+            <!-- Calculate Button -->
+            <button
+              type="submit"
+              style="
+                width: 100%;
+                padding: 0.75rem;
+                background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+                color: white;
+                border: none;
+                border-radius: 0.5rem;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                margin-top: 1rem;
+              "
+              onmouseover="this.style.transform='translateY(-1px)'"
+              onmouseout="this.style.transform='translateY(0)'"
+            >
+              🧮 Calculate VO2 Max (Demo)
+            </button>
+          </form>
+
+          <!-- Demo Results (show results from demo calculator) -->
+          @if (workoutResult && workoutResult.method === 'demo_calculator') {
+          <div
+            style="
+              margin-top: 1.5rem;
+              padding: 1.5rem;
+              background: rgba(255, 255, 255, 0.05);
+              border-radius: 0.75rem;
+              border: 1px solid rgba(255, 255, 255, 0.1);
+            "
+          >
+            <h4
+              style="
+                color: white;
+                margin-bottom: 1rem;
+                font-size: 1.125rem;
+                text-align: center;
+                font-weight: 600;
+              "
+            >
+              📊 Your Demo Results
+            </h4>
+
+            @if (workoutResult.error) {
+            <div style="color: #ef4444; font-size: 0.875rem; text-align: center">
+              ⚠️ {{ workoutResult.error }}
+            </div>
+            } @else {
+            <div style="display: flex; flex-direction: column; gap: 1rem">
+              <div
+                style="
+                  background: linear-gradient(
+                    135deg,
+                    rgba(59, 130, 246, 0.2),
+                    rgba(29, 78, 216, 0.2)
+                  );
+                  padding: 1rem;
+                  border-radius: 0.5rem;
+                  border: 1px solid rgba(59, 130, 246, 0.3);
+                  text-align: center;
+                "
+              >
+                <div
+                  style="
+                    font-size: 0.875rem;
+                    color: #93c5fd;
+                    font-weight: 500;
+                    margin-bottom: 0.25rem;
+                  "
+                >
+                  Estimated VO2 Max
+                </div>
+                <div style="font-size: 2rem; font-weight: 700; color: #3b82f6">
+                  {{
+                    workoutResult.vo2max_estimate
+                      ? (workoutResult.vo2max_estimate | number : '1.1-1')
+                      : 'N/A'
+                  }}
+                  <span style="font-size: 1rem; color: #60a5fa">mL/kg/min</span>
+                </div>
+              </div>
+
+              <div
+                style="
+                  background: linear-gradient(
+                    135deg,
+                    rgba(16, 185, 129, 0.2),
+                    rgba(5, 150, 105, 0.2)
+                  );
+                  padding: 1rem;
+                  border-radius: 0.5rem;
+                  border: 1px solid rgba(16, 185, 129, 0.3);
+                "
+              >
+                <div
+                  style="
+                    font-size: 0.875rem;
+                    color: #6ee7b7;
+                    font-weight: 500;
+                    margin-bottom: 0.5rem;
+                  "
+                >
+                  Health Benefits
+                </div>
+                <div style="color: #34d399; font-size: 0.875rem; line-height: 1.4">
+                  {{ workoutResult.benefits }}
+                </div>
+              </div>
+
+              <div style="text-align: center; margin-top: 0.5rem">
+                <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.875rem">
+                  💡 <strong>{{ workoutResult.note }}</strong>
+                </p>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- System Status -->
+        <div
+          style="
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+          "
+        >
+          <h4
+            style="
+              font-size: 1.25rem;
+              font-weight: 600;
+              color: white;
+              margin-bottom: 1.5rem;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+          >
+            <span style="margin-right: 0.5rem">🔗</span>
+            System Status
+          </h4>
+
+          <div style="display: flex; flex-direction: column; gap: 1rem">
+            <div style="display: flex; align-items: center; gap: 0.75rem">
+              <div
+                style="
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: {{ healthData ? '#10b981' : '#ef4444' }};
+              "
+              ></div>
+              <span style="color: rgba(255, 255, 255, 0.9)">
+                {{ healthData ? 'Backend API - Connected' : 'Backend API - Disconnected' }}
+              </span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 0.75rem">
+              <div
+                style="
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: {{ norseData ? '#3b82f6' : '#ef4444' }};
+              "
+              ></div>
+              <span style="color: rgba(255, 255, 255, 0.9)">
+                {{ norseData ? 'Norse SNN - Active' : 'Norse SNN - Inactive' }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Authentication Section - Always Visible -->
+      <div style="text-align: center; margin-bottom: 3rem">
+        <h2 style="font-size: 2.5rem; font-weight: 700; color: white; margin-bottom: 1rem">
+          Ready to Save Your Progress?
+        </h2>
+        <p
+          style="
+            font-size: 1.125rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+          "
+        >
+          Create a free account to track your workouts over time and unlock premium AI-powered
+          insights.
+        </p>
+      </div>
+
+      @if (!(isAuthenticated$ | async)) {
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+          gap: 2rem;
+          max-width: 900px;
+          margin: 0 auto;
+        "
+      >
+        <!-- Login Card -->
+        <div
+          style="
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+          "
+          onmouseover="this.style.transform='translateY(-4px)'"
+          onmouseout="this.style.transform='translateY(0)'"
+        >
+          <h3
+            style="
+              font-size: 1.5rem;
+              font-weight: 600;
+              color: white;
+              margin-bottom: 1.5rem;
+              text-align: center;
+            "
+          >
+            Welcome Back
+          </h3>
 
           <form (ngSubmit)="login()" style="display: flex; flex-direction: column; gap: 1rem">
             <div>
-              <label class="label" for="login-username">Username</label>
+              <label
+                style="
+                  display: block;
+                  color: rgba(255, 255, 255, 0.8);
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Username</label
+              >
               <input
                 type="text"
                 [(ngModel)]="loginData.username"
                 name="username"
-                id="login-username"
-                class="input"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: rgba(255, 255, 255, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  border-radius: 0.5rem;
+                  color: white;
+                  font-size: 1rem;
+                "
+                placeholder="Enter your username"
                 required
               />
             </div>
 
             <div>
-              <label class="label" for="login-password">Password</label>
+              <label
+                style="
+                  display: block;
+                  color: rgba(255, 255, 255, 0.8);
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Password</label
+              >
               <input
                 type="password"
                 [(ngModel)]="loginData.password"
                 name="password"
-                id="login-password"
-                class="input"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: rgba(255, 255, 255, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  border-radius: 0.5rem;
+                  color: white;
+                  font-size: 1rem;
+                "
+                placeholder="Enter your password"
                 required
               />
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%">
-              {{ loginLoading ? 'Logging in...' : 'Login' }}
+            <button
+              type="submit"
+              style="
+                width: 100%;
+                padding: 0.75rem;
+                background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+                color: white;
+                border: none;
+                border-radius: 0.5rem;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                margin-top: 1rem;
+              "
+              onmouseover="this.style.transform='translateY(-1px)'"
+              onmouseout="this.style.transform='translateY(0)'"
+            >
+              {{ loginLoading ? 'Signing in...' : 'Sign In' }}
             </button>
           </form>
 
           @if (loginError) {
-          <div
-            style="
-              color: var(--error-color);
-              font-size: 0.875rem;
-              margin-top: 1rem;
-              text-align: center;
-            "
-          >
+          <div style="color: #ef4444; font-size: 0.875rem; margin-top: 1rem; text-align: center">
             {{ loginError }}
           </div>
           }
         </div>
 
-        <!-- Register Form -->
-        <div class="card" style="padding: 1.5rem">
-          <h2
+        <!-- Register Card -->
+        <div
+          style="
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+          "
+          onmouseover="this.style.transform='translateY(-4px)'"
+          onmouseout="this.style.transform='translateY(0)'"
+        >
+          <h3
             style="
               font-size: 1.5rem;
               font-weight: 600;
-              color: var(--text-primary);
+              color: white;
               margin-bottom: 1.5rem;
               text-align: center;
             "
           >
-            Register
-          </h2>
+            Create Account
+          </h3>
 
           <form (ngSubmit)="register()" style="display: flex; flex-direction: column; gap: 1rem">
             <div>
-              <label class="label" for="register-username">Username</label>
+              <label
+                style="
+                  display: block;
+                  color: rgba(255, 255, 255, 0.8);
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Username</label
+              >
               <input
                 type="text"
                 [(ngModel)]="registerData.username"
                 name="username"
-                id="register-username"
-                class="input"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: rgba(255, 255, 255, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  border-radius: 0.5rem;
+                  color: white;
+                  font-size: 1rem;
+                "
+                placeholder="Choose a username"
                 required
               />
             </div>
 
             <div>
-              <label class="label" for="register-email">Email</label>
+              <label
+                style="
+                  display: block;
+                  color: rgba(255, 255, 255, 0.8);
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Email</label
+              >
               <input
                 type="email"
                 [(ngModel)]="registerData.email"
                 name="email"
-                id="register-email"
-                class="input"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: rgba(255, 255, 255, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  border-radius: 0.5rem;
+                  color: white;
+                  font-size: 1rem;
+                "
+                placeholder="Enter your email"
                 required
               />
             </div>
 
             <div>
-              <label class="label" for="register-password">Password</label>
+              <label
+                style="
+                  display: block;
+                  color: rgba(255, 255, 255, 0.8);
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Password</label
+              >
               <input
                 type="password"
                 [(ngModel)]="registerData.password"
                 name="password"
-                id="register-password"
-                class="input"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: rgba(255, 255, 255, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  border-radius: 0.5rem;
+                  color: white;
+                  font-size: 1rem;
+                "
+                placeholder="Create a password"
                 required
               />
             </div>
 
-            <button type="submit" class="btn btn-primary" style="width: 100%">
-              {{ registerLoading ? 'Registering...' : 'Register' }}
+            <button
+              type="submit"
+              style="
+                width: 100%;
+                padding: 0.75rem;
+                background: linear-gradient(135deg, #10b981, #059669);
+                color: white;
+                border: none;
+                border-radius: 0.5rem;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                margin-top: 1rem;
+              "
+              onmouseover="this.style.transform='translateY(-1px)'"
+              onmouseout="this.style.transform='translateY(0)'"
+            >
+              {{ registerLoading ? 'Creating account...' : 'Create Account' }}
             </button>
           </form>
 
           @if (registerError) {
-          <div
-            style="
-              color: var(--error-color);
-              font-size: 0.875rem;
-              margin-top: 1rem;
-              text-align: center;
-            "
-          >
+          <div style="color: #ef4444; font-size: 0.875rem; margin-top: 1rem; text-align: center">
             {{ registerError }}
           </div>
           }
         </div>
       </div>
+      } @else {
+      <!-- Authenticated User Welcome -->
+      <div style="text-align: center; margin-bottom: 2rem">
+        <div
+          style="
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+            display: inline-block;
+          "
+        >
+          <h3 style="color: white; margin-bottom: 0.5rem; font-size: 1.5rem; font-weight: 600">
+            Welcome back, {{ (currentUser$ | async)?.username }}! 🎉
+          </h3>
+          <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 1rem">
+            Your personalized fitness dashboard awaits below.
+          </p>
+          <button
+            (click)="logout()"
+            style="
+              padding: 0.5rem 1rem;
+              background: rgba(255, 255, 255, 0.1);
+              color: white;
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              border-radius: 0.5rem;
+              font-size: 0.875rem;
+              cursor: pointer;
+              transition: all 0.2s ease;
+            "
+            onmouseover="this.style.background='rgba(255, 255, 255, 0.2)'"
+            onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'"
+          >
+            Sign Out
+          </button>
+        </div>
+      </div>
+      }
     </div>
+  </section>
 
-    <!-- Demo Calculator Section for Unauthenticated Users -->
-    <div style="margin-bottom: 2rem">
-      <div class="card" style="padding: 1.5rem">
+  <!-- Authenticated Dashboard Section -->
+  @if ((isAuthenticated$ | async)) {
+  <section
+    style="
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      position: relative;
+    "
+  >
+    <div style="max-width: 1400px; margin: 0 auto">
+      <div style="text-align: center; margin-bottom: 3rem">
         <h2
           style="
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-          "
-        >
-          🧮 Try Our VO2 Max Calculator
-        </h2>
-
-        <!-- Demo Badge -->
-        <div
-          style="
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            padding: 0.75rem;
-            border-radius: var(--border-radius);
-            border: 1px solid #f59e0b;
-            text-align: center;
+            font-size: 3rem;
+            font-weight: 800;
+            color: #1f2937;
             margin-bottom: 1rem;
+            background: linear-gradient(45deg, #1f2937, #374151);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
           "
         >
-          <span style="color: #92400e; font-weight: 600; font-size: 0.875rem">
-            🎯 Free Demo - No Account Required
-          </span>
-        </div>
+          Your Personal Dashboard
+        </h2>
+        <p style="font-size: 1.25rem; color: #6b7280; max-width: 700px; margin: 0 auto">
+          Track your fitness journey with detailed analytics and personalized insights.
+        </p>
+      </div>
 
-        <form
-          (ngSubmit)="calculateDemoVO2Max()"
-          style="display: flex; flex-direction: column; gap: 1rem"
-        >
-          <!-- Activity Type -->
-          <div>
-            <label class="label" for="demo_activity_type">Activity Type</label>
-            <select
-              [(ngModel)]="demoWorkout.activity_type"
-              name="activity_type"
-              id="demo_activity_type"
-              class="select"
-            >
-              <option value="run">🏃 Run</option>
-              <option value="cycle">🚴 Cycle</option>
-              <option value="walk">🚶 Walk</option>
-            </select>
-          </div>
-
-          <!-- Duration -->
-          <div>
-            <label class="label" for="demo_duration">Duration (minutes)</label>
-            <input
-              type="number"
-              [(ngModel)]="demoWorkout.duration"
-              name="duration"
-              id="demo_duration"
-              required
-              class="input"
-              placeholder="30"
-            />
-          </div>
-
-          <!-- Distance -->
-          <div>
-            <label class="label" for="demo_distance">Distance (km)</label>
-            <input
-              type="number"
-              step="0.1"
-              [(ngModel)]="demoWorkout.distance"
-              name="distance"
-              id="demo_distance"
-              class="input"
-              placeholder="5.0"
-            />
-          </div>
-
-          <!-- Calculate Button -->
-          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem 1rem">
-            🧮 Calculate VO2 Max (Demo)
-          </button>
-        </form>
-
-        <!-- Demo Results (show results from demo calculator) -->
-        @if (workoutResult && workoutResult.method === 'demo_calculator') {
+      <!-- Workout Form and Charts Grid -->
+      <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 3rem; align-items: start">
+        <!-- Workout Form -->
         <div
           style="
-            margin-top: 1rem;
-            padding: 1rem;
-            background: var(--surface-color);
-            border-radius: var(--border-radius);
-            border: 1px solid var(--border-color);
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.8);
           "
         >
-          <h4
-            style="
-              color: var(--text-primary);
-              margin-bottom: 0.5rem;
-              font-size: 1rem;
-              text-align: center;
-            "
+          <h3 style="font-size: 1.5rem; font-weight: 600; color: #1f2937; margin-bottom: 1.5rem">
+            Log New Workout
+          </h3>
+
+          <form
+            (ngSubmit)="submitWorkout()"
+            style="display: flex; flex-direction: column; gap: 1rem"
           >
-            📊 Your Demo Results
-          </h4>
-
-          @if (workoutResult.error) {
-          <div style="color: var(--error-color); font-size: 0.875rem; text-align: center">
-            ⚠️ {{ workoutResult.error }}
-          </div>
-          } @else {
-          <div style="display: flex; flex-direction: column; gap: 1rem">
-            <div
-              style="
-                background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
-                padding: 1rem;
-                border-radius: var(--border-radius);
-                border: 1px solid #bfdbfe;
-                text-align: center;
-              "
-            >
-              <div
+            <!-- Activity Type -->
+            <div>
+              <label
                 style="
+                  display: block;
+                  color: #374151;
                   font-size: 0.875rem;
-                  color: var(--primary-color);
-                  font-weight: 500;
-                  margin-bottom: 0.25rem;
-                "
-              >
-                Estimated VO2 Max
-              </div>
-              <div style="font-size: 1.875rem; font-weight: 700; color: #1e40af">
-                {{
-                  workoutResult.vo2max_estimate
-                    ? (workoutResult.vo2max_estimate | number : '1.1-1')
-                    : 'N/A'
-                }}
-                <span style="font-size: 1.125rem; color: var(--primary-color)">mL/kg/min</span>
-              </div>
-            </div>
-
-            <div
-              style="
-                background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-                padding: 1rem;
-                border-radius: var(--border-radius);
-                border: 1px solid #bbf7d0;
-              "
-            >
-              <div
-                style="
-                  font-size: 0.875rem;
-                  color: var(--success-color);
                   font-weight: 500;
                   margin-bottom: 0.5rem;
                 "
+                >Activity Type</label
               >
-                Health Benefits
+              <select
+                [(ngModel)]="workout.activity_type"
+                name="activity_type"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: #f9fafb;
+                  border: 1px solid #d1d5db;
+                  border-radius: 0.5rem;
+                  color: #1f2937;
+                  font-size: 1rem;
+                "
+              >
+                <option value="run">🏃 Run</option>
+                <option value="cycle">🚴 Cycle</option>
+                <option value="walk">🚶 Walk</option>
+              </select>
+            </div>
+
+            <!-- Duration -->
+            <div>
+              <label
+                style="
+                  display: block;
+                  color: #374151;
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Duration (minutes)</label
+              >
+              <input
+                type="number"
+                [(ngModel)]="workout.duration"
+                name="duration"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: #f9fafb;
+                  border: 1px solid #d1d5db;
+                  border-radius: 0.5rem;
+                  color: #1f2937;
+                  font-size: 1rem;
+                "
+                placeholder="30"
+                required
+              />
+            </div>
+
+            <!-- Distance -->
+            <div>
+              <label
+                style="
+                  display: block;
+                  color: #374151;
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Distance (km)</label
+              >
+              <input
+                type="number"
+                step="0.1"
+                [(ngModel)]="workout.distance"
+                name="distance"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: #f9fafb;
+                  border: 1px solid #d1d5db;
+                  border-radius: 0.5rem;
+                  color: #1f2937;
+                  font-size: 1rem;
+                "
+                placeholder="5.0"
+                required
+              />
+            </div>
+
+            <!-- Heart Rate Fields -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
+              <div>
+                <label
+                  style="
+                    display: block;
+                    color: #374151;
+                    font-size: 0.875rem;
+                    font-weight: 500;
+                    margin-bottom: 0.5rem;
+                  "
+                  >Avg Heart Rate (bpm)</label
+                >
+                <input
+                  type="number"
+                  [(ngModel)]="workout.heart_rate_avg"
+                  name="heart_rate_avg"
+                  style="
+                    width: 100%;
+                    padding: 0.75rem;
+                    background: #f9fafb;
+                    border: 1px solid #d1d5db;
+                    border-radius: 0.5rem;
+                    color: #1f2937;
+                    font-size: 1rem;
+                  "
+                  placeholder="150"
+                />
               </div>
-              <div style="color: #166534; font-size: 0.875rem; line-height: 1.4">
-                {{ workoutResult.benefits }}
+              <div>
+                <label
+                  style="
+                    display: block;
+                    color: #374151;
+                    font-size: 0.875rem;
+                    font-weight: 500;
+                    margin-bottom: 0.5rem;
+                  "
+                  >Max Heart Rate (bpm)</label
+                >
+                <input
+                  type="number"
+                  [(ngModel)]="workout.heart_rate_max"
+                  name="heart_rate_max"
+                  style="
+                    width: 100%;
+                    padding: 0.75rem;
+                    background: #f9fafb;
+                    border: 1px solid #d1d5db;
+                    border-radius: 0.5rem;
+                    color: #1f2937;
+                    font-size: 1rem;
+                  "
+                  placeholder="180"
+                />
               </div>
             </div>
 
-            <div style="text-align: center">
-              <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 0.5rem">
-                💡 <strong>{{ workoutResult.note }}</strong>
-              </p>
+            <!-- Intensity -->
+            <div>
+              <label
+                style="
+                  display: block;
+                  color: #374151;
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Intensity</label
+              >
+              <select
+                [(ngModel)]="workout.intensity"
+                name="intensity"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: #f9fafb;
+                  border: 1px solid #d1d5db;
+                  border-radius: 0.5rem;
+                  color: #1f2937;
+                  font-size: 1rem;
+                "
+              >
+                <option value="low">Low</option>
+                <option value="moderate">Moderate</option>
+                <option value="high">High</option>
+              </select>
             </div>
-          </div>
-          }
-        </div>
-        }
 
-        <!-- System Status (visible to everyone) -->
-        <div style="margin-top: 1rem">
-          <div class="card" style="padding: 1rem">
-            <h4
+            <!-- Submit Button -->
+            <button
+              type="submit"
               style="
+                width: 100%;
+                padding: 0.75rem;
+                background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+                color: white;
+                border: none;
+                border-radius: 0.5rem;
                 font-size: 1rem;
                 font-weight: 600;
-                color: var(--text-primary);
-                margin-bottom: 0.75rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                margin-top: 1rem;
               "
+              onmouseover="this.style.transform='translateY(-1px)'"
+              onmouseout="this.style.transform='translateY(0)'"
             >
-              <span style="margin-right: 0.5rem">🔗</span>
-              System Status
-            </h4>
-
-            <div style="display: flex; flex-direction: column; gap: 0.5rem">
-              <div
-                class="status-indicator"
-                [ngClass]="healthData ? 'status-success' : 'status-error'"
-              >
-                <div class="status-dot" [ngClass]="healthData ? 'success' : 'error'"></div>
-                <span>{{
-                  healthData ? 'Backend API - Connected' : 'Backend API - Disconnected'
-                }}</span>
-              </div>
-
-              <div
-                class="status-indicator"
-                [ngClass]="norseData ? 'status-connected' : 'status-error'"
-              >
-                <div class="status-dot" [ngClass]="norseData ? 'connected' : 'error'"></div>
-                <span>{{ norseData ? 'Norse SNN - Active' : 'Norse SNN - Inactive' }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Call to Action -->
-        <div
-          style="
-            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            border: 1px solid #10b981;
-            text-align: center;
-            margin-top: 1rem;
-          "
-        >
-          <h4 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1rem">
-            💎 Ready for More?
-          </h4>
-          <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 1rem">
-            Sign up to save workouts, access premium AI features, and get personalized insights.
-          </p>
-          <div style="display: flex; gap: 0.5rem">
-            <button
-              (click)="scrollToAuth()"
-              class="btn btn-primary"
-              style="flex: 1; font-size: 0.875rem"
-            >
-              Sign Up Free
+              🚀 Log Workout
             </button>
-            <button
-              (click)="scrollToAuth()"
-              class="btn btn-secondary"
-              style="flex: 1; font-size: 0.875rem"
-            >
-              Login
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    } @else {
-    <!-- User Dashboard -->
-    <div class="user-dashboard" style="margin-bottom: 2rem">
-      <div class="card" style="padding: 1.5rem; text-align: center">
-        <div style="display: flex; justify-content: space-between; align-items: center">
-          <div>
-            <h2
-              style="
-                font-size: 1.25rem;
-                font-weight: 600;
-                color: var(--text-primary);
-                margin-bottom: 0.25rem;
-              "
-            >
-              Welcome, {{ (currentUser$ | async)?.username }}!
-            </h2>
-            <p style="color: var(--text-secondary); font-size: 0.875rem">
-              {{ (currentUser$ | async)?.email }}
-            </p>
-          </div>
-          <button (click)="logout()" class="btn btn-secondary">Logout</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Header -->
-    <div style="text-align: center; margin-bottom: 2rem">
-      <h1
-        style="
-          font-size: 2.5rem;
-          font-weight: 700;
-          color: var(--text-primary);
-          margin-bottom: 0.5rem;
-        "
-      >
-        {{ title() }}
-      </h1>
-      <p style="font-size: 1.125rem; color: var(--text-secondary)">
-        Log your workout to estimate VO2 max and learn its benefits.
-      </p>
-      <p style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem">
-        💡 <strong>Tip:</strong> Create an account to save your workouts and access premium
-        features!
-      </p>
-    </div>
-
-    <div class="grid grid-cols-2">
-      <!-- Workout Form -->
-      <div class="card" style="padding: 1.5rem; margin-bottom: 2rem">
-        <h2
-          style="
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-          "
-        >
-          Log Workout
-        </h2>
-
-        <form
-          (ngSubmit)="submitWorkout()"
-          style="display: flex; flex-direction: column; gap: 1.5rem"
-        >
-          <!-- Activity Type -->
-          <div>
-            <label class="label" for="activity_type">Activity Type</label>
-            <select
-              [(ngModel)]="workout.activity_type"
-              name="activity_type"
-              id="activity_type"
-              class="select"
-            >
-              <option value="run">🏃 Run</option>
-              <option value="cycle">🚴 Cycle</option>
-              <option value="walk">🚶 Walk</option>
-            </select>
-          </div>
-
-          <!-- Duration -->
-          <div>
-            <label class="label" for="duration">Duration (minutes)</label>
-            <input
-              type="number"
-              [(ngModel)]="workout.duration"
-              name="duration"
-              id="duration"
-              required
-              class="input"
-              placeholder="30"
-            />
-          </div>
-
-          <!-- Distance -->
-          <div>
-            <label class="label" for="distance">Distance (km)</label>
-            <input
-              type="number"
-              step="0.1"
-              [(ngModel)]="workout.distance"
-              name="distance"
-              id="distance"
-              class="input"
-              placeholder="5.0"
-            />
-          </div>
-
-          <!-- Heart Rate Fields -->
-          <div class="grid" style="grid-template-columns: 1fr 1fr">
-            <div>
-              <label class="label" for="heart_rate_avg">Avg Heart Rate (bpm)</label>
-              <input
-                type="number"
-                [(ngModel)]="workout.heart_rate_avg"
-                name="heart_rate_avg"
-                id="heart_rate_avg"
-                class="input"
-                placeholder="150"
-              />
-            </div>
-            <div>
-              <label class="label" for="heart_rate_max">Max Heart Rate (bpm)</label>
-              <input
-                type="number"
-                [(ngModel)]="workout.heart_rate_max"
-                name="heart_rate_max"
-                id="heart_rate_max"
-                class="input"
-                placeholder="180"
-              />
-            </div>
-          </div>
-
-          <!-- Intensity -->
-          <div>
-            <label class="label" for="intensity">Intensity</label>
-            <select [(ngModel)]="workout.intensity" name="intensity" id="intensity" class="select">
-              <option value="low">Low</option>
-              <option value="moderate">Moderate</option>
-              <option value="high">High</option>
-            </select>
-          </div>
-
-          <!-- Submit Button -->
-          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem 1rem">
-            🚀 Log Workout
-          </button>
-        </form>
-      </div>
-
-      <!-- Results Panel -->
-      <div style="display: flex; flex-direction: column; gap: 1.5rem">
-        <!-- VO2 Max Results -->
-        @if (workoutResult) {
-        <div class="card" style="padding: 1.5rem">
-          <h3
-            style="
-              font-size: 1.25rem;
-              font-weight: 600;
-              color: var(--text-primary);
-              margin-bottom: 1rem;
-              display: flex;
-              align-items: center;
-            "
-          >
-            <span style="margin-right: 0.5rem">📊</span>
-            Workout Results
-          </h3>
-
-          @if (workoutResult.error) {
-          <div style="color: var(--error-color); font-size: 0.875rem">
-            ⚠️ {{ workoutResult.error }}
-          </div>
-          } @else {
-          <div style="display: flex; flex-direction: column; gap: 1rem">
-            <div
-              style="
-                background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
-                padding: 1rem;
-                border-radius: var(--border-radius);
-                border: 1px solid #bfdbfe;
-              "
-            >
-              <div
-                style="
-                  font-size: 0.875rem;
-                  color: var(--primary-color);
-                  font-weight: 500;
-                  margin-bottom: 0.25rem;
-                "
-              >
-                Estimated VO2 Max
-              </div>
-              <div style="font-size: 1.875rem; font-weight: 700; color: #1e40af">
-                {{
-                  workoutResult.vo2max_estimate
-                    ? (workoutResult.vo2max_estimate | number : '1.1-1')
-                    : 'N/A'
-                }}
-                <span style="font-size: 1.125rem; color: var(--primary-color)">mL/kg/min</span>
-              </div>
-            </div>
-
-            <div
-              style="
-                background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-                padding: 1rem;
-                border-radius: var(--border-radius);
-                border: 1px solid #bbf7d0;
-              "
-            >
-              <div
-                style="
-                  font-size: 0.875rem;
-                  color: var(--success-color);
-                  font-weight: 500;
-                  margin-bottom: 0.5rem;
-                "
-              >
-                Health Benefits
-              </div>
-              <div style="color: #166534; font-size: 0.875rem; line-height: 1.4">
-                {{ workoutResult.benefits }}
-              </div>
-            </div>
-          </div>
-          }
-        </div>
-        }
-
-        <!-- API Status -->
-        <div class="card" style="padding: 1.5rem">
-          <h3
-            style="
-              font-size: 1.25rem;
-              font-weight: 600;
-              color: var(--text-primary);
-              margin-bottom: 1rem;
-              display: flex;
-              align-items: center;
-            "
-          >
-            <span style="margin-right: 0.5rem">🔗</span>
-            System Status
-          </h3>
-
-          <div style="display: flex; flex-direction: column; gap: 0.75rem">
-            <div
-              class="status-indicator"
-              [ngClass]="healthData ? 'status-success' : 'status-error'"
-            >
-              <div class="status-dot" [ngClass]="healthData ? 'success' : 'error'"></div>
-              <span>{{
-                healthData ? 'Backend API - Connected' : 'Backend API - Disconnected'
-              }}</span>
-            </div>
-
-            <div
-              class="status-indicator"
-              [ngClass]="norseData ? 'status-connected' : 'status-error'"
-            >
-              <div class="status-dot" [ngClass]="norseData ? 'connected' : 'error'"></div>
-              <span>{{ norseData ? 'Norse SNN - Active' : 'Norse SNN - Inactive' }}</span>
-            </div>
-          </div>
+          </form>
         </div>
 
-        <!-- Workout Analytics Dashboard - Apple-style Design -->
-        <div style="margin: 2rem 0">
-          <!-- Section Header -->
-          <div style="text-align: center; margin-bottom: 3rem">
-            <h2
-              style="
-                font-size: 2.5rem;
-                font-weight: 700;
-                color: var(--text-primary);
-                margin-bottom: 1rem;
-                letter-spacing: -0.02em;
-              "
-            >
-              Your Fitness Journey
-            </h2>
-            <p
-              style="
-                font-size: 1.125rem;
-                color: var(--text-secondary);
-                max-width: 600px;
-                margin: 0 auto;
-                line-height: 1.6;
-              "
-            >
-              Track your progress with beautiful, interactive visualizations that reveal your
-              athletic potential.
-            </p>
-          </div>
-
-          <!-- Horizontal Scrollable Charts -->
+        <!-- Charts and Results -->
+        <div style="display: flex; flex-direction: column; gap: 2rem">
+          <!-- Workout Results -->
+          @if (workoutResult) {
           <div
             style="
-              display: flex;
-              gap: 2rem;
-              overflow-x: auto;
-              padding: 0 1rem;
-              scroll-behavior: smooth;
-              -webkit-overflow-scrolling: touch;
+              background: white;
+              border-radius: 1.5rem;
+              padding: 2rem;
+              box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+              border: 1px solid rgba(255, 255, 255, 0.8);
             "
-            class="chart-carousel"
           >
-            <!-- VO2 Max Progress Card -->
-            <div
+            <h3
               style="
-                flex: 0 0 500px;
-                background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-                border-radius: 1.5rem;
-                padding: 2rem;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-                border: 1px solid rgba(255, 255, 255, 0.8);
-                transition: transform 0.2s ease, box-shadow 0.2s ease;
+                font-size: 1.5rem;
+                font-weight: 600;
+                color: #1f2937;
+                margin-bottom: 1.5rem;
+                display: flex;
+                align-items: center;
               "
-              class="chart-card"
             >
-              <div style="margin-bottom: 1.5rem">
-                <h3
+              <span style="margin-right: 0.5rem">📊</span>
+              Latest Workout Results
+            </h3>
+
+            @if (workoutResult.error) {
+            <div style="color: #ef4444; font-size: 0.875rem">⚠️ {{ workoutResult.error }}</div>
+            } @else {
+            <div style="display: flex; flex-direction: column; gap: 1rem">
+              <div
+                style="
+                  background: linear-gradient(135deg, #eff6ff, #e0e7ff);
+                  padding: 1.5rem;
+                  border-radius: 0.75rem;
+                  border: 1px solid #bfdbfe;
+                  text-align: center;
+                "
+              >
+                <div
                   style="
-                    font-size: 1.25rem;
-                    font-weight: 600;
-                    color: var(--text-primary);
+                    font-size: 0.875rem;
+                    color: #1e40af;
+                    font-weight: 500;
                     margin-bottom: 0.5rem;
                   "
                 >
-                  VO₂ Max Progress
-                </h3>
-                <p style="color: var(--text-secondary); font-size: 0.875rem; margin: 0">
-                  Your aerobic fitness improvement over time
-                </p>
-              </div>
-
-              <div style="height: 300px">
-                <ngx-charts-line-chart
-                  [view]="[450, 300]"
-                  [scheme]="colorScheme"
-                  [results]="vo2MaxTrend"
-                  [gradient]="true"
-                  [xAxis]="true"
-                  [yAxis]="true"
-                  [legend]="false"
-                  [showXAxisLabel]="false"
-                  [showYAxisLabel]="false"
-                >
-                </ngx-charts-line-chart>
-              </div>
-
-              <div style="margin-top: 1rem; text-align: center">
-                <div style="font-size: 0.875rem; color: var(--text-secondary)">
-                  Latest:
-                  <span style="font-weight: 600; color: #3b82f6"
-                    >{{ vo2MaxTrend[vo2MaxTrend.length - 1]?.value }} mL/kg/min</span
-                  >
+                  Estimated VO2 Max
                 </div>
-              </div>
-            </div>
-
-            <!-- Activity Breakdown Card -->
-            <div
-              style="
-                flex: 0 0 500px;
-                background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-                border-radius: 1.5rem;
-                padding: 2rem;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-                border: 1px solid rgba(255, 255, 255, 0.8);
-                transition: transform 0.2s ease, box-shadow 0.2s ease;
-              "
-              class="chart-card"
-            >
-              <div style="margin-bottom: 1.5rem">
-                <h3
-                  style="
-                    font-size: 1.25rem;
-                    font-weight: 600;
-                    color: var(--text-primary);
-                    margin-bottom: 0.5rem;
-                  "
-                >
-                  Activity Breakdown
-                </h3>
-                <p style="color: var(--text-secondary); font-size: 0.875rem; margin: 0">
-                  Your workout type distribution this month
-                </p>
+                <div style="font-size: 2.5rem; font-weight: 800; color: #1d4ed8">
+                  {{
+                    workoutResult.vo2max_estimate
+                      ? (workoutResult.vo2max_estimate | number : '1.1-1')
+                      : 'N/A'
+                  }}
+                  <span style="font-size: 1.25rem; color: #3b82f6">mL/kg/min</span>
+                </div>
               </div>
 
               <div
-                style="height: 300px; display: flex; align-items: center; justify-content: center"
+                style="
+                  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+                  padding: 1.5rem;
+                  border-radius: 0.75rem;
+                  border: 1px solid #bbf7d0;
+                "
               >
-                <ngx-charts-pie-chart
-                  [view]="[350, 300]"
-                  [scheme]="colorScheme"
-                  [results]="activityDistribution"
-                  [legend]="true"
-                  [labels]="false"
-                  [doughnut]="true"
-                  [explodeSlices]="false"
-                >
-                </ngx-charts-pie-chart>
-              </div>
-            </div>
-
-            <!-- Weekly Performance Card -->
-            <div
-              style="
-                flex: 0 0 500px;
-                background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-                border-radius: 1.5rem;
-                padding: 2rem;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-                border: 1px solid rgba(255, 255, 255, 0.8);
-                transition: transform 0.2s ease, box-shadow 0.2s ease;
-              "
-              class="chart-card"
-            >
-              <div style="margin-bottom: 1.5rem">
-                <h3
+                <div
                   style="
-                    font-size: 1.25rem;
-                    font-weight: 600;
-                    color: var(--text-primary);
-                    margin-bottom: 0.5rem;
+                    font-size: 0.875rem;
+                    color: #047857;
+                    font-weight: 500;
+                    margin-bottom: 0.75rem;
                   "
                 >
-                  Weekly Performance
-                </h3>
-                <p style="color: var(--text-secondary); font-size: 0.875rem; margin: 0">
-                  Your daily distance totals this week
-                </p>
-              </div>
-
-              <div style="height: 300px">
-                <ngx-charts-bar-vertical
-                  [view]="[450, 300]"
-                  [scheme]="colorScheme"
-                  [results]="weeklyVolume"
-                  [gradient]="true"
-                  [xAxis]="true"
-                  [yAxis]="true"
-                  [legend]="false"
-                  [showXAxisLabel]="false"
-                  [showYAxisLabel]="false"
-                  [barPadding]="8"
-                  [roundEdges]="true"
-                >
-                </ngx-charts-bar-vertical>
-              </div>
-
-              <div style="margin-top: 1rem; text-align: center">
-                <div style="font-size: 0.875rem; color: var(--text-secondary)">
-                  Total:
-                  <span style="font-weight: 600; color: #10b981">{{ getWeeklyTotal() }} km</span>
+                  Health Benefits
+                </div>
+                <div style="color: #065f46; font-size: 0.875rem; line-height: 1.5">
+                  {{ workoutResult.benefits }}
                 </div>
               </div>
             </div>
-
-            <!-- Heart Rate Zones Card -->
-            <div
-              style="
-                flex: 0 0 500px;
-                background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-                border-radius: 1.5rem;
-                padding: 2rem;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-                border: 1px solid rgba(255, 255, 255, 0.8);
-                transition: transform 0.2s ease, box-shadow 0.2s ease;
-              "
-              class="chart-card"
-            >
-              <div style="margin-bottom: 1.5rem">
-                <h3
-                  style="
-                    font-size: 1.25rem;
-                    font-weight: 600;
-                    color: var(--text-primary);
-                    margin-bottom: 0.5rem;
-                  "
-                >
-                  Heart Rate Zones
-                </h3>
-                <p style="color: var(--text-secondary); font-size: 0.875rem; margin: 0">
-                  Training intensity distribution over time
-                </p>
-              </div>
-
-              <div style="height: 300px">
-                <ngx-charts-area-chart-stacked
-                  [view]="[450, 300]"
-                  [scheme]="colorScheme"
-                  [results]="heartRateZones"
-                  [gradient]="true"
-                  [xAxis]="true"
-                  [yAxis]="true"
-                  [legend]="true"
-                  [showXAxisLabel]="false"
-                  [showYAxisLabel]="false"
-                >
-                </ngx-charts-area-chart-stacked>
-              </div>
-            </div>
+            }
           </div>
+          }
 
-          <!-- Scroll Indicators -->
-          <div style="display: flex; justify-content: center; margin-top: 2rem; gap: 0.5rem">
-            <div
-              style="
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                background: #3b82f6;
-                opacity: 0.5;
-                transition: opacity 0.2s ease;
-              "
-              class="scroll-indicator active"
-            ></div>
-            <div
-              style="
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                background: #3b82f6;
-                opacity: 0.3;
-                transition: opacity 0.2s ease;
-              "
-              class="scroll-indicator"
-            ></div>
-            <div
-              style="
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                opacity: 0.3;
-                transition: opacity 0.2s ease;
-              "
-              class="scroll-indicator"
-            ></div>
-            <div
-              style="
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                background: #3b82f6;
-                opacity: 0.3;
-                transition: opacity 0.2s ease;
-              "
-              class="scroll-indicator"
-            ></div>
-          </div>
-        </div>
-
-        <!-- Feature Highlights -->
-        <div class="card" style="padding: 1.5rem">
-          <h3
+          <!-- Workout Analytics Dashboard -->
+          <div
             style="
-              font-size: 1.25rem;
-              font-weight: 600;
-              color: var(--text-primary);
-              margin-bottom: 1rem;
-              display: flex;
-              align-items: center;
+              background: white;
+              border-radius: 1.5rem;
+              padding: 2rem;
+              box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+              border: 1px solid rgba(255, 255, 255, 0.8);
             "
           >
-            <span style="margin-right: 0.5rem">⚡</span>
-            AI-Powered Features
-          </h3>
+            <div style="text-align: center; margin-bottom: 2rem">
+              <h3 style="font-size: 2rem; font-weight: 700; color: #1f2937; margin-bottom: 0.5rem">
+                Your Fitness Journey
+              </h3>
+              <p style="color: #6b7280; font-size: 1rem">
+                Track your progress with beautiful, interactive visualizations.
+              </p>
+            </div>
 
-          <div style="display: flex; flex-direction: column; gap: 0.75rem">
-            <div class="feature-card">
-              <div class="feature-icon gradient-blue">
-                <span>🧠</span>
-              </div>
-              <div>
-                <div style="font-weight: 500; color: var(--text-primary); margin-bottom: 0.25rem">
-                  Spiking Neural Networks
+            <!-- Horizontal Scrollable Charts -->
+            <div
+              style="
+                display: flex;
+                gap: 2rem;
+                overflow-x: auto;
+                padding: 0 1rem;
+                scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+              "
+              class="chart-carousel"
+            >
+              <!-- VO2 Max Progress Card -->
+              <div
+                style="
+                  flex: 0 0 450px;
+                  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+                  border-radius: 1rem;
+                  padding: 1.5rem;
+                  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.8);
+                  transition: transform 0.2s ease;
+                "
+                class="chart-card"
+              >
+                <div style="margin-bottom: 1rem">
+                  <h4
+                    style="
+                      font-size: 1.125rem;
+                      font-weight: 600;
+                      color: #1f2937;
+                      margin-bottom: 0.25rem;
+                    "
+                  >
+                    VO₂ Max Progress
+                  </h4>
+                  <p style="color: #6b7280; font-size: 0.75rem; margin: 0">
+                    Your aerobic fitness improvement
+                  </p>
                 </div>
-                <div style="font-size: 0.875rem; color: var(--text-secondary)">
-                  Advanced temporal analysis for accurate VO2 max predictions
+
+                <div style="height: 250px">
+                  <ngx-charts-line-chart
+                    [view]="[400, 250]"
+                    [scheme]="colorScheme"
+                    [results]="vo2MaxTrend"
+                    [gradient]="true"
+                    [xAxis]="true"
+                    [yAxis]="true"
+                    [legend]="false"
+                    [showXAxisLabel]="false"
+                    [showYAxisLabel]="false"
+                  >
+                  </ngx-charts-line-chart>
+                </div>
+
+                <div style="margin-top: 0.75rem; text-align: center">
+                  <div style="font-size: 0.75rem; color: #6b7280">
+                    Latest:
+                    <span style="font-weight: 600; color: #3b82f6"
+                      >{{ vo2MaxTrend[vo2MaxTrend.length - 1]?.value }} mL/kg/min</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Activity Breakdown Card -->
+              <div
+                style="
+                  flex: 0 0 450px;
+                  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+                  border-radius: 1rem;
+                  padding: 1.5rem;
+                  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.8);
+                  transition: transform 0.2s ease;
+                "
+                class="chart-card"
+              >
+                <div style="margin-bottom: 1rem">
+                  <h4
+                    style="
+                      font-size: 1.125rem;
+                      font-weight: 600;
+                      color: #1f2937;
+                      margin-bottom: 0.25rem;
+                    "
+                  >
+                    Activity Breakdown
+                  </h4>
+                  <p style="color: #6b7280; font-size: 0.75rem; margin: 0">
+                    Your workout type distribution
+                  </p>
+                </div>
+
+                <div
+                  style="height: 250px; display: flex; align-items: center; justify-content: center"
+                >
+                  <ngx-charts-pie-chart
+                    [view]="[300, 250]"
+                    [scheme]="colorScheme"
+                    [results]="activityDistribution"
+                    [legend]="true"
+                    [labels]="false"
+                    [doughnut]="true"
+                  >
+                  </ngx-charts-pie-chart>
+                </div>
+              </div>
+
+              <!-- Weekly Performance Card -->
+              <div
+                style="
+                  flex: 0 0 450px;
+                  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+                  border-radius: 1rem;
+                  padding: 1.5rem;
+                  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.8);
+                  transition: transform 0.2s ease;
+                "
+                class="chart-card"
+              >
+                <div style="margin-bottom: 1rem">
+                  <h4
+                    style="
+                      font-size: 1.125rem;
+                      font-weight: 600;
+                      color: #1f2937;
+                      margin-bottom: 0.25rem;
+                    "
+                  >
+                    Weekly Performance
+                  </h4>
+                  <p style="color: #6b7280; font-size: 0.75rem; margin: 0">
+                    Your daily distance totals
+                  </p>
+                </div>
+
+                <div style="height: 250px">
+                  <ngx-charts-bar-vertical
+                    [view]="[400, 250]"
+                    [scheme]="colorScheme"
+                    [results]="weeklyVolume"
+                    [gradient]="true"
+                    [xAxis]="true"
+                    [yAxis]="true"
+                    [legend]="false"
+                    [showXAxisLabel]="false"
+                    [showYAxisLabel]="false"
+                    [barPadding]="8"
+                    [roundEdges]="true"
+                  >
+                  </ngx-charts-bar-vertical>
+                </div>
+
+                <div style="margin-top: 0.75rem; text-align: center">
+                  <div style="font-size: 0.75rem; color: #6b7280">
+                    Total:
+                    <span style="font-weight: 600; color: #10b981">{{ getWeeklyTotal() }} km</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Heart Rate Zones Card -->
+              <div
+                style="
+                  flex: 0 0 450px;
+                  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+                  border-radius: 1rem;
+                  padding: 1.5rem;
+                  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.8);
+                  transition: transform 0.2s ease;
+                "
+                class="chart-card"
+              >
+                <div style="margin-bottom: 1rem">
+                  <h4
+                    style="
+                      font-size: 1.125rem;
+                      font-weight: 600;
+                      color: #1f2937;
+                      margin-bottom: 0.25rem;
+                    "
+                  >
+                    Heart Rate Zones
+                  </h4>
+                  <p style="color: #6b7280; font-size: 0.75rem; margin: 0">
+                    Training intensity distribution
+                  </p>
+                </div>
+
+                <div style="height: 250px">
+                  <ngx-charts-area-chart-stacked
+                    [view]="[400, 250]"
+                    [scheme]="colorScheme"
+                    [results]="heartRateZones"
+                    [gradient]="true"
+                    [xAxis]="true"
+                    [yAxis]="true"
+                    [legend]="true"
+                    [showXAxisLabel]="false"
+                    [showYAxisLabel]="false"
+                  >
+                  </ngx-charts-area-chart-stacked>
                 </div>
               </div>
             </div>
 
-            <div class="feature-card">
-              <div class="feature-icon gradient-green">
-                <span>🗄️</span>
-              </div>
-              <div>
-                <div style="font-weight: 500; color: var(--text-primary); margin-bottom: 0.25rem">
-                  Vector Database
-                </div>
-                <div style="font-size: 0.875rem; color: var(--text-secondary)">
-                  ChromaDB for efficient fitness data storage and retrieval
-                </div>
-              </div>
-            </div>
-
-            <div class="feature-card">
-              <div class="feature-icon gradient-purple">
-                <span>🔌</span>
-              </div>
-              <div>
-                <div style="font-weight: 500; color: var(--text-primary); margin-bottom: 0.25rem">
-                  MCP Integration
-                </div>
-                <div style="font-size: 0.875rem; color: var(--text-secondary)">
-                  External AI tools for enhanced fitness insights
-                </div>
-              </div>
+            <!-- Scroll Indicators -->
+            <div style="display: flex; justify-content: center; margin-top: 2rem; gap: 0.5rem">
+              <div
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #3b82f6;
+                  opacity: 0.5;
+                  transition: opacity 0.2s ease;
+                "
+                class="scroll-indicator active"
+              ></div>
+              <div
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #3b82f6;
+                  opacity: 0.3;
+                  transition: opacity 0.2s ease;
+                "
+                class="scroll-indicator"
+              ></div>
+              <div
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  opacity: 0.3;
+                  transition: opacity 0.2s ease;
+                "
+                class="scroll-indicator"
+              ></div>
+              <div
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #3b82f6;
+                  opacity: 0.3;
+                  transition: opacity 0.2s ease;
+                "
+                class="scroll-indicator"
+              ></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    }
-  </div>
+  </section>
+  }
 </main>
