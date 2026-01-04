@@ -1,4 +1,5 @@
 # Build stage
+# Build stage
 FROM node:22-alpine AS builder
 
 # Set working directory
@@ -19,6 +20,13 @@ RUN npm run build
 # Production stage
 FROM node:22-alpine AS production
 
+# Install dumb-init for proper signal handling
+RUN apk add --no-cache dumb-init
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
+
 # Set working directory
 WORKDIR /app
 
@@ -31,14 +39,13 @@ RUN npm ci --only=production && npm cache clean --force
 # Copy built application from builder stage
 COPY --from=builder /app/dist ./dist
 
-# Create non-root user
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nextjs -u 1001
-
-USER nextjs
+# Change ownership to non-root user
+RUN chown -R nodejs:nodejs /app
+USER nodejs
 
 # Expose port
 EXPOSE 3000
 
-# Start the application
+# Use dumb-init to handle signals properly
+ENTRYPOINT ["dumb-init", "--"]
 CMD ["node", "dist/index.js"]

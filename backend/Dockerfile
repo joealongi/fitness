@@ -1,4 +1,4 @@
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
@@ -19,6 +19,9 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Install gunicorn globally for production
+RUN pip install --no-cache-dir gunicorn
+
 # Copy application code
 COPY . .
 
@@ -31,4 +34,4 @@ USER app
 RUN python manage.py collectstatic --noinput
 
 # Run migrations and start server
-CMD python manage.py migrate && gunicorn fitness_backend.wsgi:application --bind 0.0.0.0:$PORT
+CMD ["sh", "-c", "python manage.py migrate && gunicorn fitness_backend.wsgi:application --bind 0.0.0.0:$PORT"]
