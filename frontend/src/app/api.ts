@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class Api {
-  private baseUrl = 'http://localhost:8000/api/';
+  private baseUrl = (import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/';
 
   constructor(private http: HttpClient) {}
 

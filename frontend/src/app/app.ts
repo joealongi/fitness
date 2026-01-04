@@ -1,12 +1,11 @@
 import { Component, signal, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { DecimalPipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Api } from './api';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, DecimalPipe, CommonModule, FormsModule],
+  imports: [DecimalPipe, CommonModule, FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
