@@ -36,10 +36,15 @@ def estimate_vo2max_from_workout(workout, profile):
     if workout.distance and workout.activity_type == 'run':
         distance_m = workout.distance * 1000  # km to m
         vo2max = estimate_vo2max_cooper(distance_m, workout.duration, profile.gender)
-    elif workout.heart_rate_max and profile.age:
-        # Estimate max HR as 208 - 0.7 * age
-        estimated_max_hr = 208 - 0.7 * profile.age
+    elif workout.max_heart_rate and profile.age:
+        # Use actual max HR from workout if available
+        max_hr = workout.max_heart_rate
         # Assume resting HR 70 if not available
+        resting_hr = 70
+        vo2max = estimate_vo2max_heart_rate(max_hr, resting_hr)
+    elif profile.age:
+        # Estimate max HR as 208 - 0.7 * age if no workout HR data
+        estimated_max_hr = 208 - 0.7 * profile.age
         resting_hr = 70
         vo2max = estimate_vo2max_heart_rate(estimated_max_hr, resting_hr)
     else:

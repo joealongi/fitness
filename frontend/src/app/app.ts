@@ -1,12 +1,12 @@
 import { Component, signal, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { JsonPipe, DecimalPipe } from '@angular/common';
+import { DecimalPipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Api } from './api';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, JsonPipe, DecimalPipe, FormsModule],
+  imports: [RouterOutlet, DecimalPipe, CommonModule, FormsModule],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
@@ -41,5 +41,9 @@ export class App implements OnInit {
     this.api.postWorkout(this.workout).subscribe((result) => {
       this.workoutResult = result;
     });
+  }
+
+  getCurrentYear(): number {
+    return new Date().getFullYear();
   }
 }

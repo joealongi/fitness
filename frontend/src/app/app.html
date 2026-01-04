@@ -1,250 +1,314 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-<style>
-  :host {
-    --bright-blue: oklch(51.01% 0.274 263.83);
-    --electric-violet: oklch(53.18% 0.28 296.97);
-    --french-violet: oklch(47.66% 0.246 305.88);
-    --vivid-pink: oklch(69.02% 0.277 332.77);
-    --hot-red: oklch(61.42% 0.238 15.34);
-    --orange-red: oklch(63.32% 0.24 31.68);
-
-    --gray-900: oklch(19.37% 0.006 300.98);
-    --gray-700: oklch(36.98% 0.014 302.71);
-    --gray-400: oklch(70.9% 0.015 304.04);
-
-    --red-to-pink-to-purple-vertical-gradient: linear-gradient(
-      180deg,
-      var(--orange-red) 0%,
-      var(--vivid-pink) 50%,
-      var(--electric-violet) 100%
-    );
-
-    --red-to-pink-to-purple-horizontal-gradient: linear-gradient(
-      90deg,
-      var(--orange-red) 0%,
-      var(--vivid-pink) 50%,
-      var(--electric-violet) 100%
-    );
-
-    --pill-accent: var(--bright-blue);
-
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
-      sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  h1 {
-    font-size: 3.125rem;
-    color: var(--gray-900);
-    font-weight: 500;
-    line-height: 100%;
-    letter-spacing: -0.125rem;
-    margin: 0;
-    font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-      Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
-  }
-
-  p {
-    margin: 0;
-    color: var(--gray-700);
-  }
-
-  main {
-    width: 100%;
-    min-height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+<main
+  style="
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     padding: 1rem;
-    box-sizing: inherit;
-    position: relative;
-  }
+  "
+>
+  <div class="container">
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 2rem">
+      <h1
+        style="
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: var(--text-primary);
+          margin-bottom: 0.5rem;
+        "
+      >
+        {{ title() }}
+      </h1>
+      <p style="font-size: 1.125rem; color: var(--text-secondary)">
+        Log your workout to estimate VO2 max and learn its benefits.
+      </p>
+    </div>
 
-  .angular-logo {
-    max-width: 9.2rem;
-  }
+    <div class="grid grid-cols-2">
+      <!-- Workout Form -->
+      <div class="card" style="padding: 1.5rem; margin-bottom: 2rem">
+        <h2
+          style="
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+          "
+        >
+          Log Workout
+        </h2>
 
-  .content {
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    max-width: 700px;
-    margin-bottom: 3rem;
-  }
+        <form
+          (ngSubmit)="submitWorkout()"
+          style="display: flex; flex-direction: column; gap: 1.5rem"
+        >
+          <!-- Activity Type -->
+          <div>
+            <label class="label" for="activity_type">Activity Type</label>
+            <select
+              [(ngModel)]="workout.activity_type"
+              name="activity_type"
+              id="activity_type"
+              class="select"
+            >
+              <option value="run">🏃 Run</option>
+              <option value="cycle">🚴 Cycle</option>
+              <option value="walk">🚶 Walk</option>
+            </select>
+          </div>
 
-  .content h1 {
-    margin-top: 1.75rem;
-  }
+          <!-- Duration -->
+          <div>
+            <label class="label" for="duration">Duration (minutes)</label>
+            <input
+              type="number"
+              [(ngModel)]="workout.duration"
+              name="duration"
+              id="duration"
+              required
+              class="input"
+              placeholder="30"
+            />
+          </div>
 
-  .content p {
-    margin-top: 1.5rem;
-  }
+          <!-- Distance -->
+          <div>
+            <label class="label" for="distance">Distance (km)</label>
+            <input
+              type="number"
+              step="0.1"
+              [(ngModel)]="workout.distance"
+              name="distance"
+              id="distance"
+              class="input"
+              placeholder="5.0"
+            />
+          </div>
 
-  .divider {
-    width: 1px;
-    background: var(--red-to-pink-to-purple-vertical-gradient);
-    margin-inline: 0.5rem;
-  }
+          <!-- Heart Rate Fields -->
+          <div class="grid" style="grid-template-columns: 1fr 1fr">
+            <div>
+              <label class="label" for="heart_rate_avg">Avg Heart Rate (bpm)</label>
+              <input
+                type="number"
+                [(ngModel)]="workout.heart_rate_avg"
+                name="heart_rate_avg"
+                id="heart_rate_avg"
+                class="input"
+                placeholder="150"
+              />
+            </div>
+            <div>
+              <label class="label" for="heart_rate_max">Max Heart Rate (bpm)</label>
+              <input
+                type="number"
+                [(ngModel)]="workout.heart_rate_max"
+                name="heart_rate_max"
+                id="heart_rate_max"
+                class="input"
+                placeholder="180"
+              />
+            </div>
+          </div>
 
-  .pill-group {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    flex-wrap: wrap;
-    gap: 1.25rem;
-  }
+          <!-- Intensity -->
+          <div>
+            <label class="label" for="intensity">Intensity</label>
+            <select [(ngModel)]="workout.intensity" name="intensity" id="intensity" class="select">
+              <option value="low">Low</option>
+              <option value="moderate">Moderate</option>
+              <option value="high">High</option>
+            </select>
+          </div>
 
-  .pill {
-    display: flex;
-    align-items: center;
-    --pill-accent: var(--bright-blue);
-    background: color-mix(in srgb, var(--pill-accent) 5%, transparent);
-    color: var(--pill-accent);
-    padding-inline: 0.75rem;
-    padding-block: 0.375rem;
-    border-radius: 2.75rem;
-    border: 0;
-    transition: background 0.3s ease;
-    font-family: var(--inter-font);
-    font-size: 0.875rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 1.4rem;
-    letter-spacing: -0.00875rem;
-    text-decoration: none;
-    white-space: nowrap;
-  }
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem 1rem">
+            🚀 Log Workout
+          </button>
+        </form>
+      </div>
 
-  .pill:hover {
-    background: color-mix(in srgb, var(--pill-accent) 15%, transparent);
-  }
+      <!-- Results Panel -->
+      <div style="display: flex; flex-direction: column; gap: 1.5rem">
+        <!-- VO2 Max Results -->
+        <div *ngIf="workoutResult" class="card" style="padding: 1.5rem">
+          <h3
+            style="
+              font-size: 1.25rem;
+              font-weight: 600;
+              color: var(--text-primary);
+              margin-bottom: 1rem;
+              display: flex;
+              align-items: center;
+            "
+          >
+            <span style="margin-right: 0.5rem">📊</span>
+            Workout Results
+          </h3>
 
-  .pill-group .pill:nth-child(6n + 1) {
-    --pill-accent: var(--bright-blue);
-  }
-  .pill-group .pill:nth-child(6n + 2) {
-    --pill-accent: var(--electric-violet);
-  }
-  .pill-group .pill:nth-child(6n + 3) {
-    --pill-accent: var(--french-violet);
-  }
+          <div style="display: flex; flex-direction: column; gap: 1rem">
+            <div
+              style="
+                background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+                padding: 1rem;
+                border-radius: var(--border-radius);
+                border: 1px solid #bfdbfe;
+              "
+            >
+              <div
+                style="
+                  font-size: 0.875rem;
+                  color: var(--primary-color);
+                  font-weight: 500;
+                  margin-bottom: 0.25rem;
+                "
+              >
+                Estimated VO2 Max
+              </div>
+              <div style="font-size: 1.875rem; font-weight: 700; color: #1e40af">
+                {{
+                  workoutResult.vo2max_estimate
+                    ? (workoutResult.vo2max_estimate | number : '1.1-1')
+                    : 'N/A'
+                }}
+                <span style="font-size: 1.125rem; color: var(--primary-color)">mL/kg/min</span>
+              </div>
+            </div>
 
-  .pill-group .pill:nth-child(6n + 4),
-  .pill-group .pill:nth-child(6n + 5),
-  .pill-group .pill:nth-child(6n + 6) {
-    --pill-accent: var(--hot-red);
-  }
+            <div
+              style="
+                background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+                padding: 1rem;
+                border-radius: var(--border-radius);
+                border: 1px solid #bbf7d0;
+              "
+            >
+              <div
+                style="
+                  font-size: 0.875rem;
+                  color: var(--success-color);
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+              >
+                Health Benefits
+              </div>
+              <div style="color: #166534; font-size: 0.875rem; line-height: 1.4">
+                {{ workoutResult.benefits }}
+              </div>
+            </div>
+          </div>
+        </div>
 
-  .pill-group svg {
-    margin-inline-start: 0.25rem;
-  }
+        <!-- API Status -->
+        <div class="card" style="padding: 1.5rem">
+          <h3
+            style="
+              font-size: 1.25rem;
+              font-weight: 600;
+              color: var(--text-primary);
+              margin-bottom: 1rem;
+              display: flex;
+              align-items: center;
+            "
+          >
+            <span style="margin-right: 0.5rem">🔗</span>
+            System Status
+          </h3>
 
-  .social-links {
-    display: flex;
-    align-items: center;
-    gap: 0.73rem;
-    margin-top: 1.5rem;
-  }
+          <div style="display: flex; flex-direction: column; gap: 0.75rem">
+            <div *ngIf="healthData" class="status-indicator status-success">
+              <div class="status-dot success"></div>
+              <span>Backend API - Connected</span>
+            </div>
 
-  .social-links path {
-    transition: fill 0.3s ease;
-    fill: var(--gray-400);
-  }
+            <div *ngIf="norseData" class="status-indicator status-connected">
+              <div class="status-dot connected"></div>
+              <span>Norse SNN - Active</span>
+            </div>
+          </div>
+        </div>
 
-  .social-links a:hover svg path {
-    fill: var(--gray-900);
-  }
+        <!-- Feature Highlights -->
+        <div class="card" style="padding: 1.5rem">
+          <h3
+            style="
+              font-size: 1.25rem;
+              font-weight: 600;
+              color: var(--text-primary);
+              margin-bottom: 1rem;
+              display: flex;
+              align-items: center;
+            "
+          >
+            <span style="margin-right: 0.5rem">⚡</span>
+            AI-Powered Features
+          </h3>
 
-  @media screen and (max-width: 650px) {
-    .content {
-      flex-direction: column;
-      width: max-content;
-    }
+          <div style="display: flex; flex-direction: column; gap: 0.75rem">
+            <div class="feature-card">
+              <div class="feature-icon gradient-blue">
+                <span>🧠</span>
+              </div>
+              <div>
+                <div style="font-weight: 500; color: var(--text-primary); margin-bottom: 0.25rem">
+                  Spiking Neural Networks
+                </div>
+                <div style="font-size: 0.875rem; color: var(--text-secondary)">
+                  Advanced temporal analysis for accurate VO2 max predictions
+                </div>
+              </div>
+            </div>
 
-    .divider {
-      height: 1px;
-      width: 100%;
-      background: var(--red-to-pink-to-purple-horizontal-gradient);
-      margin-block: 1.5rem;
-    }
-  }
-</style>
+            <div class="feature-card">
+              <div class="feature-icon gradient-green">
+                <span>🗄️</span>
+              </div>
+              <div>
+                <div style="font-weight: 500; color: var(--text-primary); margin-bottom: 0.25rem">
+                  Vector Database
+                </div>
+                <div style="font-size: 0.875rem; color: var(--text-secondary)">
+                  ChromaDB for efficient fitness data storage and retrieval
+                </div>
+              </div>
+            </div>
 
-<main>
-  <h1>{{ title() }}</h1>
-  <p>Log your workout to estimate VO2 max and learn its benefits.</p>
+            <div class="feature-card">
+              <div class="feature-icon gradient-purple">
+                <span>🔌</span>
+              </div>
+              <div>
+                <div style="font-weight: 500; color: var(--text-primary); margin-bottom: 0.25rem">
+                  MCP Integration
+                </div>
+                <div style="font-size: 0.875rem; color: var(--text-secondary)">
+                  External AI tools for enhanced fitness insights
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <form (ngSubmit)="submitWorkout()">
-    <label
-      >Activity Type:
-      <select [(ngModel)]="workout.activity_type" name="activity_type">
-        <option value="run">Run</option>
-        <option value="cycle">Cycle</option>
-        <option value="walk">Walk</option>
-      </select> </label
-    ><br />
-
-    <label
-      >Duration (minutes):
-      <input type="number" [(ngModel)]="workout.duration" name="duration" required /> </label
-    ><br />
-
-    <label
-      >Distance (km):
-      <input type="number" step="0.1" [(ngModel)]="workout.distance" name="distance" /> </label
-    ><br />
-
-    <label
-      >Avg Heart Rate (bpm):
-      <input type="number" [(ngModel)]="workout.heart_rate_avg" name="heart_rate_avg" /> </label
-    ><br />
-
-    <label
-      >Max Heart Rate (bpm):
-      <input type="number" [(ngModel)]="workout.heart_rate_max" name="heart_rate_max" /> </label
-    ><br />
-
-    <label
-      >Intensity:
-      <select [(ngModel)]="workout.intensity" name="intensity">
-        <option value="low">Low</option>
-        <option value="moderate">Moderate</option>
-        <option value="high">High</option>
-      </select> </label
-    ><br />
-
-    <button type="submit">Log Workout</button>
-  </form>
-
-  <div *ngIf="workoutResult">
-    <h2>Workout Logged</h2>
-    <p>
-      Estimated VO2 Max:
-      {{
-        workoutResult.vo2max_estimate ? (workoutResult.vo2max_estimate | number : '1.1-1') : 'N/A'
-      }}
-      mL/kg/min
-    </p>
-    <p>{{ workoutResult.benefits }}</p>
-  </div>
-
-  <div *ngIf="healthData">
-    <h2>API Health</h2>
-    <pre>{{ healthData | json }}</pre>
-  </div>
-  <div *ngIf="norseData">
-    <h2>Norse SNN Test</h2>
-    <pre>{{ norseData | json }}</pre>
+    <!-- Footer -->
+    <footer
+      style="
+        margin-top: 3rem;
+        padding: 2rem 0;
+        border-top: 1px solid var(--border-color);
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      "
+    >
+      <div class="container" style="text-align: center">
+        <div style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem">
+          Made with 💪 grit by Joe Alongi • Built with ⚡ speed by Cline and 🐆 Grok
+        </div>
+        <div style="font-size: 0.75rem; color: var(--text-secondary)">
+          © {{ getCurrentYear() }} Airwave. All rights reserved.
+        </div>
+      </div>
+    </footer>
   </div>
 </main>
 

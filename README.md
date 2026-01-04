@@ -17,7 +17,8 @@ Airwave is a comprehensive fitness application that estimates VO2 max from worko
 
 - **Angular 21**: Latest modern reactive web framework
 - **TypeScript**: Type-safe development
-- **SCSS**: Advanced styling
+- **Spartan CSS**: Custom utility-first CSS framework inspired by modern design principles
+- **Responsive Design**: Mobile-first approach with clean, accessible components
 
 ### Backend
 
@@ -118,17 +119,48 @@ npm run build
 
 ## 🚀 Usage
 
+### Getting Started
+
+1. **Start the Backend:**
+
+   ```bash
+   cd backend && source venv/bin/activate && python manage.py runserver
+   ```
+
+2. **Start the Frontend:**
+
+   ```bash
+   cd frontend && npm start
+   ```
+
+3. **Open your browser** to `http://localhost:4200`
+
 ### Logging Workouts
 
-1. Open the Airwave application in your browser
-2. Fill out the workout form:
-   - Activity type (run, cycle, walk)
+1. **Fill out the workout form:**
+
+   - Activity type (🏃 Run, 🚴 Cycle, 🚶 Walk)
    - Duration in minutes
    - Distance in kilometers
    - Heart rate data (optional)
    - Intensity level
-3. Click "Log Workout"
-4. View your estimated VO2 max and personalized benefits
+
+2. **Click "🚀 Log Workout"**
+
+3. **View your results:**
+   - Estimated VO2 max with gradient display
+   - Personalized health benefits
+   - System status indicators
+   - AI feature highlights
+
+### Spartan UI Features
+
+- **Clean Design**: Minimal, accessible interface following modern design principles
+- **Responsive Layout**: Works perfectly on desktop and mobile devices
+- **Status Indicators**: Real-time connection status for backend and AI services
+- **Gradient Accents**: Beautiful color gradients for visual hierarchy
+- **Card-based Layout**: Organized content in clean, shadow-bordered cards
+- **Interactive Elements**: Hover effects and smooth transitions
 
 ### API Endpoints
 
@@ -224,6 +256,81 @@ Add to your MCP settings file:
   }
 }
 ```
+
+## 🔒 Security & Production Deployment
+
+### Environment Setup
+
+1. **Copy environment template:**
+
+```bash
+cp .env.example .env
+```
+
+2. **Generate secure secret key:**
+
+```bash
+python -c "import secrets; print(secrets.token_urlsafe(32))"
+```
+
+3. **Update `.env` with production values:**
+
+```bash
+# Use strong, unique values for production
+SECRET_KEY=your-generated-secret-key
+DEBUG=False
+ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
+```
+
+### Security Checklist
+
+- ✅ **Environment Variables**: Sensitive data moved to `.env`
+- ✅ **DEBUG Disabled**: Set to `False` in production
+- ✅ **Secure Headers**: XSS protection, content sniffing prevention
+- ✅ **HTTPS Enforcement**: SSL redirect and HSTS enabled
+- ✅ **CSRF Protection**: Trusted origins configured
+- ✅ **Rate Limiting**: API throttling to prevent abuse
+- ✅ **Logging**: Error logging for monitoring
+- ✅ **CORS Security**: Restricted to allowed domains
+- ✅ **Data Encryption**: AES-256 encryption for sensitive health data
+
+### Data Encryption Setup
+
+Airwave uses **AES-256 encryption** to protect sensitive health and personal data at the database level.
+
+#### Encrypted Fields
+
+- **User Profile**: Age, weight, height (PII and sensitive health data)
+- **Workout Data**: Heart rate metrics (biometric data)
+
+#### Encryption Key Setup
+
+1. **Generate encryption key:**
+
+```bash
+python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())"
+```
+
+2. **Add to environment variables:**
+
+```bash
+# .env file
+FIELD_ENCRYPTION_KEY=your-generated-44-character-fernet-key-here
+```
+
+3. **Key Requirements:**
+
+- Must be 32 bytes (44 characters when base64 encoded)
+- Use different keys for development and production
+- Store securely and backup encryption keys
+- Never commit keys to version control
+
+#### Security Benefits
+
+- **At Rest Protection**: Data encrypted in database using Fernet (AES-128-CBC + HMAC)
+- **Regulatory Compliance**: HIPAA/GDPR-ready for health applications
+- **Zero Knowledge**: Data encrypted before storage, decrypted only when accessed
+- **Key Rotation**: Support for key rotation without data migration
 
 ## 🌐 Deployment
 
