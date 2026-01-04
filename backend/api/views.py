@@ -8,15 +8,90 @@ from django.conf import settings
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework_simplejwt.tokens import RefreshToken
 import stripe
 import json
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from .models import Subscription, Payment, UserProfile, Workout
 from .vo2max_utils import estimate_vo2max_from_workout
 
 # Initialize Stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
+class RegisterView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        data = request.data
+        username = data.get('username')
+        email = data.get('email')
+        password = data.get('password')
+
+        if not username or not email or not password:
+            return Response({'error': 'Username, email, and password are required'}, status=400)
+
+        if User.objects.filter(username=username).exists():
+            return Response({'error': 'Username already exists'}, status=400)
+
+        if User.objects.filter(email=email).exists():
+            return Response({'error': 'Email already exists'}, status=400)
+
+        user = User.objects.create_user(username=username, email=email, password=password)
+
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email
+            },
+            'tokens': {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }
+        })
+
+class LoginView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        data = request.data
+        username = data.get('username')
+        password = data.get('password')
+
+        if not username or not password:
+            return Response({'error': 'Username and password are required'}, status=400)
+
+        user = authenticate(username=username, password=password)
+        if user is None:
+            return Response({'error': 'Invalid credentials'}, status=401)
+
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email
+            },
+            'tokens': {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            }
+        })
+
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response({
+            'id': user.id,
+            'username': user.username,
+            'email': user.email,
+            'date_joined': user.date_joined
+        })
 
 class HealthCheckView(APIView):
     def get(self, request):
@@ -51,23 +126,12 @@ class NorseVO2View(APIView):
         })
 
 class WorkoutView(APIView):
-    # Temporarily removed authentication for demo - add back later if needed
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         try:
             data = request.data
-
-            # For demo purposes, create a dummy user if not authenticated
-            # In production, you'd want proper authentication
-            if request.user.is_authenticated:
-                user = request.user
-            else:
-                # Create or get a demo user for testing
-                user, created = User.objects.get_or_create(
-                    username='demo_user',
-                    defaults={'email': 'demo@example.com'}
-                )
+            user = request.user
 
             # Get or create user profile
             profile, created = UserProfile.objects.get_or_create(

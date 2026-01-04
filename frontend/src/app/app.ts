@@ -1,7 +1,8 @@
-import { Component, signal, inject, OnInit } from '@angular/core';
+import { Component, signal, inject, OnInit, OnDestroy } from '@angular/core';
 import { DecimalPipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Api } from './api';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +10,24 @@ import { Api } from './api';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App implements OnInit {
+export class App implements OnInit, OnDestroy {
   protected readonly title = signal('Airwave');
   private api = inject(Api);
+  private subscriptions: Subscription[] = [];
+
+  // Authentication state
+  isAuthenticated = false;
+  currentUser: any = null;
+
+  // Login form
+  loginData = { username: '', password: '' };
+  loginLoading = false;
+  loginError = '';
+
+  // Register form
+  registerData = { username: '', email: '', password: '' };
+  registerLoading = false;
+  registerError = '';
 
   healthData: any = null;
   norseData: any = null;
@@ -28,6 +44,16 @@ export class App implements OnInit {
   };
 
   ngOnInit() {
+    // Subscribe to authentication state changes
+    this.subscriptions.push(
+      this.api.isAuthenticated$.subscribe((isAuth) => {
+        this.isAuthenticated = isAuth;
+      }),
+      this.api.currentUser$.subscribe((user) => {
+        this.currentUser = user;
+      })
+    );
+
     this.api.getHealth().subscribe({
       next: (data) => {
         this.healthData = data;
@@ -46,6 +72,53 @@ export class App implements OnInit {
         this.norseData = null;
       },
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
+  login() {
+    if (!this.loginData.username || !this.loginData.password) return;
+
+    this.loginLoading = true;
+    this.loginError = '';
+
+    this.api.login(this.loginData.username, this.loginData.password).subscribe({
+      next: () => {
+        this.loginLoading = false;
+        this.loginData = { username: '', password: '' };
+      },
+      error: (error) => {
+        this.loginLoading = false;
+        this.loginError = error.error?.error || 'Login failed';
+      },
+    });
+  }
+
+  register() {
+    if (!this.registerData.username || !this.registerData.email || !this.registerData.password)
+      return;
+
+    this.registerLoading = true;
+    this.registerError = '';
+
+    this.api
+      .register(this.registerData.username, this.registerData.email, this.registerData.password)
+      .subscribe({
+        next: () => {
+          this.registerLoading = false;
+          this.registerData = { username: '', email: '', password: '' };
+        },
+        error: (error) => {
+          this.registerLoading = false;
+          this.registerError = error.error?.error || 'Registration failed';
+        },
+      });
+  }
+
+  logout() {
+    this.api.logout();
   }
 
   submitWorkout() {
