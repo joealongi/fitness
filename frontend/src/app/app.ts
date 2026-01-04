@@ -130,42 +130,55 @@ export class App implements OnInit, OnDestroy {
   workoutHistory: any[] = [];
 
   ngOnInit() {
-    // Subscribe to authentication state changes
-    this.subscriptions.push(
-      this.api.isAuthenticated$.subscribe((isAuth) => {
-        this.isAuthenticated = isAuth;
-        if (isAuth) {
-          this.loadWorkoutHistory();
-          this.updateChartsFromHistory();
-        }
-      }),
-      this.api.currentUser$.subscribe((user) => {
-        this.currentUser = user;
-      })
-    );
+    // Subscribe to authentication state changes (only if observables exist)
+    if (this.api.isAuthenticated$) {
+      this.subscriptions.push(
+        this.api.isAuthenticated$.subscribe((isAuth) => {
+          this.isAuthenticated = isAuth;
+          if (isAuth) {
+            this.loadWorkoutHistory();
+            this.updateChartsFromHistory();
+          }
+        })
+      );
+    }
+
+    if (this.api.currentUser$) {
+      this.subscriptions.push(
+        this.api.currentUser$.subscribe((user) => {
+          this.currentUser = user;
+        })
+      );
+    }
 
     // Load workout history on app start
     this.loadWorkoutHistory();
     this.updateChartsFromHistory();
 
-    this.api.getHealth().subscribe({
-      next: (data) => {
-        this.healthData = data;
-      },
-      error: (error) => {
-        console.warn('Backend health check failed:', error);
-        this.healthData = null;
-      },
-    });
-    this.api.getNorseTest().subscribe({
-      next: (data) => {
-        this.norseData = data;
-      },
-      error: (error) => {
-        console.warn('Norse SNN check failed:', error);
-        this.norseData = null;
-      },
-    });
+    // Only subscribe to health checks if methods exist (skip in tests)
+    if (this.api.getHealth) {
+      this.api.getHealth().subscribe({
+        next: (data) => {
+          this.healthData = data;
+        },
+        error: (error) => {
+          console.warn('Backend health check failed:', error);
+          this.healthData = null;
+        },
+      });
+    }
+
+    if (this.api.getNorseTest) {
+      this.api.getNorseTest().subscribe({
+        next: (data) => {
+          this.norseData = data;
+        },
+        error: (error) => {
+          console.warn('Norse SNN check failed:', error);
+          this.norseData = null;
+        },
+      });
+    }
   }
 
   ngOnDestroy() {
