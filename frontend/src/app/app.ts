@@ -28,13 +28,12 @@ export class App implements OnInit {
   };
 
   ngOnInit() {
-    // Temporarily disable API calls to prevent potential errors
-    // this.api.getHealth().subscribe((data) => {
-    //   this.healthData = data;
-    // });
-    // this.api.getNorseTest().subscribe((data) => {
-    //   this.norseData = data;
-    // });
+    this.api.getHealth().subscribe((data) => {
+      this.healthData = data;
+    });
+    this.api.getNorseTest().subscribe((data) => {
+      this.norseData = data;
+    });
   }
 
   submitWorkout() {
