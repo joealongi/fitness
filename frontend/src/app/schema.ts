@@ -117,8 +117,17 @@ export type Payment = z.infer<typeof paymentSchema>;
 export type NewPayment = z.infer<typeof insertPaymentSchema>;
 export type UpdatePayment = z.infer<typeof updatePaymentSchema>;
 
-// API Response types (what the frontend receives)
-export type WorkoutWithVO2Max = Partial<Workout> & {
+// API Response types (what the frontend receives) - defined after table types
+export type WorkoutWithVO2Max = {
+  id?: number;
+  userId?: number;
+  activityType?: string;
+  duration?: string | number;
+  distance?: string | number | null;
+  heartRateAvg?: string | null;
+  heartRateMax?: string | null;
+  intensity?: 'low' | 'moderate' | 'high' | null;
+  date?: Date | null;
   vo2max_estimate?: number;
   benefits?: string;
   error?: string;

@@ -1,5 +1,5 @@
-// Re-export all Drizzle-generated types for easy importing
-export type {
+// Import and re-export all Drizzle-generated types for easy importing
+import type {
   UserProfile,
   NewUserProfile,
   UpdateUserProfile,
@@ -15,6 +15,23 @@ export type {
   WorkoutWithVO2Max,
   UserDashboard,
 } from './schema';
+
+export type {
+  UserProfile,
+  NewUserProfile,
+  UpdateUserProfile,
+  Workout,
+  NewWorkout,
+  UpdateWorkout,
+  Subscription,
+  NewSubscription,
+  UpdateSubscription,
+  Payment,
+  NewPayment,
+  UpdatePayment,
+  WorkoutWithVO2Max,
+  UserDashboard,
+};
 
 // Re-export schemas for validation
 export {
