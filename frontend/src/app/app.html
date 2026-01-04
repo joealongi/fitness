@@ -838,6 +838,14 @@
                   border-radius: 0.5rem;
                   color: #1f2937;
                   font-size: 1rem;
+                  -webkit-appearance: none;
+                  -moz-appearance: none;
+                  appearance: none;
+                  background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23374151%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3e%3cpolyline points=%226,9 12,15 18,9%22%3e%3c/polyline%3e%3c/svg%3e');
+                  background-repeat: no-repeat;
+                  background-position: right 0.75rem center;
+                  background-size: 1rem;
+                  padding-right: 2.5rem;
                 "
               >
                 <option value="run">Run</option>
@@ -984,6 +992,14 @@
                   border-radius: 0.5rem;
                   color: #1f2937;
                   font-size: 1rem;
+                  -webkit-appearance: none;
+                  -moz-appearance: none;
+                  appearance: none;
+                  background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%23374151%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3e%3cpolyline points=%226,9 12,15 18,9%22%3e%3c/polyline%3e%3c/svg%3e');
+                  background-repeat: no-repeat;
+                  background-position: right 0.75rem center;
+                  background-size: 1rem;
+                  padding-right: 2.5rem;
                 "
               >
                 <option value="low">Low</option>
@@ -1145,13 +1161,76 @@
                     margin-bottom: 0.25rem;
                   "
                 >
-                  VO₂ Max Progress
+                  VO2 Max Progress
                 </h4>
                 <p style="color: #6b7280; font-size: 0.75rem; margin: 0">
-                  Your aerobic fitness improvement
+                  Your aerobic fitness improvement vs industry average
                 </p>
               </div>
 
+              @if (chartsLoading) {
+              <!-- Skeleton Loading State -->
+              <div
+                style="
+                  height: 300px;
+                  width: 100%;
+                  position: relative;
+                  overflow: hidden;
+                  background: #f3f4f6;
+                  border-radius: 0.5rem;
+                "
+              >
+                <div
+                  style="
+                    position: absolute;
+                    top: 0;
+                    left: -100%;
+                    width: 100%;
+                    height: 100%;
+                    background: linear-gradient(
+                      90deg,
+                      transparent,
+                      rgba(255, 255, 255, 0.4),
+                      transparent
+                    );
+                    animation: shimmer 1.5s infinite;
+                  "
+                ></div>
+                <div
+                  style="
+                    position: absolute;
+                    top: 20%;
+                    left: 10%;
+                    width: 80%;
+                    height: 4px;
+                    background: #e5e7eb;
+                    border-radius: 2px;
+                  "
+                ></div>
+                <div
+                  style="
+                    position: absolute;
+                    bottom: 20%;
+                    left: 10%;
+                    width: 80%;
+                    height: 4px;
+                    background: #e5e7eb;
+                    border-radius: 2px;
+                  "
+                ></div>
+                <div
+                  style="
+                    position: absolute;
+                    left: 10%;
+                    bottom: 10%;
+                    width: 80%;
+                    height: 2px;
+                    background: #e5e7eb;
+                    border-radius: 1px;
+                  "
+                ></div>
+              </div>
+              } @else {
               <div style="height: 300px; width: 100%">
                 <ngx-charts-line-chart
                   [view]="[800, 300]"
@@ -1160,18 +1239,22 @@
                   [gradient]="true"
                   [xAxis]="true"
                   [yAxis]="true"
-                  [legend]="false"
+                  [legend]="true"
                   [showXAxisLabel]="false"
                   [showYAxisLabel]="false"
                 ></ngx-charts-line-chart>
               </div>
+              }
 
               <div style="margin-top: 0.75rem; text-align: center">
                 <div style="font-size: 0.75rem; color: #6b7280">
-                  Latest:
+                  Industry Average:
+                  <span style="font-weight: 600; color: #6b7280">35 mL/kg/min</span> @if
+                  (vo2MaxTrend.length > 1) { | Your Latest:
                   <span style="font-weight: 600; color: #ef4444"
-                    >{{ vo2MaxTrend[vo2MaxTrend.length - 1]?.value }} mL/kg/min</span
+                    >{{ vo2MaxTrend[vo2MaxTrend.length - 1]?.value || 0 }} mL/kg/min</span
                   >
+                  }
                 </div>
               </div>
             </div>

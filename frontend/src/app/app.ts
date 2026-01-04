@@ -65,70 +65,37 @@ export class App implements OnInit, OnDestroy {
   // Chart data and configuration
   view: [number, number] = [700, 300];
 
+  // Loading states for charts
+  chartsLoading = false;
+
   // Color scheme for charts - Red, Black, White, Grey theme
   colorScheme: any = {
     domain: ['#ef4444', '#6b7280', '#374151', '#1f2937', '#9ca3af', '#d1d5db'],
   };
 
-  // VO2 Max trend over time (Line Chart)
-  vo2MaxTrend: any[] = [
-    { name: 'Jan', value: 35 },
-    { name: 'Feb', value: 38 },
-    { name: 'Mar', value: 42 },
-    { name: 'Apr', value: 39 },
-    { name: 'May', value: 45 },
-    { name: 'Jun', value: 48 },
+  // Baseline/Industry standard data
+  private baselineVO2Max = 35; // Average adult VO2 max
+  private baselineWeeklyVolume = [
+    { name: 'Mon', value: 3.2 },
+    { name: 'Tue', value: 2.8 },
+    { name: 'Wed', value: 3.5 },
+    { name: 'Thu', value: 2.9 },
+    { name: 'Fri', value: 2.1 },
+    { name: 'Sat', value: 5.8 },
+    { name: 'Sun', value: 4.2 },
   ];
+
+  // VO2 Max trend over time (Line Chart) - Shows baseline + user data
+  vo2MaxTrend: any[] = [];
 
   // Activity type distribution (Pie Chart)
-  activityDistribution: any[] = [
-    { name: 'Running', value: 45 },
-    { name: 'Cycling', value: 30 },
-    { name: 'Walking', value: 15 },
-    { name: 'Swimming', value: 10 },
-  ];
+  activityDistribution: any[] = [];
 
-  // Weekly workout volume (Bar Chart)
-  weeklyVolume: any[] = [
-    { name: 'Mon', value: 2.5 },
-    { name: 'Tue', value: 3.1 },
-    { name: 'Wed', value: 1.8 },
-    { name: 'Thu', value: 4.2 },
-    { name: 'Fri', value: 2.9 },
-    { name: 'Sat', value: 6.1 },
-    { name: 'Sun', value: 3.7 },
-  ];
+  // Weekly workout volume (Bar Chart) - Shows baseline + user data
+  weeklyVolume: any[] = [];
 
   // Heart rate zones (Area Chart)
-  heartRateZones: any[] = [
-    {
-      name: 'Fat Burn',
-      series: [
-        { name: 'Week 1', value: 120 },
-        { name: 'Week 2', value: 125 },
-        { name: 'Week 3', value: 130 },
-        { name: 'Week 4', value: 135 },
-      ],
-    },
-    {
-      name: 'Cardio',
-      series: [
-        { name: 'Week 1', value: 140 },
-        { name: 'Week 2', value: 145 },
-        { name: 'Week 3', value: 150 },
-        { name: 'Week 4', value: 155 },
-      ],
-    },
-    {
-      name: 'Peak',
-      series: [
-        { name: 'Week 1', value: 160 },
-        { name: 'Week 2', value: 165 },
-        { name: 'Week 3', value: 170 },
-        { name: 'Week 4', value: 175 },
-      ],
-    },
-  ];
+  heartRateZones: any[] = [];
 
   // Workout history storage
   private workoutHistoryKey = 'airwave_workout_history';
@@ -362,42 +329,63 @@ export class App implements OnInit, OnDestroy {
   }
 
   private resetChartsToDefaults(): void {
+    // Show baseline/industry standard data when no user data exists
     this.vo2MaxTrend = [
-      { name: 'Workout 1', value: 0 },
-      { name: 'Workout 2', value: 0 },
-      { name: 'Workout 3', value: 0 },
-      { name: 'Workout 4', value: 0 },
-      { name: 'Workout 5', value: 0 },
-      { name: 'Workout 6', value: 0 },
+      { name: 'Baseline', value: this.baselineVO2Max, series: 'Industry Average' },
+      { name: 'Your Progress', value: 0, series: 'Your Data' },
     ];
-    this.activityDistribution = [{ name: 'No Workouts', value: 1 }];
-    this.weeklyVolume = [
-      { name: 'Mon', value: 0 },
-      { name: 'Tue', value: 0 },
-      { name: 'Wed', value: 0 },
-      { name: 'Thu', value: 0 },
-      { name: 'Fri', value: 0 },
-      { name: 'Sat', value: 0 },
-      { name: 'Sun', value: 0 },
+
+    // Show typical activity distribution for fitness enthusiasts
+    this.activityDistribution = [
+      { name: 'Running', value: 45 },
+      { name: 'Cycling', value: 30 },
+      { name: 'Walking', value: 15 },
+      { name: 'Other', value: 10 },
+    ];
+
+    // Show typical weekly volume for active individuals
+    this.weeklyVolume = this.baselineWeeklyVolume.map((item) => ({
+      ...item,
+      series: 'Industry Average',
+    }));
+
+    // Default heart rate zones
+    this.heartRateZones = [
+      {
+        name: 'Fat Burn Zone',
+        series: [{ name: 'Baseline', value: 125 }],
+      },
+      {
+        name: 'Cardio Zone',
+        series: [{ name: 'Baseline', value: 145 }],
+      },
+      {
+        name: 'Peak Zone',
+        series: [{ name: 'Baseline', value: 165 }],
+      },
     ];
   }
 
   private updateVO2MaxTrend(): void {
-    // Show last 6 workouts or create monthly averages
-    const recentWorkouts = this.workoutHistory.slice(-6);
+    // Show baseline comparison with user progress
+    const recentWorkouts = this.workoutHistory.slice(-5); // Last 5 workouts
 
-    this.vo2MaxTrend = recentWorkouts.map((workout, index) => ({
+    // Create combined data showing baseline vs user progress
+    const userData = recentWorkouts.map((workout, index) => ({
       name: `Workout ${index + 1}`,
       value: workout.vo2max || 0,
+      series: 'Your Data',
     }));
 
-    // If less than 6 workouts, pad with zeros
-    while (this.vo2MaxTrend.length < 6) {
-      this.vo2MaxTrend.unshift({
-        name: `Workout ${this.vo2MaxTrend.length}`,
-        value: 0,
-      });
-    }
+    // Add baseline reference point
+    const baselineData = {
+      name: 'Industry Avg',
+      value: this.baselineVO2Max,
+      series: 'Industry Average',
+    };
+
+    // Combine baseline and user data
+    this.vo2MaxTrend = [baselineData, ...userData];
   }
 
   private updateActivityDistribution(): void {
@@ -423,7 +411,7 @@ export class App implements OnInit, OnDestroy {
 
   private updateWeeklyVolume(): void {
     const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const weeklyData: { [key: string]: number } = {
+    const userWeeklyData: { [key: string]: number } = {
       Sun: 0,
       Mon: 0,
       Tue: 0,
@@ -433,18 +421,35 @@ export class App implements OnInit, OnDestroy {
       Sat: 0,
     };
 
-    // Group workouts by day of week
+    // Group user workouts by day of week
     this.workoutHistory.forEach((workout) => {
       const date = new Date(workout.timestamp || workout.date);
       const dayName = dayNames[date.getDay()];
-      weeklyData[dayName] += workout.distance || 0;
+      userWeeklyData[dayName] += workout.distance || 0;
     });
 
-    // Convert to chart format
-    this.weeklyVolume = Object.entries(weeklyData).map(([day, distance]) => ({
-      name: day,
-      value: Math.round(distance * 10) / 10, // Round to 1 decimal
-    }));
+    // Combine baseline and user data
+    const combinedData = dayNames
+      .map((day) => {
+        const baselineValue = this.baselineWeeklyVolume.find((b) => b.name === day)?.value || 0;
+        const userValue = Math.round(userWeeklyData[day] * 10) / 10;
+
+        return [
+          {
+            name: day,
+            value: baselineValue,
+            series: 'Industry Average',
+          },
+          {
+            name: day,
+            value: userValue,
+            series: 'Your Data',
+          },
+        ];
+      })
+      .flat();
+
+    this.weeklyVolume = combinedData;
   }
 
   private updateHeartRateZones(): void {
