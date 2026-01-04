@@ -414,6 +414,32 @@ Add to your MCP settings file:
 
 ## 🔒 Security & Production Deployment
 
+### CI/CD with GitHub Actions
+
+This project includes automated CI/CD pipelines using GitHub Actions:
+
+#### Setup GitHub Secrets
+
+1. **Go to your GitHub repository Settings → Secrets and variables → Actions**
+
+2. **Add Railway Token:**
+   - Name: `RAILWAY_TOKEN`
+   - Value: Get from Railway Dashboard → Account Settings → Tokens
+
+#### What the CI/CD Pipeline Does
+
+- ✅ **Runs on every push/PR to main/master branches**
+- ✅ **Tests Backend:** Django migrations, tests, linting
+- ✅ **Tests Frontend:** Angular linting, tests, production build
+- ✅ **Deploy Instructions:** Provides deployment commands when tests pass
+- ✅ **Caching:** Speeds up builds with dependency caching
+
+#### Pipeline Jobs
+
+1. **`test-backend`**: Python 3.11, Django tests, flake8 linting
+2. **`test-frontend`**: Node.js 22, Angular tests, production build
+3. **`deploy-railway`**: Shows deployment instructions (manual trigger)
+
 ### Environment Setup
 
 1. **Copy environment template:**
@@ -432,7 +458,7 @@ python -c "import secrets; print(secrets.token_urlsafe(32))"
 
 ```bash
 # Use strong, unique values for production
-SECRET_KEY=your-generated-secret-key
+SECRET_KEY=your-32-char-secret-key
 DEBUG=False
 ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
 ```
@@ -564,84 +590,81 @@ Airwave is designed for easy deployment to modern cloud platforms. This guide co
 
 #### Step-by-Step Deployment
 
-1. **Install Railway CLI:**
+1. **Create Projects on Railway Dashboard:**
 
-```bash
-npm install -g @railway/cli
-railway login --browserless
-```
+   Go to the [Railway Dashboard](https://railway.com) and create three projects:
 
-2. **Create Projects on Railway Dashboard:**
+   - **Backend Project**: Name it `airwave-backend`
+   - **Frontend Project**: Name it `airwave-frontend`
+   - **MCP Project** (optional): Name it `airwave-mcp`
 
-   Since Railway CLI `init` can sometimes have issues, create projects directly on the [Railway Dashboard](https://railway.com):
+2. **Generate Required Keys Locally:**
 
-   - Create **Backend Project**: Name it `airwave-backend`
-   - Create **Frontend Project**: Name it `airwave-frontend`
-   - Create **MCP Project** (optional): Name it `airwave-mcp`
+   ```bash
+   # Generate Django secret key
+   python3 -c "import secrets; print(secrets.token_urlsafe(32))"
+
+   # Generate encryption key
+   python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())"
+   ```
 
 3. **Deploy Backend Service (First):**
 
-```bash
-# Navigate to backend directory
-cd backend
+   In the Railway Dashboard for `airwave-backend`:
 
-# Link to your Railway backend project
-railway link --project airwave-backend
+   - **Variables Tab**: Add these environment variables:
 
-# Deploy backend
-railway up
+     ```
+     DEBUG=False
+     SECRET_KEY=your-generated-secret-key-here
+     FIELD_ENCRYPTION_KEY=your-generated-encryption-key-here
+     ALLOWED_HOSTS=airwave-backend-production.up.railway.app
+     ```
 
-# Set environment variables
-railway variables set DEBUG=False
-railway variables set SECRET_KEY=$(python3 -c "import secrets; print(secrets.token_urlsafe(32))")
-railway variables set FIELD_ENCRYPTION_KEY=$(python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())")
-railway variables set ALLOWED_HOSTS=airwave-backend-production.up.railway.app
+   - **Deploy Tab**: Railway will build and deploy your Django app
 
-# Run migrations
-railway run python manage.py migrate
-railway run python manage.py createsuperuser
-```
+   - **Database Setup**: Railway automatically provides PostgreSQL - migrations run automatically
 
 4. **Deploy Frontend Service (Second):**
 
-```bash
-# Navigate to frontend directory
-cd ../frontend
+   In the Railway Dashboard for `airwave-frontend`:
 
-# Link to your Railway frontend project
-railway link --project airwave-frontend
+   - **Variables Tab**: Add environment variable:
 
-# Deploy frontend
-railway up
+     ```
+     VITE_API_URL=https://airwave-backend-production.up.railway.app
+     ```
 
-# Set API URL (replace with your actual backend URL from Railway dashboard)
-railway variables set VITE_API_URL=https://airwave-backend-production.up.railway.app
-```
+   - **Deploy Tab**: Railway will build your Angular app for production and serve the static files
 
 5. **Deploy MCP Server (Optional - Third):**
 
-```bash
-# Navigate to MCP directory
-cd ../mcp-airwave
+   In the Railway Dashboard for `airwave-mcp`:
 
-# Link to your Railway MCP project
-railway link --project airwave-mcp
-
-# Deploy MCP server
-railway up
-```
+   - Railway will automatically detect and deploy your Node.js MCP server
 
 #### Update CORS Settings
 
-After both backend and frontend are deployed, update backend CORS settings:
+After both backend and frontend are deployed, in the `airwave-backend` Railway dashboard:
+
+- **Variables Tab**: Add CORS settings:
+  ```
+  CORS_ALLOWED_ORIGINS=https://airwave-frontend-production.up.railway.app
+  CSRF_TRUSTED_ORIGINS=https://airwave-frontend-production.up.railway.app
+  ```
+
+#### CLI Alternative (If Preferred)
+
+If you prefer using Railway CLI:
 
 ```bash
-# Switch to backend project
-railway link --project airwave-backend
+# Install CLI
+npm install -g @railway/cli
+railway login
 
-# Set CORS to allow frontend
-railway variables set CORS_ALLOWED_ORIGINS=https://airwave-frontend-production.up.railway.app
-railway variables set CSRF_TRUSTED_ORIGINS=https://airwave-frontend-production.up.railway.app
+# Link and deploy (after creating projects on dashboard)
+cd backend && railway link --project airwave-backend && railway up
+cd ../frontend && railway link --project airwave-frontend && railway up
 ```
 
 #### Manual Service Management
