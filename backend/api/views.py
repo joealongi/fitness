@@ -148,7 +148,7 @@ class WorkoutView(APIView):
                 }
             )
 
-            # Create workout
+            # Create workout in Django
             workout = Workout.objects.create(
                 user=user,
                 activity_type=data.get('activity_type', 'run'),
@@ -161,6 +161,30 @@ class WorkoutView(APIView):
 
             # Calculate VO2 max
             vo2max = estimate_vo2max_from_workout(workout, profile)
+
+            # Prepare workout data for ChromaDB storage
+            workout_data_for_ai = {
+                'id': str(workout.id),
+                'activity_type': workout.activity_type,
+                'duration': workout.duration,
+                'distance': workout.distance or 0,
+                'heart_rate_avg': data.get('heart_rate_avg', 0),
+                'heart_rate_max': data.get('heart_rate_max', 0),
+                'intensity': workout.intensity,
+                'date': workout.date.isoformat(),
+                'vo2max_estimate': round(vo2max, 1) if vo2max else 0,
+            }
+
+            # Store workout in ChromaDB for AI analysis (async/background task would be ideal)
+            try:
+                from .chroma_setup import store_workout_in_chroma, get_chroma_client, create_collections
+                chroma_client = get_chroma_client()
+                collections = create_collections(chroma_client)
+                workouts_collection = collections['workouts']
+                store_workout_in_chroma(workouts_collection, workout_data_for_ai, str(user.id))
+            except Exception as chroma_error:
+                # Don't fail the workout save if ChromaDB storage fails
+                print(f"Warning: Failed to store workout in ChromaDB: {chroma_error}")
 
             # Get benefits
             from .vo2max_utils import get_vo2max_benefits
@@ -176,7 +200,8 @@ class WorkoutView(APIView):
                     'date': workout.date
                 },
                 'vo2max_estimate': round(vo2max, 1) if vo2max else None,
-                'benefits': benefits
+                'benefits': benefits,
+                'ai_stored': True  # Indicate workout was stored for AI analysis
             })
 
         except Exception as e:
