@@ -341,8 +341,15 @@ export class App implements OnInit, OnDestroy {
   }
 
   private resetChartsToDefaults(): void {
-    this.vo2MaxTrend = [{ name: 'No Data', value: 0 }];
-    this.activityDistribution = [{ name: 'No Workouts', value: 100 }];
+    this.vo2MaxTrend = [
+      { name: 'Workout 1', value: 0 },
+      { name: 'Workout 2', value: 0 },
+      { name: 'Workout 3', value: 0 },
+      { name: 'Workout 4', value: 0 },
+      { name: 'Workout 5', value: 0 },
+      { name: 'Workout 6', value: 0 },
+    ];
+    this.activityDistribution = [{ name: 'No Workouts', value: 1 }];
     this.weeklyVolume = [
       { name: 'Mon', value: 0 },
       { name: 'Tue', value: 0 },
@@ -420,29 +427,47 @@ export class App implements OnInit, OnDestroy {
   }
 
   private updateHeartRateZones(): void {
-    // For now, keep mock data - in future, calculate from actual heart rate data
-    // This would analyze heart rate ranges from workout history
+    // Use last 4 workouts or create default series
+    const recentWorkouts = this.workoutHistory.slice(-4);
+    const numWorkouts = Math.max(4, recentWorkouts.length);
+
+    // Create series data
+    const fatBurnSeries = [];
+    const cardioSeries = [];
+    const peakSeries = [];
+
+    for (let i = 0; i < numWorkouts; i++) {
+      const workout = recentWorkouts[i];
+      const workoutName = `Workout ${i + 1}`;
+
+      fatBurnSeries.push({
+        name: workoutName,
+        value: workout?.heart_rate_avg ? workout.heart_rate_avg - 20 : 120 + Math.random() * 20,
+      });
+
+      cardioSeries.push({
+        name: workoutName,
+        value: workout?.heart_rate_avg || 140 + Math.random() * 20,
+      });
+
+      peakSeries.push({
+        name: workoutName,
+        value: workout?.heart_rate_max || 160 + Math.random() * 20,
+      });
+    }
+
     this.heartRateZones = [
       {
         name: 'Fat Burn',
-        series: this.workoutHistory.slice(-4).map((workout, index) => ({
-          name: `Workout ${index + 1}`,
-          value: workout.heart_rate_avg || 120 + Math.random() * 20,
-        })),
+        series: fatBurnSeries,
       },
       {
         name: 'Cardio',
-        series: this.workoutHistory.slice(-4).map((workout, index) => ({
-          name: `Workout ${index + 1}`,
-          value: workout.heart_rate_avg ? workout.heart_rate_avg + 20 : 140 + Math.random() * 20,
-        })),
+        series: cardioSeries,
       },
       {
         name: 'Peak',
-        series: this.workoutHistory.slice(-4).map((workout, index) => ({
-          name: `Workout ${index + 1}`,
-          value: workout.heart_rate_max || 160 + Math.random() * 20,
-        })),
+        series: peakSeries,
       },
     ];
   }
