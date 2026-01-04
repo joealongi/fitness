@@ -639,6 +639,161 @@ Advanced temporal processing of heart rate variability for more accurate predict
 
 Airwave is designed for easy deployment to modern cloud platforms. This guide covers Railway (recommended), Heroku, Vercel, and other options.
 
+### Railway PostgreSQL Database Setup
+
+**Yes! Railway provides PostgreSQL databases automatically**, and Airwave is configured to use them seamlessly. Here's the complete setup guide:
+
+#### Step 1: Create Railway Projects
+
+Go to [Railway Dashboard](https://railway.com) and create **three separate projects**:
+
+1. **Backend Project**: `airwave-backend` (with PostgreSQL database)
+2. **Frontend Project**: `airwave-frontend`
+3. **MCP Project** (optional): `airwave-mcp`
+
+#### Step 2: Add PostgreSQL Database
+
+In your **backend project** (`airwave-backend`):
+
+1. **Click "Add Plugin"** in the project dashboard
+2. **Search for "PostgreSQL"** and select it
+3. **Choose your plan** (Hobby plan is free and sufficient for development)
+4. **Click "Add PostgreSQL"**
+
+Railway will automatically:
+
+- ✅ Create a PostgreSQL database instance
+- ✅ Set up environment variables (`PGDATABASE`, `PGUSER`, `PGPASSWORD`, etc.)
+- ✅ Configure SSL connections
+- ✅ Handle database migrations automatically
+
+#### Step 3: Configure Environment Variables
+
+In your `airwave-backend` Railway project **Variables tab**, add these:
+
+```bash
+# Django Configuration
+DEBUG=False
+SECRET_KEY=your-32-char-secret-key-here
+FIELD_ENCRYPTION_KEY=your-44-char-fernet-key-here
+
+# Domain Configuration (will be auto-populated by Railway)
+ALLOWED_HOSTS=airwave-backend-production.up.railway.app
+
+# CORS Configuration (update after frontend deployment)
+CORS_ALLOWED_ORIGINS=https://airwave-frontend-production.up.railway.app
+CSRF_TRUSTED_ORIGINS=https://airwave-frontend-production.up.railway.app
+
+# Security (optional - Railway provides SSL automatically)
+SECURE_SSL_REDIRECT=True
+```
+
+#### Step 4: Generate Secure Keys
+
+Run these commands locally to generate your keys:
+
+```bash
+# Django Secret Key (32+ characters)
+python3 -c "import secrets; print(secrets.token_urlsafe(32))"
+
+# Field Encryption Key (44 characters for Fernet)
+python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())"
+```
+
+#### Step 5: Deploy Backend
+
+Railway will automatically:
+
+- ✅ Detect your Django application
+- ✅ Install Python dependencies from `requirements.txt`
+- ✅ Run database migrations (`python manage.py migrate`)
+- ✅ Start your Django server with PostgreSQL connection
+- ✅ Set up automatic SSL certificates
+
+#### Step 6: Verify Database Connection
+
+After deployment, check your backend logs in Railway dashboard. You should see:
+
+```
+Django DB Connection: PostgreSQL
+Database migrations completed successfully
+Server running on https://airwave-backend-production.up.railway.app
+```
+
+#### Step 7: Test Database Functionality
+
+```bash
+# Test API endpoints (replace with your Railway URL)
+curl https://airwave-backend-production.up.railway.app/api/health/
+curl https://airwave-backend-production.up.railway.app/api/workouts/
+```
+
+### Railway PostgreSQL Features
+
+Railway's PostgreSQL provides:
+
+- ✅ **Automatic SSL**: Secure connections built-in
+- ✅ **Backups**: Automatic daily backups
+- ✅ **Scaling**: Vertical and horizontal scaling available
+- ✅ **Monitoring**: Built-in performance metrics
+- ✅ **High Availability**: Automatic failover and redundancy
+- ✅ **Point-in-Time Recovery**: Restore to any point in time
+
+### Environment Variables (Auto-Configured by Railway)
+
+Railway automatically provides these PostgreSQL environment variables:
+
+```bash
+# Database Connection (automatically set by Railway)
+PGHOST=containers-us-west-XXX.railway.app
+PGPORT=XXXX
+PGDATABASE=railway
+PGUSER=postgres
+PGPASSWORD=your-auto-generated-password
+
+# Railway Environment Detection
+RAILWAY_ENVIRONMENT=production
+RAILWAY_PROJECT_ID=your-project-id
+```
+
+### Django PostgreSQL Configuration
+
+Airwave automatically detects Railway and uses PostgreSQL:
+
+```python
+# settings.py - Automatic PostgreSQL detection
+if os.getenv('RAILWAY_ENVIRONMENT'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('PGDATABASE'),
+            'USER': os.getenv('PGUSER'),
+            'PASSWORD': os.getenv('PGPASSWORD'),
+            'HOST': os.getenv('PGHOST'),
+            'PORT': os.getenv('PGPORT', '5432'),
+            'OPTIONS': {
+                'sslmode': 'require',
+            },
+        }
+    }
+```
+
+### Database Management Commands
+
+```bash
+# Connect to your Railway PostgreSQL database
+railway run python manage.py dbshell
+
+# Run migrations
+railway run python manage.py migrate
+
+# Create superuser
+railway run python manage.py createsuperuser
+
+# Backup database (Railway does this automatically)
+railway run pg_dump > backup.sql
+```
+
 ### Railway Deployment (Recommended) ⭐
 
 **⚠️ IMPORTANT**: This is a **monorepo with multiple services**. You must deploy each service as a **separate Railway project**. Do NOT deploy the entire repository as one project.
@@ -667,6 +822,7 @@ Airwave is designed for easy deployment to modern cloud platforms. This guide co
 
    In the Railway Dashboard for `airwave-backend`:
 
+   - **Add PostgreSQL Plugin**: Click "Add Plugin" → PostgreSQL → Add
    - **Variables Tab**: Add these environment variables:
 
      ```
