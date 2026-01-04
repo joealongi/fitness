@@ -133,7 +133,7 @@ if os.getenv('PGDATABASE') or os.getenv('DATABASE_URL'):
                 'HOST': os.getenv('PGHOST'),
                 'PORT': os.getenv('PGPORT', '5432'),
                 'OPTIONS': {
-                    'sslmode': 'require' if os.getenv('RAILWAY_ENVIRONMENT') else 'prefer',
+                    'sslmode': 'require' if os.getenv('RAILWAY_ENVIRONMENT_NAME') else 'prefer',
                 },
             }
         }

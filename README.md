@@ -731,7 +731,7 @@ PGUSER=postgres
 PGPASSWORD=your-auto-generated-password
 
 # Railway Environment Detection
-RAILWAY_ENVIRONMENT=production
+RAILWAY_ENVIRONMENT_NAME=production
 RAILWAY_PROJECT_ID=your-project-id
 ```
 
@@ -741,7 +741,7 @@ Airwave automatically detects Railway and uses PostgreSQL:
 
 ```python
 # settings.py - Automatic PostgreSQL detection
-if os.getenv('RAILWAY_ENVIRONMENT'):
+if os.getenv('RAILWAY_ENVIRONMENT_NAME'):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
