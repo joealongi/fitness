@@ -40,6 +40,10 @@ class RegisterView(APIView):
 
         user = User.objects.create_user(username=username, email=email, password=password)
 
+        # Create default subscription for new users
+        from .models import Subscription
+        Subscription.objects.create(user=user)
+
         refresh = RefreshToken.for_user(user)
         return Response({
             'user': {
