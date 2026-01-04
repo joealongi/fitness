@@ -80,24 +80,41 @@ jobs:
         run: docker build -t airwave-frontend .
         working-directory: ./frontend
 
-  # Deploy to Railway (Manual Trigger Required)
+  # Deploy to Railway (Automatic)
   deploy-railway:
     needs: [test-backend, test-frontend]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || contains(github.ref, 'railway-deploy')
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
 
     steps:
-      - name: Railway Deployment Instructions
+      - uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy Backend to Railway
         run: |
-          echo "✅ All tests passed! Ready for Railway deployment."
-          echo ""
-          echo "To deploy manually:"
-          echo "1. Push this code to your main branch"
-          echo "2. Go to Railway Dashboard"
-          echo "3. Each service will auto-deploy from GitHub"
-          echo ""
-          echo "Or use Railway CLI:"
-          echo "railway login"
-          echo "cd backend && railway link --project airwave-backend && railway up"
-          echo "cd ../frontend && railway link --project airwave-frontend && railway up"
-          echo "cd ../mcp-airwave && railway link --project airwave-mcp && railway up"
+          railway login --token ${{ secrets.RAILWAY_TOKEN }}
+          cd backend
+          railway link --project airwave-backend || echo "Backend project already linked"
+          railway up --detach
+
+      - name: Deploy Frontend to Railway
+        run: |
+          cd frontend
+          railway link --project airwave-frontend || echo "Frontend project already linked"
+          railway up --detach
+
+      - name: Deploy MCP to Railway
+        run: |
+          cd mcp-airwave
+          railway link --project airwave-mcp || echo "MCP project already linked"
+          railway up --detach
+
+      - name: Verify Deployments
+        run: |
+          echo "✅ Railway deployments initiated!"
+          echo "Check Railway dashboard for deployment status:"
+          echo "• Backend: https://railway.com/project/airwave-backend"
+          echo "• Frontend: https://railway.com/project/airwave-frontend"
+          echo "• MCP: https://railway.com/project/airwave-mcp"

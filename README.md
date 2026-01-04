@@ -475,18 +475,24 @@ This project includes automated CI/CD pipelines using GitHub Actions:
 
 #### Setup GitHub Secrets
 
-1. **Go to your GitHub repository Settings → Secrets and variables → Actions**
+1. **Get Railway Token:**
 
-2. **Add Railway Token:**
+   - Go to Railway Dashboard → Account Settings → Tokens
+   - Click "Create Token"
+   - Copy the token (keep it secure!)
+
+2. **Add to GitHub Secrets:**
+   - Go to your GitHub repository Settings → Secrets and variables → Actions
+   - Click "New repository secret"
    - Name: `RAILWAY_TOKEN`
-   - Value: Get from Railway Dashboard → Account Settings → Tokens
+   - Value: Paste your Railway token
 
 #### What the CI/CD Pipeline Does
 
 - ✅ **Runs on every push/PR to main/master branches**
 - ✅ **Tests Backend:** Django migrations, tests, linting
-- ✅ **Tests Frontend:** Angular linting, tests, production build
-- ✅ **Deploy Instructions:** Provides deployment commands when tests pass
+- ✅ **Tests Frontend:** Angular tests, production build, Docker build
+- ✅ **Automatic Deployment:** Deploys to Railway when tests pass on main/master
 - ✅ **Caching:** Speeds up builds with dependency caching
 
 #### Pipeline Jobs
