@@ -54,7 +54,15 @@ SUBSCRIPTION_PLANS = {
     }
 }
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+# Railway uses dynamic hostnames and internal IPs for health checks
+ALLOWED_HOSTS = [
+    host.strip() for host in os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+] + [
+    # Railway specific hostnames and IPs
+    '.railway.app',
+    '.up.railway.app',
+    '100.64.0.0/10',  # Railway's internal network range
+]
 
 
 # Application definition

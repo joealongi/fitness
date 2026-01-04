@@ -84,7 +84,7 @@ jobs:
   deploy-railway:
     needs: [test-backend, test-frontend]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || contains(github.ref, 'railway-deploy')
 
     steps:
       - name: Railway Deployment Instructions
