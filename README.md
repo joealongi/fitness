@@ -804,9 +804,238 @@ python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).de
 - ✅ **CORS Headers**: Properly configured for cross-origin requests
 - ✅ **Environment Variables**: All secrets set securely
 - ✅ **Encryption Keys**: Generated and configured
-- ✅ **Domain Setup**: airwave.fitness configured
+- ✅ **Domain Setup**: Custom domain configured (see below)
 - ✅ **SEO Setup**: Sitemap submitted to Google Search Console
 - ✅ **Social Media**: Open Graph images created and tested
+
+## 🌐 Custom Domain Setup with Cloudflare
+
+Airwave supports custom domains for production deployments. Here's how to set up your domain with Cloudflare and Railway:
+
+### Prerequisites
+
+- ✅ **Domain Name**: Purchase from any registrar (Namecheap, GoDaddy, etc.)
+- ✅ **Cloudflare Account**: Sign up at [cloudflare.com](https://cloudflare.com)
+- ✅ **Railway Services**: Deployed and running
+
+### Step 1: Add Domain to Cloudflare
+
+1. **Log into Cloudflare** and click "Add Site"
+
+2. **Enter your domain** (e.g., `airwave.fitness`)
+
+3. **Select Plan**: Free plan works for most use cases
+
+4. **Update Nameservers**:
+   - Copy Cloudflare's nameservers
+   - Go to your domain registrar
+   - Replace default nameservers with Cloudflare's
+   - Wait 24-48 hours for DNS propagation
+
+### Step 2: Configure DNS Records
+
+In Cloudflare DNS settings, add these records:
+
+#### Frontend (Main Domain)
+
+```
+Type: CNAME
+Name: @
+Content: [your-frontend-service].up.railway.app
+Proxy Status: Proxied (orange cloud)
+TTL: Auto
+```
+
+#### Backend API (Subdomain)
+
+```
+Type: CNAME
+Name: api
+Content: [your-backend-service].up.railway.app
+Proxy Status: Proxied (orange cloud)
+TTL: Auto
+```
+
+#### Optional: www Redirect
+
+```
+Type: CNAME
+Name: www
+Content: [your-frontend-service].up.railway.app
+Proxy Status: Proxied (orange cloud)
+TTL: Auto
+```
+
+### Step 3: Railway Domain Configuration
+
+#### Frontend Service
+
+1. **Go to Railway Dashboard** → Your frontend service
+2. **Settings Tab** → Domains
+3. **Add Domain**: Enter your main domain (e.g., `airwave.fitness`)
+4. **Add www Domain**: Enter `www.airwave.fitness` (optional)
+
+#### Backend Service
+
+1. **Go to Railway Dashboard** → Your backend service
+2. **Settings Tab** → Domains
+3. **Add Domain**: Enter your API subdomain (e.g., `api.airwave.fitness`)
+
+### Step 4: Update Application Configuration
+
+#### Frontend Environment Variables
+
+Update your frontend Railway service:
+
+```
+VITE_API_URL=https://api.airwave.fitness
+```
+
+#### Backend Environment Variables
+
+Update your backend Railway service:
+
+```
+ALLOWED_HOSTS=api.airwave.fitness,airwave.fitness,www.airwave.fitness
+CORS_ALLOWED_ORIGINS=https://airwave.fitness,https://www.airwave.fitness
+CSRF_TRUSTED_ORIGINS=https://airwave.fitness,https://www.airwave.fitness
+```
+
+### Step 5: SSL/TLS Configuration
+
+Cloudflare handles SSL automatically:
+
+1. **SSL/TLS Tab** in Cloudflare → Overview
+2. **SSL Status**: Should show "Active Certificate"
+3. **Railway**: Provides automatic SSL for custom domains
+
+### Step 6: Testing and Verification
+
+#### DNS Propagation
+
+```bash
+# Check DNS records
+dig airwave.fitness
+dig api.airwave.fitness
+
+# Should return Railway IP addresses
+```
+
+#### SSL Certificate
+
+```bash
+# Test SSL
+curl -I https://airwave.fitness
+curl -I https://api.airwave.fitness
+
+# Should return 200 OK with valid SSL
+```
+
+#### Full Application Test
+
+```bash
+# Test frontend
+curl https://airwave.fitness
+
+# Test API
+curl https://api.airwave.fitness/api/health/
+```
+
+### Cloudflare Optimization Settings
+
+#### Speed Tab
+
+- ✅ **Auto Minify**: Enable HTML, CSS, JavaScript
+- ✅ **Brotli Compression**: Enable
+- ✅ **Rocket Loader**: Enable (for better loading)
+
+#### Caching Tab
+
+- ✅ **Caching Level**: Standard
+- ✅ **Browser Cache TTL**: 4 hours
+- ✅ **Always Online**: Enable
+
+#### Rules (Page Rules)
+
+Create these rules for better performance:
+
+```
+# API Caching Rule
+URL: api.airwave.fitness/*
+Cache Level: Bypass
+```
+
+```
+# Static Assets Caching
+URL: airwave.fitness/static/*
+Cache Level: Cache Everything
+Edge Cache TTL: 1 year
+Browser Cache TTL: 1 year
+```
+
+### Troubleshooting
+
+#### DNS Issues
+
+- **Propagation Delay**: Wait 24-48 hours after nameserver changes
+- **Check DNS**: Use `dig` or online DNS checkers
+- **Clear Cache**: Flush local DNS cache
+
+#### SSL Issues
+
+- **Mixed Content**: Ensure all assets use HTTPS
+- **Certificate Status**: Check Cloudflare SSL/TLS tab
+- **Railway SSL**: Automatic for custom domains
+
+#### CORS Issues
+
+- **Update ALLOWED_HOSTS**: Include all domain variations
+- **Check Origins**: Ensure CORS settings match your domains
+- **API Calls**: Frontend should use full HTTPS URLs
+
+#### Performance Issues
+
+- **Cloudflare Status**: Check if proxy is enabled (orange cloud)
+- **Railway Logs**: Check for application errors
+- **Caching**: Clear Cloudflare cache if needed
+
+### Domain Examples
+
+| Service  | Railway URL                                 | Custom Domain         |
+| -------- | ------------------------------------------- | --------------------- |
+| Frontend | `airwave-production.up.railway.app`         | `airwave.fitness`     |
+| Backend  | `airwave-backend-production.up.railway.app` | `api.airwave.fitness` |
+| MCP      | `airwave-mcp-production.up.railway.app`     | `mcp.airwave.fitness` |
+
+### Security Benefits
+
+- ✅ **DDoS Protection**: Cloudflare's network protection
+- ✅ **SSL/TLS**: Automatic certificate management
+- ✅ **WAF**: Web Application Firewall
+- ✅ **Bot Protection**: Automated bot detection
+- ✅ **Rate Limiting**: Built-in request throttling
+
+### Cost Breakdown
+
+- ✅ **Domain**: $10-20/year from registrar
+- ✅ **Cloudflare**: Free plan (sufficient for most apps)
+- ✅ **Railway**: Custom domains included in paid plans
+- ✅ **SSL**: Free with both Cloudflare and Railway
+
+**Total Cost**: ~$15-25/year for professional domain setup
+
+### Migration Checklist
+
+- ✅ **Domain Purchased**: From registrar
+- ✅ **Cloudflare Setup**: Nameservers updated
+- ✅ **DNS Records**: CNAME records added
+- ✅ **Railway Domains**: Custom domains configured
+- ✅ **Environment Variables**: Updated for production
+- ✅ **SSL Active**: Certificates working
+- ✅ **Application Tested**: All endpoints working
+- ✅ **SEO Updated**: Search engines notified of domain change
+
+**Your Airwave application will now have a professional custom domain with enterprise-grade DNS and security!** 🌐✨
 
 ### Troubleshooting
 
