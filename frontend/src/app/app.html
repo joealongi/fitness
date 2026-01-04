@@ -1536,8 +1536,7 @@
     margin-top: 0;
   "
 >
-  @if (!(isAuthenticated$ | async)) {
-  <!-- Full Footer for Non-Authenticated Users -->
+  <!-- Full Footer Content (Always Visible) -->
   <div style="max-width: 1200px; margin: 0 auto">
     <div
       style="
@@ -1553,7 +1552,7 @@
           style="
             font-size: 1.25rem;
             font-weight: 600;
-            color: white;
+            color: {{ (isAuthenticated$ | async) ? '#1f2937' : 'white' }};
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
@@ -1569,7 +1568,11 @@
                 healthData ? '#10b981' : '#ef4444'
               }}"
             ></div>
-            <span style="color: rgba(255, 255, 255, 0.9)">
+            <span
+              style="color: {{
+                (isAuthenticated$ | async) ? '#374151' : 'rgba(255, 255, 255, 0.9)'
+              }}"
+            >
               {{ healthData ? 'Backend API - Connected' : 'Backend API - Disconnected' }}
             </span>
           </div>
@@ -1580,7 +1583,11 @@
                 norseData ? '#3b82f6' : '#ef4444'
               }}"
             ></div>
-            <span style="color: rgba(255, 255, 255, 0.9)">
+            <span
+              style="color: {{
+                (isAuthenticated$ | async) ? '#374151' : 'rgba(255, 255, 255, 0.9)'
+              }}"
+            >
               {{ norseData ? 'Norse SNN - Active' : 'Norse SNN - Inactive' }}
             </span>
           </div>
@@ -1589,10 +1596,18 @@
 
       <!-- About -->
       <div>
-        <h4 style="font-size: 1.25rem; font-weight: 600; color: white; margin-bottom: 1.5rem">
+        <h4
+          style="font-size: 1.25rem; font-weight: 600; color: {{
+            (isAuthenticated$ | async) ? '#1f2937' : 'white'
+          }}; margin-bottom: 1.5rem"
+        >
           About Airwave
         </h4>
-        <p style="color: rgba(255, 255, 255, 0.7); line-height: 1.6; margin-bottom: 1rem">
+        <p
+          style="color: {{
+            (isAuthenticated$ | async) ? '#6b7280' : 'rgba(255, 255, 255, 0.7)'
+          }}; line-height: 1.6; margin-bottom: 1rem"
+        >
           AI-powered fitness intelligence that helps you unlock your athletic potential with
           advanced VO2 max calculations and personalized insights.
         </p>
@@ -1600,10 +1615,15 @@
 
       <!-- Links -->
       <div>
-        <h4 style="font-size: 1.25rem; font-weight: 600; color: white; margin-bottom: 1.5rem">
+        <h4
+          style="font-size: 1.25rem; font-weight: 600; color: {{
+            (isAuthenticated$ | async) ? '#1f2937' : 'white'
+          }}; margin-bottom: 1.5rem"
+        >
           Quick Links
         </h4>
         <div style="display: flex; flex-direction: column; gap: 0.75rem">
+          @if (!(isAuthenticated$ | async)) {
           <a
             (click)="scrollToDemo()"
             style="
@@ -1630,11 +1650,19 @@
           >
             Create Account
           </a>
+          } @else {
+          <span
+            style="color: {{
+              (isAuthenticated$ | async) ? '#6b7280' : 'rgba(255, 255, 255, 0.5)'
+            }}; font-size: 0.875rem"
+          >
+            Welcome, {{ (currentUser$ | async)?.username }}
+          </span>
+          }
         </div>
       </div>
     </div>
   </div>
-  }
 
   <!-- Copyright Section (Always Visible) -->
   <div style="max-width: 1200px; margin: 0 auto">
@@ -1655,7 +1683,7 @@
           margin-bottom: 0.5rem;
         "
       >
-        Crafted by Joe Alongi with warp velocity by Cline and Grok Code Fast
+        Crafted in by Joe Alongi with warp velocity by Cline and Grok Code Fast
       </div>
       <div
         style="
