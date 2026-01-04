@@ -19,6 +19,10 @@ export class App implements OnInit, OnDestroy {
   isAuthenticated = false;
   currentUser: any = null;
 
+  // Expose observables for template
+  isAuthenticated$ = this.api.isAuthenticated$;
+  currentUser$ = this.api.currentUser$;
+
   // Login form
   loginData = { username: '', password: '' };
   loginLoading = false;
