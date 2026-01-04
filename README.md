@@ -15,7 +15,7 @@ Airwave is a comprehensive fitness application that estimates VO2 max from worko
 
 ### Frontend
 
-- **Angular 17**: Modern reactive web framework
+- **Angular 21**: Latest modern reactive web framework
 - **TypeScript**: Type-safe development
 - **SCSS**: Advanced styling
 
@@ -35,7 +35,7 @@ Airwave is a comprehensive fitness application that estimates VO2 max from worko
 
 ## 📋 Prerequisites
 
-- Node.js 18+
+- Node.js 22+ (LTS)
 - Python 3.11+
 - PostgreSQL (for production)
 - Git
