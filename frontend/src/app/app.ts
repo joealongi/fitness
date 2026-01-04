@@ -264,7 +264,7 @@ export class App implements OnInit, OnDestroy {
 
   // Scroll to demo section
   scrollToDemo() {
-    const demoSection = document.querySelector('#demo-section');
+    const demoSection = document.querySelector('#experience-section');
     if (demoSection) {
       demoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
