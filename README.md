@@ -542,55 +542,9 @@ ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
 
 ## 🌐 Deployment
 
-### Backend Deployment (Heroku)
+### Railway Deployment (Recommended) ⭐
 
-1. **Create Heroku app:**
-
-```bash
-heroku create your-airwave-backend
-```
-
-2. **Set environment variables:**
-
-```bash
-heroku config:set DJANGO_SETTINGS_MODULE=fitness_backend.settings
-heroku config:set SECRET_KEY=your-secret-key
-heroku config:set DATABASE_URL=your-database-url
-```
-
-3. **Deploy:**
-
-```bash
-git push heroku main
-```
-
-4. **Run migrations:**
-
-```bash
-heroku run python manage.py migrate
-```
-
-### Frontend Deployment (Vercel)
-
-1. **Install Vercel CLI:**
-
-```bash
-npm i -g vercel
-```
-
-2. **Deploy:**
-
-```bash
-cd frontend
-vercel --prod
-```
-
-### Alternative Deployment Options
-
-- **Railway**: Full-stack deployment with databases
-- **Render**: Django + PostgreSQL hosting
-- **Netlify**: Frontend hosting with serverless functions
-- **AWS/GCP/Azure**: Enterprise cloud deployments
+**⚠️ IMPORTANT**: This is a **monorepo with multiple services**. You must deploy each service as a **separate Railway project**. Do NOT deploy the entire repository as one project.
 
 ## 🔧 Maintenance
 
@@ -637,7 +591,7 @@ Advanced temporal processing of heart rate variability for more accurate predict
 
 ## 🚀 Complete Deployment Guide
 
-Airwave is designed for easy deployment to modern cloud platforms. This guide covers Railway (recommended), Heroku, Vercel, and other options.
+Airwave is designed for easy deployment to Railway with Cloudflare for custom domains.
 
 ### Railway PostgreSQL Database Setup
 
@@ -927,70 +881,6 @@ railway variables set CORS_ALLOWED_ORIGINS=https://airwave-production.up.railway
 railway variables set CSRF_TRUSTED_ORIGINS=https://airwave-production.up.railway.app
 ```
 
-### Heroku Deployment
-
-#### Backend
-
-```bash
-# Create Heroku apps
-heroku create airwave-backend
-heroku create airwave-frontend
-
-# Backend setup
-cd backend
-heroku git:remote -a airwave-backend
-heroku addons:create heroku-postgresql
-
-# Set environment variables
-heroku config:set DEBUG=False
-heroku config:set SECRET_KEY=$(python -c "import secrets; print(secrets.token_urlsafe(32))")
-heroku config:set FIELD_ENCRYPTION_KEY=$(python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())")
-heroku config:set ALLOWED_HOSTS=airwave-backend.herokuapp.com
-
-# Deploy
-git push heroku main
-heroku run python manage.py migrate
-heroku run python manage.py createsuperuser
-```
-
-#### Frontend
-
-```bash
-cd frontend
-heroku git:remote -a airwave-frontend
-
-# Create static.json for SPA routing
-echo '{
-  "root": "dist",
-  "routes": {
-    "/**": "index.html"
-  }
-}' > static.json
-
-# Set API URL
-heroku config:set API_URL=https://airwave-backend.herokuapp.com
-
-git push heroku main
-```
-
-### Vercel + Railway Hybrid
-
-For optimal performance, deploy frontend to Vercel and backend to Railway:
-
-```bash
-# Backend on Railway (as above)
-railway init airwave-backend
-railway up
-
-# Frontend on Vercel
-cd frontend
-npm i -g vercel
-vercel --prod
-
-# Set environment variables in Vercel dashboard
-# VITE_API_URL=https://your-railway-backend-url
-```
-
 ### Environment Variables Required
 
 #### Backend (.env)
@@ -1033,7 +923,7 @@ python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).de
 
 ### Post-Deployment Checklist
 
-- ✅ **SSL Certificate**: Automatic on Railway/Vercel
+- ✅ **SSL Certificate**: Automatic on Railway
 - ✅ **Database Migration**: Run `python manage.py migrate`
 - ✅ **Static Files**: Served correctly on frontend
 - ✅ **API Connectivity**: Frontend can reach backend APIs
@@ -1296,8 +1186,7 @@ railway variables set CORS_ALLOWED_ORIGINS=https://your-frontend-domain.com
 **Static Files:**
 
 ```bash
-# For SPA routing, ensure proper configuration
-# Railway/Vercel handle this automatically
+# For SPA routing, Railway handles this automatically
 ```
 
 **Encryption Issues:**
@@ -1312,7 +1201,7 @@ python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).de
 After deployment, update your local development to use production URLs:
 
 - **Backend API**: `https://your-backend.railway.app`
-- **Frontend App**: `https://your-frontend.vercel.app` or Railway URL
+- **Frontend App**: `https://your-frontend.railway.app`
 - **MCP Server**: Deploy separately if needed
 
 ### Monitoring & Maintenance
@@ -1322,7 +1211,7 @@ After deployment, update your local development to use production URLs:
 - **Backups**: Railway automatic database backups
 - **Scaling**: Easy horizontal scaling on Railway
 
-Railway is recommended for its simplicity and Railway + Vercel for optimal performance. Both provide automatic SSL, scaling, and excellent developer experience!
+Railway provides automatic SSL, scaling, and excellent developer experience for production deployments!
 
 **Note**: The `railway.toml` files in each service directory are configured for Railway's deployment system. If you encounter any issues, Railway will automatically detect your Python/Node.js applications and configure them appropriately.
 
