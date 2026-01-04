@@ -223,14 +223,22 @@
           </h3>
 
           <div style="display: flex; flex-direction: column; gap: 0.75rem">
-            <div *ngIf="healthData" class="status-indicator status-success">
-              <div class="status-dot success"></div>
-              <span>Backend API - Connected</span>
+            <div
+              class="status-indicator"
+              [ngClass]="healthData ? 'status-success' : 'status-error'"
+            >
+              <div class="status-dot" [ngClass]="healthData ? 'success' : 'error'"></div>
+              <span>{{
+                healthData ? 'Backend API - Connected' : 'Backend API - Disconnected'
+              }}</span>
             </div>
 
-            <div *ngIf="norseData" class="status-indicator status-connected">
-              <div class="status-dot connected"></div>
-              <span>Norse SNN - Active</span>
+            <div
+              class="status-indicator"
+              [ngClass]="norseData ? 'status-connected' : 'status-error'"
+            >
+              <div class="status-dot" [ngClass]="norseData ? 'connected' : 'error'"></div>
+              <span>{{ norseData ? 'Norse SNN - Active' : 'Norse SNN - Inactive' }}</span>
             </div>
           </div>
         </div>
