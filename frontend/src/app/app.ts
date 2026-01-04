@@ -7,7 +7,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-root',
-  imports: [DecimalPipe, CommonModule, FormsModule, NgxChartsModule],
+  imports: [CommonModule, FormsModule, NgxChartsModule],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
