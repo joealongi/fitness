@@ -246,6 +246,12 @@ export class App implements OnInit, OnDestroy {
     }
   }
 
+  // Calculate weekly total for chart display
+  getWeeklyTotal(): string {
+    const total = this.weeklyVolume.reduce((sum: number, item: any) => sum + item.value, 0);
+    return total.toFixed(1);
+  }
+
   getCurrentYear(): number {
     return new Date().getFullYear();
   }
