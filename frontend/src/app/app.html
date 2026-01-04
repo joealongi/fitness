@@ -1522,15 +1522,22 @@
 </main>
 
 <!-- Footer -->
-@if (!(isAuthenticated$ | async)) {
 <footer
   style="
-    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    background: {{
+    (isAuthenticated$ | async)
+      ? 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)'
+      : 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
+  }};
     padding: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid {{
+    (isAuthenticated$ | async) ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)'
+  }};
     margin-top: 0;
   "
 >
+  @if (!(isAuthenticated$ | async)) {
+  <!-- Full Footer for Non-Authenticated Users -->
   <div style="max-width: 1200px; margin: 0 auto">
     <div
       style="
@@ -1623,30 +1630,47 @@
           >
             Create Account
           </a>
-          @if ((isAuthenticated$ | async)) {
-          <span style="color: rgba(255, 255, 255, 0.5); font-size: 0.875rem">
-            Welcome, {{ (currentUser$ | async)?.username }}
-          </span>
-          }
         </div>
       </div>
     </div>
-    <!-- Copyright Section -->
+  </div>
+  }
+
+  <!-- Copyright Section (Always Visible) -->
+  <div style="max-width: 1200px; margin: 0 auto">
     <div
       style="
         text-align: center;
-        margin-top: 2rem;
-        padding-top: 2rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: {{ (isAuthenticated$ | async) ? '0' : '2rem' }};
+        padding-top: {{ (isAuthenticated$ | async) ? '0' : '2rem' }};
+        border-top: 1px solid {{
+        (isAuthenticated$ | async) ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)'
+      }};
       "
     >
-      <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.7); margin-bottom: 0.5rem">
+      <div
+        style="
+          font-size: 0.875rem;
+          color: {{ (isAuthenticated$ | async) ? '#6b7280' : 'rgba(255, 255, 255, 0.7)' }};
+          margin-bottom: 0.5rem;
+        "
+      >
         Crafted in by Joe Alongi with warp velocity by Cline and Grok Code Fast
       </div>
-      <div style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); margin-bottom: 0.5rem">
+      <div
+        style="
+          font-size: 0.75rem;
+          color: {{ (isAuthenticated$ | async) ? '#9ca3af' : 'rgba(255, 255, 255, 0.6)' }};
+          margin-bottom: 0.5rem;
+        "
+      >
         © {{ getCurrentYear() }} Airwave. All rights reserved.
       </div>
-      <div style="font-size: 0.7rem; color: rgba(255, 255, 255, 0.6)">
+      <div
+        style="font-size: 0.7rem; color: {{
+          (isAuthenticated$ | async) ? '#9ca3af' : 'rgba(255, 255, 255, 0.6)'
+        }}"
+      >
         <a
           href="https://railway.com?referralCode=BpTk0g"
           target="_blank"
@@ -1668,4 +1692,3 @@
     </div>
   </div>
 </footer>
-}
