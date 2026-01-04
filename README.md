@@ -651,19 +651,44 @@ Go to [Railway Dashboard](https://railway.com) and create **three separate proje
 2. **Frontend Project**: `airwave-frontend`
 3. **MCP Project** (optional): `airwave-mcp`
 
-#### Step 2: Add PostgreSQL Database
+#### Step 2: Add and Link PostgreSQL Database
+
+**CRITICAL**: You must link the PostgreSQL database to your backend service.
 
 In your **backend project** (`airwave-backend`):
 
-1. **Click "Add Plugin"** in the project dashboard
-2. **Search for "PostgreSQL"** and select it
-3. **Choose your plan** (Hobby plan is free and sufficient for development)
-4. **Click "Add PostgreSQL"**
+1. **Add PostgreSQL Plugin:**
+
+   - Click "Add Plugin" in the project dashboard
+   - Search for "PostgreSQL" and select it
+   - Choose your plan (Hobby plan is free and sufficient for development)
+   - Click "Add PostgreSQL"
+
+2. **Link Database to Backend Service:**
+
+   - In your backend project, go to the **"Services"** tab
+   - Find your backend service (should be named something like `airwave-backend`)
+   - Click on the service to open its settings
+   - In the service settings, find the **"Plugins"** section
+   - Click **"Link Plugin"**
+   - Select the PostgreSQL plugin you just created
+   - Click **"Link Plugin"**
+
+3. **Verify Connection:**
+   - Go to your backend service **"Variables"** tab
+   - You should now see PostgreSQL environment variables:
+     ```
+     PGDATABASE=railway
+     PGHOST=containers-us-west-XXX.railway.app
+     PGPORT=XXXX
+     PGPASSWORD=your-auto-generated-password
+     PGUSER=postgres
+     ```
 
 Railway will automatically:
 
 - ✅ Create a PostgreSQL database instance
-- ✅ Set up environment variables (`PGDATABASE`, `PGUSER`, `PGPASSWORD`, etc.)
+- ✅ Set up environment variables in your backend service
 - ✅ Configure SSL connections
 - ✅ Handle database migrations automatically
 

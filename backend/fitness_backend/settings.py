@@ -113,22 +113,30 @@ WSGI_APPLICATION = 'fitness_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-# Check if we're running on Railway (production) or locally
-if os.getenv('RAILWAY_ENVIRONMENT'):
-    # Railway PostgreSQL configuration
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('PGDATABASE'),
-            'USER': os.getenv('PGUSER'),
-            'PASSWORD': os.getenv('PGPASSWORD'),
-            'HOST': os.getenv('PGHOST'),
-            'PORT': os.getenv('PGPORT', '5432'),
-            'OPTIONS': {
-                'sslmode': 'require',
-            },
+# Check if we have PostgreSQL environment variables (Railway or other cloud)
+if os.getenv('PGDATABASE') or os.getenv('DATABASE_URL'):
+    # Railway PostgreSQL configuration or other PostgreSQL setup
+    if os.getenv('DATABASE_URL'):
+        # Parse DATABASE_URL if provided
+        import dj_database_url
+        DATABASES = {
+            'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
         }
-    }
+    else:
+        # Railway-style environment variables
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': os.getenv('PGDATABASE', 'railway'),
+                'USER': os.getenv('PGUSER', 'postgres'),
+                'PASSWORD': os.getenv('PGPASSWORD'),
+                'HOST': os.getenv('PGHOST'),
+                'PORT': os.getenv('PGPORT', '5432'),
+                'OPTIONS': {
+                    'sslmode': 'require' if os.getenv('RAILWAY_ENVIRONMENT') else 'prefer',
+                },
+            }
+        }
 else:
     # Local SQLite configuration for development
     DATABASES = {
