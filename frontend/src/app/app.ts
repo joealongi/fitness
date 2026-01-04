@@ -43,6 +43,13 @@ export class App implements OnInit, OnDestroy {
     user: 1, // Hardcoded for demo
   };
 
+  // Demo calculator for unauthenticated users
+  demoWorkout = {
+    activity_type: 'run',
+    duration: 30,
+    distance: 5,
+  };
+
   ngOnInit() {
     // Subscribe to authentication state changes
     this.subscriptions.push(
@@ -132,6 +139,39 @@ export class App implements OnInit, OnDestroy {
         this.workoutResult = { error: 'Unable to submit workout. Backend may be unreachable.' };
       },
     });
+  }
+
+  // Demo calculator for unauthenticated users
+  calculateDemoVO2Max() {
+    if (!this.demoWorkout.duration || !this.demoWorkout.distance) return;
+
+    // Simple Cooper test calculation for demo
+    // VO2 max = (distance_m - 504.9) / 44.73 for males
+    const distanceM = this.demoWorkout.distance * 1000; // Convert km to meters
+    const estimatedVO2Max = (distanceM - 504.9) / 44.73;
+
+    // Get basic benefits
+    const benefits =
+      estimatedVO2Max > 40
+        ? 'Excellent aerobic fitness! You have great cardiovascular health.'
+        : estimatedVO2Max > 30
+        ? 'Good aerobic fitness. Keep up the great work!'
+        : 'Fair aerobic fitness. Consider increasing your training intensity.';
+
+    this.workoutResult = {
+      vo2max_estimate: Math.max(15, Math.min(80, estimatedVO2Max)), // Clamp between 15-80
+      benefits: benefits,
+      method: 'demo_calculator',
+      note: 'This is a demo calculation. Sign up for personalized results!',
+    };
+  }
+
+  // Scroll to authentication section
+  scrollToAuth() {
+    const authSection = document.querySelector('.auth-section');
+    if (authSection) {
+      authSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   getCurrentYear(): number {
