@@ -405,42 +405,67 @@ Airwave is designed for easy deployment to modern cloud platforms. This guide co
 
 ### Railway Deployment (Recommended) ⭐
 
-Railway provides the easiest full-stack deployment with built-in PostgreSQL and automatic SSL. This monorepo is configured for seamless multi-service deployment.
+Railway provides the easiest full-stack deployment with built-in PostgreSQL and automatic SSL. **This is a monorepo with multiple services** - deploy each service as a separate Railway project.
 
-#### Quick Start
+#### Step-by-Step Deployment
+
+1. **Install Railway CLI:**
 
 ```bash
-# Install Railway CLI
 npm install -g @railway/cli
 railway login
-
-# Deploy all services at once
-railway init airwave
-railway up
 ```
 
-#### Environment Variables Setup
-
-Railway will automatically detect the monorepo structure and deploy all services. Set environment variables for each service:
+2. **Deploy Backend Service:**
 
 ```bash
-# Backend variables
+cd backend
+railway init airwave-backend
+railway up
+
+# Set environment variables for backend
 railway variables set DEBUG=False
 railway variables set SECRET_KEY=$(python -c "import secrets; print(secrets.token_urlsafe(32))")
 railway variables set FIELD_ENCRYPTION_KEY=$(python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())")
-railway variables set ALLOWED_HOSTS=airwave-production.up.railway.app
+railway variables set ALLOWED_HOSTS=airwave-backend-production.up.railway.app
 
-# Frontend variables (update with your backend URL)
-railway variables set VITE_API_URL=https://airwave-production.up.railway.app
-
-# Run Django migrations
-railway run --service backend python manage.py migrate
-railway run --service backend python manage.py createsuperuser
+# Run migrations
+railway run python manage.py migrate
+railway run python manage.py createsuperuser
 ```
 
-#### Manual Service Deployment (Alternative)
+3. **Deploy Frontend Service:**
 
-If you prefer to deploy services individually:
+```bash
+cd ../frontend  # from backend directory
+railway init airwave-frontend
+railway up
+
+# Set API URL (use your backend Railway URL)
+railway variables set VITE_API_URL=https://airwave-backend-production.up.railway.app
+```
+
+4. **Deploy MCP Server (Optional):**
+
+```bash
+cd ../mcp-airwave  # from frontend directory
+railway init airwave-mcp
+railway up
+```
+
+#### Update CORS Settings
+
+After deployment, update backend CORS settings with your frontend URL:
+
+```bash
+# In backend Railway project
+railway variables set CORS_ALLOWED_ORIGINS=https://airwave-frontend-production.up.railway.app
+railway variables set CSRF_TRUSTED_ORIGINS=https://airwave-frontend-production.up.railway.app
+```
+
+#### Manual Service Management
+
+If you prefer to manage services individually:
 
 ```bash
 # Backend only
