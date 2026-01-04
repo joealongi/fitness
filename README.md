@@ -13,26 +13,81 @@ Airwave is a comprehensive fitness application that estimates VO2 max from worko
 
 ## 🛠️ Tech Stack
 
-### Frontend
+### Single-Page Application Architecture
 
-- **Angular 21**: Latest modern reactive web framework
-- **TypeScript**: Type-safe development
+**Angular (TypeScript) frontend, Drizzle ORM, TypeScript MCP, Python Django backend, Chroma vector database, and Postgres database.**
+
+#### Why This Architecture?
+
+**Frontend - Angular (TypeScript):**
+
+- **Component-based architecture** for maintainable, reusable UI components
+- **Reactive programming** with RxJS for handling async operations and real-time updates
+- **TypeScript** provides compile-time type checking, reducing runtime errors
+- **SPA routing** enables fast navigation without full page reloads
+- **PWA capabilities** allow offline functionality and app-like experience
+
+**Drizzle ORM:**
+
+- **Type-safe database schemas** that mirror Django models exactly
+- **Runtime validation** with Zod integration for API data validation
+- **Frontend type safety** ensures API responses match expected structures
+- **Developer experience** with excellent IDE autocomplete and error detection
+- **Schema consistency** between backend models and frontend types
+
+**TypeScript MCP (Model Context Protocol):**
+
+- **External AI tool integration** for enhanced fitness guidance
+- **Type-safe communication** with AI assistants and external services
+- **Standardized protocol** for connecting to various AI tools and services
+- **Fitness-specific insights** from external AI models and calculations
+
+**Backend - Python Django:**
+
+- **Rapid development** with built-in admin, authentication, and ORM
+- **Security features** including CSRF protection, input validation, and encryption
+- **Scalable architecture** with proper separation of concerns
+- **RESTful APIs** via Django REST Framework for frontend communication
+- **Production-ready** with comprehensive testing and deployment tools
+
+**Chroma Vector Database:**
+
+- **Semantic search** capabilities for fitness data analysis
+- **Vector embeddings** for advanced workout pattern recognition
+- **AI-powered insights** using similarity search on fitness metrics
+- **Scalable storage** for high-dimensional fitness data
+- **Integration with ML models** for personalized recommendations
+
+**PostgreSQL Database:**
+
+- **ACID compliance** ensuring data integrity for user health information
+- **Advanced querying** with JSON fields for complex workout data
+- **Encryption support** for sensitive health data (PII protection)
+- **Performance** with indexing and query optimization
+- **Reliability** with automatic backups and point-in-time recovery
+
+### Detailed Component Breakdown
+
+#### Frontend Technologies
+
+- **Angular 21**: Latest modern reactive web framework with standalone components
+- **TypeScript**: Type-safe development with advanced IDE support
 - **Spartan CSS**: Custom utility-first CSS framework inspired by modern design principles
 - **Responsive Design**: Mobile-first approach with clean, accessible components
 
-### Backend
+#### Backend Technologies
 
-- **Django 6.0**: Robust web framework
-- **Django REST Framework**: API development
-- **PostgreSQL**: Production database
-- **PyTorch**: Machine learning framework
-- **Norse**: Spiking Neural Networks library
-- **ChromaDB**: Vector database for embeddings
+- **Django 6.0**: Robust web framework with excellent security features
+- **Django REST Framework**: Professional API development toolkit
+- **PostgreSQL**: Production database with advanced features
+- **PyTorch**: Machine learning framework for AI model development
+- **Norse**: Spiking Neural Networks library for temporal data processing
+- **ChromaDB**: Vector database for embeddings and semantic search
 
-### AI & External Tools
+#### AI & Integration Technologies
 
-- **MCP (Model Context Protocol)**: External AI tool integration
-- **Scientific Formulas**: Cooper test, heart rate-based calculations
+- **MCP (Model Context Protocol)**: External AI tool integration standard
+- **Scientific Formulas**: Cooper test, heart rate-based VO2 max calculations
 
 ## 🏗️ System Architecture
 
