@@ -5,6 +5,9 @@ import { Api } from './api';
 import { Subscription } from 'rxjs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
+/* Spartan UI - Using CSS-first approach for now */
+/* Components will be updated to use Spartan UI directives when available */
+
 @Component({
   selector: 'app-root',
   imports: [CommonModule, FormsModule, NgxChartsModule],
