@@ -1345,12 +1345,13 @@
 </main>
 
 <!-- Footer -->
+@if (!(isAuthenticated$ | async)) {
 <footer
   style="
     background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
     padding: 2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    margin-top: 1rem;
+    margin-top: 0;
   "
 >
   <div style="max-width: 1200px; margin: 0 auto">
@@ -1461,3 +1462,4 @@
     </div>
   </div>
 </footer>
+}
