@@ -294,43 +294,15 @@ ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
 - ✅ **CORS Security**: Restricted to allowed domains
 - ✅ **Data Encryption**: AES-256 encryption for sensitive health data
 
-### Data Encryption Setup
+### SEO & Performance Features
 
-Airwave uses **AES-256 encryption** to protect sensitive health and personal data at the database level.
-
-#### Encrypted Fields
-
-- **User Profile**: Age, weight, height (PII and sensitive health data)
-- **Workout Data**: Heart rate metrics (biometric data)
-
-#### Encryption Key Setup
-
-1. **Generate encryption key:**
-
-```bash
-python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())"
-```
-
-2. **Add to environment variables:**
-
-```bash
-# .env file
-FIELD_ENCRYPTION_KEY=your-generated-44-character-fernet-key-here
-```
-
-3. **Key Requirements:**
-
-- Must be 32 bytes (44 characters when base64 encoded)
-- Use different keys for development and production
-- Store securely and backup encryption keys
-- Never commit keys to version control
-
-#### Security Benefits
-
-- **At Rest Protection**: Data encrypted in database using Fernet (AES-128-CBC + HMAC)
-- **Regulatory Compliance**: HIPAA/GDPR-ready for health applications
-- **Zero Knowledge**: Data encrypted before storage, decrypted only when accessed
-- **Key Rotation**: Support for key rotation without data migration
+- ✅ **Complete SEO Meta Tags**: Title, description, keywords, Open Graph, Twitter cards
+- ✅ **Structured Data (JSON-LD)**: Rich snippets for search engines
+- ✅ **PWA Manifest**: Progressive Web App capabilities
+- ✅ **Robots.txt & Sitemap.xml**: Search engine optimization
+- ✅ **Mobile Optimization**: Responsive design and mobile meta tags
+- ✅ **Font Optimization**: Preconnect for Google Fonts
+- ✅ **Accessibility**: Skip links and semantic HTML
 
 ## 🌐 Deployment
 
@@ -427,6 +399,223 @@ VO2 max = 15.3 × (max HR / resting HR)
 
 Advanced temporal processing of heart rate variability for more accurate predictions.
 
+## 🚀 Complete Deployment Guide
+
+Airwave is designed for easy deployment to modern cloud platforms. This guide covers Railway (recommended), Heroku, Vercel, and other options.
+
+### Railway Deployment (Recommended) ⭐
+
+Railway provides the easiest full-stack deployment with built-in PostgreSQL and automatic SSL.
+
+#### 1. Backend Deployment
+
+```bash
+# Install Railway CLI
+npm install -g @railway/cli
+railway login
+
+# Create project and deploy backend
+railway init airwave-backend
+railway up
+
+# Set environment variables
+railway variables set DEBUG=False
+railway variables set SECRET_KEY=$(python -c "import secrets; print(secrets.token_urlsafe(32))")
+railway variables set FIELD_ENCRYPTION_KEY=$(python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())")
+railway variables set ALLOWED_HOSTS=airwave-backend-production.up.railway.app
+
+# Run migrations
+railway run python manage.py migrate
+railway run python manage.py createsuperuser
+```
+
+#### 2. Frontend Deployment
+
+```bash
+# Deploy frontend to Railway
+cd frontend
+railway init airwave-frontend
+railway up
+
+# Set production API URL
+railway variables set VITE_API_URL=https://airwave-backend-production.up.railway.app
+```
+
+#### 3. Update CORS Settings
+
+In Railway backend environment variables:
+
+```bash
+CORS_ALLOWED_ORIGINS=https://airwave-frontend-production.up.railway.app
+CSRF_TRUSTED_ORIGINS=https://airwave-frontend-production.up.railway.app
+```
+
+### Heroku Deployment
+
+#### Backend
+
+```bash
+# Create Heroku apps
+heroku create airwave-backend
+heroku create airwave-frontend
+
+# Backend setup
+cd backend
+heroku git:remote -a airwave-backend
+heroku addons:create heroku-postgresql
+
+# Set environment variables
+heroku config:set DEBUG=False
+heroku config:set SECRET_KEY=$(python -c "import secrets; print(secrets.token_urlsafe(32))")
+heroku config:set FIELD_ENCRYPTION_KEY=$(python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())")
+heroku config:set ALLOWED_HOSTS=airwave-backend.herokuapp.com
+
+# Deploy
+git push heroku main
+heroku run python manage.py migrate
+heroku run python manage.py createsuperuser
+```
+
+#### Frontend
+
+```bash
+cd frontend
+heroku git:remote -a airwave-frontend
+
+# Create static.json for SPA routing
+echo '{
+  "root": "dist",
+  "routes": {
+    "/**": "index.html"
+  }
+}' > static.json
+
+# Set API URL
+heroku config:set API_URL=https://airwave-backend.herokuapp.com
+
+git push heroku main
+```
+
+### Vercel + Railway Hybrid
+
+For optimal performance, deploy frontend to Vercel and backend to Railway:
+
+```bash
+# Backend on Railway (as above)
+railway init airwave-backend
+railway up
+
+# Frontend on Vercel
+cd frontend
+npm i -g vercel
+vercel --prod
+
+# Set environment variables in Vercel dashboard
+# VITE_API_URL=https://your-railway-backend-url
+```
+
+### Environment Variables Required
+
+#### Backend (.env)
+
+```bash
+DEBUG=False
+SECRET_KEY=your-32-char-secret-key
+FIELD_ENCRYPTION_KEY=your-44-char-fernet-key
+ALLOWED_HOSTS=yourdomain.com,your-backend-url
+CORS_ALLOWED_ORIGINS=https://your-frontend-url
+CSRF_TRUSTED_ORIGINS=https://your-frontend-url
+SECURE_SSL_REDIRECT=True
+```
+
+#### Frontend (.env)
+
+```bash
+VITE_API_URL=https://your-backend-api-url
+```
+
+### Data Encryption Setup
+
+**Critical**: Set up encryption keys before deploying to production.
+
+#### Generate Keys
+
+```bash
+# Django secret key
+python -c "import secrets; print(secrets.token_urlsafe(32))"
+
+# Field encryption key
+python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())"
+```
+
+#### Encrypted Data
+
+- **User Profiles**: Age, weight, height (PII protection)
+- **Workout Data**: Heart rate metrics (biometric data)
+- **Security**: AES-256 encryption at database level
+
+### Post-Deployment Checklist
+
+- ✅ **SSL Certificate**: Automatic on Railway/Vercel
+- ✅ **Database Migration**: Run `python manage.py migrate`
+- ✅ **Static Files**: Served correctly on frontend
+- ✅ **API Connectivity**: Frontend can reach backend APIs
+- ✅ **CORS Headers**: Properly configured for cross-origin requests
+- ✅ **Environment Variables**: All secrets set securely
+- ✅ **Encryption Keys**: Generated and configured
+- ✅ **Domain Setup**: airwave.fitness configured
+- ✅ **SEO Setup**: Sitemap submitted to Google Search Console
+- ✅ **Social Media**: Open Graph images created and tested
+
+### Troubleshooting
+
+#### Common Issues
+
+**CORS Errors:**
+
+```bash
+# Check CORS_ALLOWED_ORIGINS in backend
+railway variables set CORS_ALLOWED_ORIGINS=https://your-frontend-domain.com
+```
+
+**Database Connection:**
+
+```bash
+# Railway provides DATABASE_URL automatically
+# Check with: railway run python manage.py dbshell
+```
+
+**Static Files:**
+
+```bash
+# For SPA routing, ensure proper configuration
+# Railway/Vercel handle this automatically
+```
+
+**Encryption Issues:**
+
+```bash
+# Regenerate keys if deployment fails
+python3 -c "import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())"
+```
+
+### Production URLs
+
+After deployment, update your local development to use production URLs:
+
+- **Backend API**: `https://your-backend.railway.app`
+- **Frontend App**: `https://your-frontend.vercel.app` or Railway URL
+- **MCP Server**: Deploy separately if needed
+
+### Monitoring & Maintenance
+
+- **Logs**: `railway logs` or Railway dashboard
+- **Metrics**: Railway provides built-in monitoring
+- **Backups**: Railway automatic database backups
+- **Scaling**: Easy horizontal scaling on Railway
+
+Railway is recommended for its simplicity and Railway + Vercel for optimal performance. Both provide automatic SSL, scaling, and excellent developer experience! 🚀
+
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -437,7 +626,7 @@ Advanced temporal processing of heart rate variability for more accurate predict
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the Mozilla Public License Version 2.0 - see the LICENSE file for details.
 
 ## 📞 Support
 

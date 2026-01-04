@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Block access to admin areas (if any)
+Disallow: /admin/
+Disallow: /api/admin/
+
+# Allow crawling of main content
+Allow: /api/health/
+Allow: /api/norse-test/
+
+# Sitemap
+Sitemap: https://airwave.fitness/sitemap.xml
