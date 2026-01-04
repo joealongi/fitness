@@ -1,0 +1,10 @@
+[build]
+builder = "node"
+
+[deploy]
+startCommand = "npm start"
+restartPolicyType = "ON_FAILURE"
+
+[environments]
+[environments.production]
+NODE_ENV = "production"

@@ -1,0 +1,31 @@
+[build]
+builder = "monorepo"
+
+[[services]]
+name = "backend"
+source = "backend"
+builder = "python"
+
+[services.deploy]
+startCommand = "python manage.py runserver 0.0.0.0:$PORT"
+healthcheckPath = "/api/health/"
+restartPolicyType = "ON_FAILURE"
+
+[[services]]
+name = "frontend"
+source = "frontend"
+builder = "node"
+
+[services.deploy]
+startCommand = "npm start"
+healthcheckPath = "/"
+restartPolicyType = "ON_FAILURE"
+
+[[services]]
+name = "mcp-server"
+source = "mcp-airwave"
+builder = "node"
+
+[services.deploy]
+startCommand = "npm start"
+restartPolicyType = "ON_FAILURE"

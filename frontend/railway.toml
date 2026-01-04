@@ -1,0 +1,11 @@
+[build]
+builder = "node"
+
+[deploy]
+startCommand = "npm start"
+healthcheckPath = "/"
+restartPolicyType = "ON_FAILURE"
+
+[environments]
+[environments.production]
+NODE_ENV = "production"

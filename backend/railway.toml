@@ -1,0 +1,12 @@
+[build]
+builder = "python"
+
+[deploy]
+startCommand = "python manage.py runserver 0.0.0.0:$PORT"
+healthcheckPath = "/api/health/"
+restartPolicyType = "ON_FAILURE"
+
+[environments]
+[environments.production]
+DJANGO_SETTINGS_MODULE = "fitness_backend.settings"
+DEBUG = false
