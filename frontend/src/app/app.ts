@@ -40,7 +40,6 @@ export class App implements OnInit, OnDestroy {
     heart_rate_avg: null,
     heart_rate_max: null,
     intensity: 'moderate',
-    user: 1, // Hardcoded for demo
   };
 
   // Demo calculator for unauthenticated users
