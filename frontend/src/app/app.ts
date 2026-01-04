@@ -3,10 +3,11 @@ import { DecimalPipe, CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Api } from './api';
 import { Subscription } from 'rxjs';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'app-root',
-  imports: [DecimalPipe, CommonModule, FormsModule],
+  imports: [DecimalPipe, CommonModule, FormsModule, NgxChartsModule],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
@@ -52,6 +53,74 @@ export class App implements OnInit, OnDestroy {
     duration: 30,
     distance: 5,
   };
+
+  // Chart data and configuration
+  view: [number, number] = [700, 300];
+
+  // Color scheme for charts
+  colorScheme: any = {
+    domain: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'],
+  };
+
+  // VO2 Max trend over time (Line Chart)
+  vo2MaxTrend: any[] = [
+    { name: 'Jan', value: 35 },
+    { name: 'Feb', value: 38 },
+    { name: 'Mar', value: 42 },
+    { name: 'Apr', value: 39 },
+    { name: 'May', value: 45 },
+    { name: 'Jun', value: 48 },
+  ];
+
+  // Activity type distribution (Pie Chart)
+  activityDistribution: any[] = [
+    { name: 'Running', value: 45 },
+    { name: 'Cycling', value: 30 },
+    { name: 'Walking', value: 15 },
+    { name: 'Swimming', value: 10 },
+  ];
+
+  // Weekly workout volume (Bar Chart)
+  weeklyVolume: any[] = [
+    { name: 'Mon', value: 2.5 },
+    { name: 'Tue', value: 3.1 },
+    { name: 'Wed', value: 1.8 },
+    { name: 'Thu', value: 4.2 },
+    { name: 'Fri', value: 2.9 },
+    { name: 'Sat', value: 6.1 },
+    { name: 'Sun', value: 3.7 },
+  ];
+
+  // Heart rate zones (Area Chart)
+  heartRateZones: any[] = [
+    {
+      name: 'Fat Burn',
+      series: [
+        { name: 'Week 1', value: 120 },
+        { name: 'Week 2', value: 125 },
+        { name: 'Week 3', value: 130 },
+        { name: 'Week 4', value: 135 },
+      ],
+    },
+    {
+      name: 'Cardio',
+      series: [
+        { name: 'Week 1', value: 140 },
+        { name: 'Week 2', value: 145 },
+        { name: 'Week 3', value: 150 },
+        { name: 'Week 4', value: 155 },
+      ],
+    },
+    {
+      name: 'Peak',
+      series: [
+        { name: 'Week 1', value: 160 },
+        { name: 'Week 2', value: 165 },
+        { name: 'Week 3', value: 170 },
+        { name: 'Week 4', value: 175 },
+      ],
+    },
+  ];
 
   ngOnInit() {
     // Subscribe to authentication state changes

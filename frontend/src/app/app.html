@@ -656,6 +656,135 @@
           </div>
         </div>
 
+        <!-- Workout Analytics Dashboard -->
+        <div class="card" style="padding: 1.5rem">
+          <h3
+            style="
+              font-size: 1.25rem;
+              font-weight: 600;
+              color: var(--text-primary);
+              margin-bottom: 1.5rem;
+              display: flex;
+              align-items: center;
+            "
+          >
+            <span style="margin-right: 0.5rem">📊</span>
+            Workout Analytics
+          </h3>
+
+          <div style="display: flex; flex-direction: column; gap: 2rem">
+            <!-- VO2 Max Trend -->
+            <div>
+              <h4
+                style="
+                  font-size: 1rem;
+                  font-weight: 600;
+                  color: var(--text-primary);
+                  margin-bottom: 1rem;
+                "
+              >
+                VO2 Max Progress Over Time
+              </h4>
+              <ngx-charts-line-chart
+                [view]="view"
+                [scheme]="colorScheme"
+                [results]="vo2MaxTrend"
+                [gradient]="true"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="false"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                xAxisLabel="Month"
+                yAxisLabel="VO2 Max (mL/kg/min)"
+              >
+              </ngx-charts-line-chart>
+            </div>
+
+            <!-- Activity Distribution & Weekly Volume -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem">
+              <!-- Activity Distribution -->
+              <div>
+                <h4
+                  style="
+                    font-size: 1rem;
+                    font-weight: 600;
+                    color: var(--text-primary);
+                    margin-bottom: 1rem;
+                  "
+                >
+                  Activity Distribution
+                </h4>
+                <ngx-charts-pie-chart
+                  [view]="[300, 300]"
+                  [scheme]="colorScheme"
+                  [results]="activityDistribution"
+                  [legend]="true"
+                  [labels]="true"
+                  [doughnut]="true"
+                >
+                </ngx-charts-pie-chart>
+              </div>
+
+              <!-- Weekly Volume -->
+              <div>
+                <h4
+                  style="
+                    font-size: 1rem;
+                    font-weight: 600;
+                    color: var(--text-primary);
+                    margin-bottom: 1rem;
+                  "
+                >
+                  Weekly Workout Volume (km)
+                </h4>
+                <ngx-charts-bar-vertical
+                  [view]="[300, 300]"
+                  [scheme]="colorScheme"
+                  [results]="weeklyVolume"
+                  [gradient]="true"
+                  [xAxis]="true"
+                  [yAxis]="true"
+                  [legend]="false"
+                  [showXAxisLabel]="true"
+                  [showYAxisLabel]="true"
+                  xAxisLabel="Day"
+                  yAxisLabel="Distance (km)"
+                >
+                </ngx-charts-bar-vertical>
+              </div>
+            </div>
+
+            <!-- Heart Rate Zones -->
+            <div>
+              <h4
+                style="
+                  font-size: 1rem;
+                  font-weight: 600;
+                  color: var(--text-primary);
+                  margin-bottom: 1rem;
+                "
+              >
+                Heart Rate Zone Progress
+              </h4>
+              <ngx-charts-area-chart-stacked
+                [view]="view"
+                [scheme]="colorScheme"
+                [results]="heartRateZones"
+                [gradient]="true"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="true"
+                [showXAxisLabel]="true"
+                [showYAxisLabel]="true"
+                xAxisLabel="Week"
+                yAxisLabel="Heart Rate (bpm)"
+              >
+              </ngx-charts-area-chart-stacked>
+            </div>
+          </div>
+        </div>
+
         <!-- Feature Highlights -->
         <div class="card" style="padding: 1.5rem">
           <h3
