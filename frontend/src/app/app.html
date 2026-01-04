@@ -1257,16 +1257,7 @@
           <!-- Vertical Chart Layout -->
           <div style="display: flex; flex-direction: column; gap: 2rem">
             <!-- VO2 Max Progress Chart -->
-            <div
-              style="
-                background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-                border-radius: 1rem;
-                padding: 1.5rem;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.8);
-                width: 100%;
-              "
-            >
+            <div style="text-align: center; border-top: 1px solid rgba(0, 0, 0, 0.1)">
               <div style="margin-bottom: 1rem">
                 <h4
                   style="
@@ -1524,15 +1515,9 @@
 <!-- Footer -->
 <footer
   style="
-    background: {{
-    (isAuthenticated$ | async)
-      ? 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)'
-      : 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
-  }};
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
     padding: 2rem;
-    border-top: 1px solid {{
-    (isAuthenticated$ | async) ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)'
-  }};
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
     margin-top: 0;
   "
 >
@@ -1552,7 +1537,7 @@
           style="
             font-size: 1.25rem;
             font-weight: 600;
-            color: {{ (isAuthenticated$ | async) ? '#1f2937' : 'white' }};
+            color: #1f2937;
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
@@ -1568,11 +1553,7 @@
                 healthData ? '#10b981' : '#ef4444'
               }}"
             ></div>
-            <span
-              style="color: {{
-                (isAuthenticated$ | async) ? '#374151' : 'rgba(255, 255, 255, 0.9)'
-              }}"
-            >
+            <span style="color: #374151">
               {{ healthData ? 'Backend API - Connected' : 'Backend API - Disconnected' }}
             </span>
           </div>
@@ -1583,11 +1564,7 @@
                 norseData ? '#3b82f6' : '#ef4444'
               }}"
             ></div>
-            <span
-              style="color: {{
-                (isAuthenticated$ | async) ? '#374151' : 'rgba(255, 255, 255, 0.9)'
-              }}"
-            >
+            <span style="color: #374151">
               {{ norseData ? 'Norse SNN - Active' : 'Norse SNN - Inactive' }}
             </span>
           </div>
@@ -1596,18 +1573,10 @@
 
       <!-- About -->
       <div>
-        <h4
-          style="font-size: 1.25rem; font-weight: 600; color: {{
-            (isAuthenticated$ | async) ? '#1f2937' : 'white'
-          }}; margin-bottom: 1.5rem"
-        >
+        <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1.5rem">
           About Airwave
         </h4>
-        <p
-          style="color: {{
-            (isAuthenticated$ | async) ? '#6b7280' : 'rgba(255, 255, 255, 0.7)'
-          }}; line-height: 1.6; margin-bottom: 1rem"
-        >
+        <p style="color: #6b7280; line-height: 1.6; margin-bottom: 1rem">
           AI-powered fitness intelligence that helps you unlock your athletic potential with
           advanced VO2 max calculations and personalized insights.
         </p>
@@ -1615,11 +1584,7 @@
 
       <!-- Links -->
       <div>
-        <h4
-          style="font-size: 1.25rem; font-weight: 600; color: {{
-            (isAuthenticated$ | async) ? '#1f2937' : 'white'
-          }}; margin-bottom: 1.5rem"
-        >
+        <h4 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-bottom: 1.5rem">
           Quick Links
         </h4>
         <div style="display: flex; flex-direction: column; gap: 0.75rem">
@@ -1627,35 +1592,31 @@
           <a
             (click)="scrollToDemo()"
             style="
-              color: rgba(255, 255, 255, 0.7);
+              color: #6b7280;
               text-decoration: none;
               cursor: pointer;
               transition: color 0.2s ease;
             "
-            onmouseover="this.style.color='white'"
-            onmouseout="this.style.color='rgba(255, 255, 255, 0.7)'"
+            onmouseover="this.style.color='#1f2937'"
+            onmouseout="this.style.color='#6b7280'"
           >
             Try Demo Calculator
           </a>
           <a
             (click)="scrollToAuth()"
             style="
-              color: rgba(255, 255, 255, 0.7);
+              color: #6b7280;
               text-decoration: none;
               cursor: pointer;
               transition: color 0.2s ease;
             "
-            onmouseover="this.style.color='white'"
-            onmouseout="this.style.color='rgba(255, 255, 255, 0.7)'"
+            onmouseover="this.style.color='#1f2937'"
+            onmouseout="this.style.color='#6b7280'"
           >
             Create Account
           </a>
           } @else {
-          <span
-            style="color: {{
-              (isAuthenticated$ | async) ? '#6b7280' : 'rgba(255, 255, 255, 0.5)'
-            }}; font-size: 0.875rem"
-          >
+          <span style="color: #6b7280; font-size: 0.875rem">
             Welcome, {{ (currentUser$ | async)?.username }}
           </span>
           }
@@ -1676,29 +1637,13 @@
       }};
       "
     >
-      <div
-        style="
-          font-size: 0.875rem;
-          color: {{ (isAuthenticated$ | async) ? '#6b7280' : 'rgba(255, 255, 255, 0.7)' }};
-          margin-bottom: 0.5rem;
-        "
-      >
+      <div style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.5rem">
         Crafted in by Joe Alongi with warp velocity by Cline and Grok Code Fast
       </div>
-      <div
-        style="
-          font-size: 0.75rem;
-          color: {{ (isAuthenticated$ | async) ? '#9ca3af' : 'rgba(255, 255, 255, 0.6)' }};
-          margin-bottom: 0.5rem;
-        "
-      >
+      <div style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 0.5rem">
         © {{ getCurrentYear() }} Airwave. All rights reserved.
       </div>
-      <div
-        style="font-size: 0.7rem; color: {{
-          (isAuthenticated$ | async) ? '#9ca3af' : 'rgba(255, 255, 255, 0.6)'
-        }}"
-      >
+      <div style="font-size: 0.7rem; color: #9ca3af">
         <a
           href="https://railway.com?referralCode=BpTk0g"
           target="_blank"
