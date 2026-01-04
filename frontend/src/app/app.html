@@ -139,6 +139,126 @@
         </div>
       </div>
     </div>
+
+    <!-- Demo Calculator Section for Unauthenticated Users -->
+    <div style="margin-bottom: 2rem">
+      <div class="card" style="padding: 1.5rem">
+        <h2
+          style="
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+          "
+        >
+          🧮 Try Our VO2 Max Calculator
+        </h2>
+
+        <!-- Demo Badge -->
+        <div
+          style="
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+            border: 1px solid #f59e0b;
+            text-align: center;
+            margin-bottom: 1rem;
+          "
+        >
+          <span style="color: #92400e; font-weight: 600; font-size: 0.875rem">
+            🎯 Free Demo - No Account Required
+          </span>
+        </div>
+
+        <form
+          (ngSubmit)="calculateDemoVO2Max()"
+          style="display: flex; flex-direction: column; gap: 1rem"
+        >
+          <!-- Activity Type -->
+          <div>
+            <label class="label" for="demo_activity_type">Activity Type</label>
+            <select
+              [(ngModel)]="demoWorkout.activity_type"
+              name="activity_type"
+              id="demo_activity_type"
+              class="select"
+            >
+              <option value="run">🏃 Run</option>
+              <option value="cycle">🚴 Cycle</option>
+              <option value="walk">🚶 Walk</option>
+            </select>
+          </div>
+
+          <!-- Duration -->
+          <div>
+            <label class="label" for="demo_duration">Duration (minutes)</label>
+            <input
+              type="number"
+              [(ngModel)]="demoWorkout.duration"
+              name="duration"
+              id="demo_duration"
+              required
+              class="input"
+              placeholder="30"
+            />
+          </div>
+
+          <!-- Distance -->
+          <div>
+            <label class="label" for="demo_distance">Distance (km)</label>
+            <input
+              type="number"
+              step="0.1"
+              [(ngModel)]="demoWorkout.distance"
+              name="distance"
+              id="demo_distance"
+              class="input"
+              placeholder="5.0"
+            />
+          </div>
+
+          <!-- Calculate Button -->
+          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem 1rem">
+            🧮 Calculate VO2 Max (Demo)
+          </button>
+        </form>
+
+        <!-- Call to Action -->
+        <div
+          style="
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            border: 1px solid #10b981;
+            text-align: center;
+            margin-top: 1rem;
+          "
+        >
+          <h4 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1rem">
+            💎 Ready for More?
+          </h4>
+          <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 1rem">
+            Sign up to save workouts, access premium AI features, and get personalized insights.
+          </p>
+          <div style="display: flex; gap: 0.5rem">
+            <button
+              (click)="scrollToAuth()"
+              class="btn btn-primary"
+              style="flex: 1; font-size: 0.875rem"
+            >
+              Sign Up Free
+            </button>
+            <button
+              (click)="scrollToAuth()"
+              class="btn btn-secondary"
+              style="flex: 1; font-size: 0.875rem"
+            >
+              Login
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     } @else {
     <!-- User Dashboard -->
     <div class="user-dashboard" style="margin-bottom: 2rem">
@@ -288,126 +408,6 @@
           </button>
         </form>
       </div>
-
-      <!-- Demo Calculator Section (visible to unauthenticated users too) -->
-      @if (!isAuthenticated) {
-      <div class="card" style="padding: 1.5rem; margin-bottom: 2rem">
-        <h2
-          style="
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 1.5rem;
-          "
-        >
-          🧮 Demo Calculator
-        </h2>
-
-        <!-- Demo Badge -->
-        <div
-          style="
-            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
-            padding: 0.75rem;
-            border-radius: var(--border-radius);
-            border: 1px solid #f59e0b;
-            text-align: center;
-            margin-bottom: 1rem;
-          "
-        >
-          <span style="color: #92400e; font-weight: 600; font-size: 0.875rem">
-            🎯 Try It Free - No Account Required
-          </span>
-        </div>
-
-        <form
-          (ngSubmit)="calculateDemoVO2Max()"
-          style="display: flex; flex-direction: column; gap: 1rem"
-        >
-          <!-- Activity Type -->
-          <div>
-            <label class="label" for="demo_activity_type">Activity Type</label>
-            <select
-              [(ngModel)]="demoWorkout.activity_type"
-              name="activity_type"
-              id="demo_activity_type"
-              class="select"
-            >
-              <option value="run">🏃 Run</option>
-              <option value="cycle">🚴 Cycle</option>
-              <option value="walk">🚶 Walk</option>
-            </select>
-          </div>
-
-          <!-- Duration -->
-          <div>
-            <label class="label" for="demo_duration">Duration (minutes)</label>
-            <input
-              type="number"
-              [(ngModel)]="demoWorkout.duration"
-              name="duration"
-              id="demo_duration"
-              required
-              class="input"
-              placeholder="30"
-            />
-          </div>
-
-          <!-- Distance -->
-          <div>
-            <label class="label" for="demo_distance">Distance (km)</label>
-            <input
-              type="number"
-              step="0.1"
-              [(ngModel)]="demoWorkout.distance"
-              name="distance"
-              id="demo_distance"
-              class="input"
-              placeholder="5.0"
-            />
-          </div>
-
-          <!-- Calculate Button -->
-          <button type="submit" class="btn btn-primary" style="width: 100%; padding: 0.75rem 1rem">
-            🧮 Calculate VO2 Max (Demo)
-          </button>
-        </form>
-
-        <!-- Call to Action -->
-        <div
-          style="
-            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            border: 1px solid #10b981;
-            text-align: center;
-            margin-top: 1rem;
-          "
-        >
-          <h4 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 1rem">
-            💎 Ready for More?
-          </h4>
-          <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 1rem">
-            Sign up to save workouts, access premium AI features, and get personalized insights.
-          </p>
-          <div style="display: flex; gap: 0.5rem">
-            <button
-              (click)="scrollToAuth()"
-              class="btn btn-primary"
-              style="flex: 1; font-size: 0.875rem"
-            >
-              Sign Up Free
-            </button>
-            <button
-              (click)="scrollToAuth()"
-              class="btn btn-secondary"
-              style="flex: 1; font-size: 0.875rem"
-            >
-              Login
-            </button>
-          </div>
-        </div>
-      </div>
-      }
 
       <!-- Results Panel -->
       <div style="display: flex; flex-direction: column; gap: 1.5rem">
