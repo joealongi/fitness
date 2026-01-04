@@ -438,52 +438,272 @@
       </div>
 
       @if (!(isAuthenticated$ | async)) {
-      <div style="max-width: 500px; margin: 0 auto; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1rem; padding: 2rem; transition: transform 0.2s ease;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
-        <div style="display: flex; margin-bottom: 2rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
-          <button (click)="activeAuthTab = 'login'" style="flex: 1; padding: 0.75rem; background: transparent; color: white; border: none; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; border-bottom: 3px solid {{ activeAuthTab === 'login' ? '#ef4444' : 'transparent' }};">Sign In</button>
-          <button (click)="activeAuthTab = 'register'" style="flex: 1; padding: 0.75rem; background: transparent; color: white; border: none; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; border-bottom: 3px solid {{ activeAuthTab === 'register' ? '#ef4444' : 'transparent' }};">Create Account</button>
+      <div
+        style="
+          max-width: 500px;
+          margin: 0 auto;
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 1rem;
+          padding: 2rem;
+          transition: transform 0.2s ease;
+        "
+        onmouseover="this.style.transform='translateY(-4px)'"
+        onmouseout="this.style.transform='translateY(0)'"
+      >
+        <div
+          style="
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          "
+        >
+          <button
+            (click)="activeAuthTab = 'login'"
+            style="flex: 1; padding: 0.75rem; background: transparent; color: white; border: none; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; border-bottom: 3px solid {{
+              activeAuthTab === 'login' ? '#ef4444' : 'transparent'
+            }};"
+          >
+            Sign In
+          </button>
+          <button
+            (click)="activeAuthTab = 'register'"
+            style="flex: 1; padding: 0.75rem; background: transparent; color: white; border: none; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; border-bottom: 3px solid {{
+              activeAuthTab === 'register' ? '#ef4444' : 'transparent'
+            }};"
+          >
+            Create Account
+          </button>
         </div>
 
         <div *ngIf="activeAuthTab === 'login'">
-          <h3 style="font-size: 1.5rem; font-weight: 600; color: white; margin-bottom: 1.5rem; text-align: center;">Welcome Back</h3>
+          <h3
+            style="
+              font-size: 1.5rem;
+              font-weight: 600;
+              color: white;
+              margin-bottom: 1.5rem;
+              text-align: center;
+            "
+          >
+            Welcome Back
+          </h3>
           <form (ngSubmit)="login()" style="display: flex; flex-direction: column; gap: 1rem">
             <div>
-              <label style="display: block; color: rgba(255, 255, 255, 0.8); font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Username</label>
-              <input type="text" [(ngModel)]="loginData.username" name="username" style="width: 100%; padding: 0.75rem; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 0.5rem; color: white; font-size: 1rem;" placeholder="Enter your username" required>
+              <label
+                style="
+                  display: block;
+                  color: rgba(255, 255, 255, 0.8);
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Username</label
+              >
+              <input
+                type="text"
+                [(ngModel)]="loginData.username"
+                name="username"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: rgba(255, 255, 255, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  border-radius: 0.5rem;
+                  color: white;
+                  font-size: 1rem;
+                "
+                placeholder="Enter your username"
+                required
+              />
             </div>
             <div>
-              <label style="display: block; color: rgba(255, 255, 255, 0.8); font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Password</label>
-              <input type="password" [(ngModel)]="loginData.password" name="password" style="width: 100%; padding: 0.75rem; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 0.5rem; color: white; font-size: 1rem;" placeholder="Enter your password" required>
+              <label
+                style="
+                  display: block;
+                  color: rgba(255, 255, 255, 0.8);
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Password</label
+              >
+              <input
+                type="password"
+                [(ngModel)]="loginData.password"
+                name="password"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: rgba(255, 255, 255, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  border-radius: 0.5rem;
+                  color: white;
+                  font-size: 1rem;
+                "
+                placeholder="Enter your password"
+                required
+              />
             </div>
-            <button type="submit" style="width: 100%; padding: 0.75rem; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; margin-top: 1rem;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'">{{ loginLoading ? 'Signing in...' : 'Sign In' }}</button>
+            <button
+              type="submit"
+              style="
+                width: 100%;
+                padding: 0.75rem;
+                background: linear-gradient(135deg, #ef4444, #dc2626);
+                color: white;
+                border: none;
+                border-radius: 0.5rem;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                margin-top: 1rem;
+              "
+              onmouseover="this.style.transform='translateY(-1px)'"
+              onmouseout="this.style.transform='translateY(0)'"
+            >
+              {{ loginLoading ? 'Signing in...' : 'Sign In' }}
+            </button>
           </form>
-          <div *ngIf="loginError" style="color: #ef4444; font-size: 0.875rem; margin-top: 1rem; text-align: center">{{ loginError }}</div>
+          <div
+            *ngIf="loginError"
+            style="color: #ef4444; font-size: 0.875rem; margin-top: 1rem; text-align: center"
+          >
+            {{ loginError }}
+          </div>
         </div>
 
         <div *ngIf="activeAuthTab === 'register'">
-          <h3 style="font-size: 1.5rem; font-weight: 600; color: white; margin-bottom: 1.5rem; text-align: center;">Create Account</h3>
+          <h3
+            style="
+              font-size: 1.5rem;
+              font-weight: 600;
+              color: white;
+              margin-bottom: 1.5rem;
+              text-align: center;
+            "
+          >
+            Create Account
+          </h3>
           <form (ngSubmit)="register()" style="display: flex; flex-direction: column; gap: 1rem">
             <div>
-              <label style="display: block; color: rgba(255, 255, 255, 0.8); font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Username</label>
-              <input type="text" [(ngModel)]="registerData.username" name="username" style="width: 100%; padding: 0.75rem; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 0.5rem; color: white; font-size: 1rem;" placeholder="Choose a username" required>
+              <label
+                style="
+                  display: block;
+                  color: rgba(255, 255, 255, 0.8);
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Username</label
+              >
+              <input
+                type="text"
+                [(ngModel)]="registerData.username"
+                name="username"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: rgba(255, 255, 255, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  border-radius: 0.5rem;
+                  color: white;
+                  font-size: 1rem;
+                "
+                placeholder="Choose a username"
+                required
+              />
             </div>
             <div>
-              <label style="display: block; color: rgba(255, 255, 255, 0.8); font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Email</label>
-              <input type="email" [(ngModel)]="registerData.email" name="email" style="width: 100%; padding: 0.75rem; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 0.5rem; color: white; font-size: 1rem;" placeholder="Enter your email" required>
+              <label
+                style="
+                  display: block;
+                  color: rgba(255, 255, 255, 0.8);
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Email</label
+              >
+              <input
+                type="email"
+                [(ngModel)]="registerData.email"
+                name="email"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: rgba(255, 255, 255, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  border-radius: 0.5rem;
+                  color: white;
+                  font-size: 1rem;
+                "
+                placeholder="Enter your email"
+                required
+              />
             </div>
             <div>
-              <label style="display: block; color: rgba(255, 255, 255, 0.8); font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem;">Password</label>
-              <input type="password" [(ngModel)]="registerData.password" name="password" style="width: 100%; padding: 0.75rem; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 0.5rem; color: white; font-size: 1rem;" placeholder="Create a password" required>
+              <label
+                style="
+                  display: block;
+                  color: rgba(255, 255, 255, 0.8);
+                  font-size: 0.875rem;
+                  font-weight: 500;
+                  margin-bottom: 0.5rem;
+                "
+                >Password</label
+              >
+              <input
+                type="password"
+                [(ngModel)]="registerData.password"
+                name="password"
+                style="
+                  width: 100%;
+                  padding: 0.75rem;
+                  background: rgba(255, 255, 255, 0.1);
+                  border: 1px solid rgba(255, 255, 255, 0.2);
+                  border-radius: 0.5rem;
+                  color: white;
+                  font-size: 1rem;
+                "
+                placeholder="Create a password"
+                required
+              />
             </div>
-            <button type="submit" style="width: 100%; padding: 0.75rem; background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; border-radius: 0.5rem; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; margin-top: 1rem;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform='translateY(0)'">{{ registerLoading ? 'Creating account...' : 'Create Account' }}</button>
+            <button
+              type="submit"
+              style="
+                width: 100%;
+                padding: 0.75rem;
+                background: linear-gradient(135deg, #ef4444, #dc2626);
+                color: white;
+                border: none;
+                border-radius: 0.5rem;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                margin-top: 1rem;
+              "
+              onmouseover="this.style.transform='translateY(-1px)'"
+              onmouseout="this.style.transform='translateY(0)'"
+            >
+              {{ registerLoading ? 'Creating account...' : 'Create Account' }}
+            </button>
           </form>
-          <div *ngIf="registerError" style="color: #ef4444; font-size: 0.875rem; margin-top: 1rem; text-align: center">{{ registerError }}</div>
+          <div
+            *ngIf="registerError"
+            style="color: #ef4444; font-size: 0.875rem; margin-top: 1rem; text-align: center"
+          >
+            {{ registerError }}
+          </div>
         </div>
       </div>
       }
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- Dashboard Section -->
   @if ((isAuthenticated$ | async)) {
@@ -1162,7 +1382,14 @@
       </div>
     </div>
     <!-- Copyright Section -->
-    <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1)">
+    <div
+      style="
+        text-align: center;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      "
+    >
       <div style="font-size: 0.875rem; color: rgba(255, 255, 255, 0.7); margin-bottom: 0.5rem">
         Made with ⌨ typing by Joe Alongi • Built with ⚡ speed by Cline and 🐆 AI
       </div>
