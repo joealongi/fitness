@@ -352,11 +352,66 @@ Airwave includes premium subscription features powered by Stripe:
 
 2. **Get API Keys** from Stripe Dashboard:
 
+   #### Step-by-Step Setup:
+
+   a. **Go to Stripe Dashboard**: [dashboard.stripe.com](https://dashboard.stripe.com)
+
+   b. **Navigate to API Keys**:
+
+   - Click "Developers" in the left sidebar
+   - Click "API keys" tab
+
+   c. **Get Your Keys**:
+
+   - **Publishable key** (starts with `pk_test_` for test mode): Used in frontend
+   - **Secret key** (starts with `sk_test_` for test mode): Used in backend
+   - **⚠️ Keep secret key secure** - never expose it in frontend code
+
+   d. **Create Webhook Endpoint** (for production):
+
+   - Go to "Webhooks" in Developers section
+   - Click "Add endpoint"
+   - URL: `https://your-backend-domain/api/payments/webhook/`
+   - Events: Select `customer.subscription.*` and `payment_intent.succeeded`
+   - Copy the **webhook signing secret** (starts with `whsec_`)
+
+   #### Environment Variables:
+
+   **For Railway Backend Deployment:**
+
    ```bash
-   # Add to your .env file
-   STRIPE_PUBLIC_KEY=pk_test_your_publishable_key
-   STRIPE_SECRET_KEY=sk_test_your_secret_key
-   STRIPE_WEBHOOK_SECRET=whsec_your_webhook_secret
+   # In Railway dashboard → Your backend service → Variables tab
+   STRIPE_PUBLIC_KEY=pk_test_51XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   STRIPE_SECRET_KEY=sk_test_51XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   STRIPE_WEBHOOK_SECRET=whsec_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   ```
+
+   **For Local Development (.env file):**
+
+   ```bash
+   # In backend/.env file
+   STRIPE_PUBLIC_KEY=pk_test_51XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   STRIPE_SECRET_KEY=sk_test_51XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   STRIPE_WEBHOOK_SECRET=whsec_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   ```
+
+   **For Frontend (Railway):**
+
+   ```bash
+   # In Railway dashboard → Your frontend service → Variables tab
+   VITE_STRIPE_PUBLIC_KEY=pk_test_51XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   ```
+
+   #### Testing Your Setup:
+
+   ```bash
+   # Test API keys (replace with your actual keys)
+   curl -X POST https://api.stripe.com/v1/tokens \
+     -u sk_test_51XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX: \
+     -d card[number]=4242424242424242 \
+     -d card[exp_month]=12 \
+     -d card[exp_year]=2025 \
+     -d card[cvc]=123
    ```
 
 3. **Configure Webhooks** in Stripe Dashboard:
