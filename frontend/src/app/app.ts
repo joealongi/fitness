@@ -5,6 +5,7 @@ import { Api } from './api';
 import { Subscription } from 'rxjs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
+/* TODO: Add NG Icons when available */
 /* Spartan UI - Using CSS-first approach for now */
 /* Components will be updated to use Spartan UI directives when available */
 
@@ -60,9 +61,9 @@ export class App implements OnInit, OnDestroy {
   // Chart data and configuration
   view: [number, number] = [700, 300];
 
-  // Color scheme for charts
+  // Color scheme for charts - Red, Black, White, Grey theme
   colorScheme: any = {
-    domain: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'],
+    domain: ['#ef4444', '#6b7280', '#374151', '#1f2937', '#9ca3af', '#d1d5db'],
   };
 
   // VO2 Max trend over time (Line Chart)
