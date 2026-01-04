@@ -1,7 +1,6 @@
 [build]
-buildCommand = "pip install -r requirements.txt && python manage.py collectstatic --noinput"
+builder = "dockerfile"
 
 [deploy]
-startCommand = ". .venv/bin/activate && python manage.py migrate && python manage.py runserver 0.0.0.0:$PORT"
 healthcheckPath = "/api/health/"
 restartPolicyType = "ON_FAILURE"

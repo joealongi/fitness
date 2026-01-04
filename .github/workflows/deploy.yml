@@ -79,6 +79,10 @@ jobs:
       - name: Build for production
         run: npm run build
 
+      - name: Test Docker build
+        run: docker build -t airwave-frontend .
+        working-directory: ./frontend
+
   # Deploy to Railway (Manual Trigger Required)
   deploy-railway:
     needs: [test-backend, test-frontend]

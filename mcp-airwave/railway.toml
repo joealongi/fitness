@@ -1,8 +1,7 @@
 [build]
-builder = "node"
+builder = "dockerfile"
 
 [deploy]
-startCommand = "npm start"
 restartPolicyType = "ON_FAILURE"
 
 [environments]

@@ -621,9 +621,9 @@ Airwave is designed for easy deployment to modern cloud platforms. This guide co
      ALLOWED_HOSTS=airwave-backend-production.up.railway.app
      ```
 
-   - **Deploy Tab**: Railway will build and deploy your Django app
+   - **Deploy Tab**: Railway will build and deploy all services using Docker containers
 
-   - **Database Setup**: Railway automatically provides PostgreSQL - migrations run automatically
+   - **Database Setup**: Railway automatically provides PostgreSQL - migrations run automatically in backend container
 
 4. **Deploy Frontend Service (Second):**
 
