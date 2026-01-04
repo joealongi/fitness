@@ -884,23 +884,106 @@
     "
   >
     <div style="max-width: 1400px; margin: 0 auto">
-      <div style="text-align: center; margin-bottom: 3rem">
-        <h2
+      <!-- Mini Hero for Authenticated Users -->
+      <div
+        style="
+          text-align: center;
+          margin-bottom: 3rem;
+          padding: 2rem;
+          background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+          border-radius: 1rem;
+          border: 1px solid rgba(0, 0, 0, 0.05);
+        "
+      >
+        <div
           style="
-            font-size: 3rem;
-            font-weight: 800;
-            color: #1f2937;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #1f2937, #374151);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
           "
         >
-          Your Personal Dashboard
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 80 80"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            style="filter: drop-shadow(0 2px 4px rgba(239, 68, 68, 0.3))"
+          >
+            <circle
+              cx="40"
+              cy="40"
+              r="35"
+              stroke="#ef4444"
+              stroke-width="3"
+              fill="none"
+              opacity="0.3"
+            />
+            <path
+              d="M15 40 L25 40 L30 25 L35 55 L40 30 L45 40 L55 40 L60 35 L65 45 L70 40"
+              stroke="#ef4444"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"
+            />
+            <circle cx="40" cy="40" r="3" fill="#ef4444" />
+          </svg>
+          <h2 style="font-size: 2.5rem; font-weight: 700; color: #1f2937; margin: 0">
+            Welcome back, {{ (currentUser$ | async)?.username }}! 👋
+          </h2>
+        </div>
+
+        <p style="font-size: 1.125rem; color: #6b7280; margin-bottom: 1.5rem">
+          Ready to crush your fitness goals? Track your progress and unlock new insights.
+        </p>
+
+        <!-- Quick Stats Row -->
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+          "
+        >
+          <div style="text-align: center">
+            <div
+              style="font-size: 1.5rem; font-weight: 700; color: #ef4444; margin-bottom: 0.25rem"
+            >
+              {{ workoutHistory.length }}
+            </div>
+            <div style="color: #6b7280; font-size: 0.75rem">Workouts Logged</div>
+          </div>
+          <div style="text-align: center">
+            <div
+              style="font-size: 1.5rem; font-weight: 700; color: #6b7280; margin-bottom: 0.25rem"
+            >
+              {{ getWeeklyTotal() }}km
+            </div>
+            <div style="color: #6b7280; font-size: 0.75rem">This Week</div>
+          </div>
+          <div style="text-align: center">
+            <div
+              style="font-size: 1.5rem; font-weight: 700; color: #374151; margin-bottom: 0.25rem"
+            >
+              {{ vo2MaxTrend.length > 1 ? vo2MaxTrend[vo2MaxTrend.length - 1]?.value || 0 : '35' }}
+            </div>
+            <div style="color: #6b7280; font-size: 0.75rem">VO2 Max</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Title -->
+      <div style="text-align: center; margin-bottom: 3rem">
+        <h2 style="font-size: 2.5rem; font-weight: 700; color: #1f2937; margin-bottom: 0.5rem">
+          Your Fitness Journey
         </h2>
-        <p style="font-size: 1.25rem; color: #6b7280; max-width: 700px; margin: 0 auto">
-          Track your fitness journey with detailed analytics and personalized insights.
+        <p style="font-size: 1.125rem; color: #6b7280">
+          Track your progress with detailed analytics and personalized insights.
         </p>
       </div>
 
