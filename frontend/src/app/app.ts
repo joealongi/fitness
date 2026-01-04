@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Api } from './api';
 import { Subscription } from 'rxjs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { WorkoutWithVO2Max, WorkoutForm, DemoWorkoutForm, LoginForm, RegisterForm } from './types';
 
 /* TODO: Add NG Icons when available */
 /* Spartan UI - Using CSS-first approach for now */
@@ -43,19 +44,19 @@ export class App implements OnInit, OnDestroy {
 
   healthData: any = null;
   norseData: any = null;
-  workoutResult: any = null;
+  workoutResult: WorkoutWithVO2Max | null = null;
 
-  workout = {
+  workout: WorkoutForm = {
     activity_type: 'run',
     duration: 30,
     distance: 5,
-    heart_rate_avg: null,
-    heart_rate_max: null,
+    heart_rate_avg: undefined,
+    heart_rate_max: undefined,
     intensity: 'moderate',
   };
 
   // Demo calculator for unauthenticated users
-  demoWorkout = {
+  demoWorkout: DemoWorkoutForm = {
     activity_type: 'run',
     duration: 30,
     distance: 5,
