@@ -24,6 +24,9 @@ export class App implements OnInit, OnDestroy {
   isAuthenticated = false;
   currentUser: any = null;
 
+  // Tab switching for auth forms
+  activeAuthTab: 'login' | 'register' = 'login';
+
   // Expose observables for template
   isAuthenticated$ = this.api.isAuthenticated$;
   currentUser$ = this.api.currentUser$;
