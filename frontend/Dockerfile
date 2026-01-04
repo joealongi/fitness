@@ -32,10 +32,14 @@ RUN mkdir -p /var/cache/nginx /var/log/nginx /var/run && \
     chown -R nginx:nginx /var/cache/nginx /var/log/nginx /var/run
 
 # Copy built application from builder stage
-COPY --from=builder --chown=nginx:nginx /app/dist /usr/share/nginx/html
+COPY --from=builder --chown=nginx:nginx /app/dist/airwave/browser /usr/share/nginx/html
 
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+# Verify Angular build files exist
+RUN ls -la /usr/share/nginx/html/ && test -f /usr/share/nginx/html/index.html
+
+# Remove default nginx configuration and copy our config
+RUN rm -f /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port
 EXPOSE 8080

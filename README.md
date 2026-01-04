@@ -889,6 +889,7 @@ Update your frontend Railway service:
 
 ```
 VITE_API_URL=https://api.airwave.fitness
+PORT=8080
 ```
 
 #### Backend Environment Variables
@@ -899,6 +900,7 @@ Update your backend Railway service:
 ALLOWED_HOSTS=api.airwave.fitness,airwave.fitness,www.airwave.fitness
 CORS_ALLOWED_ORIGINS=https://airwave.fitness,https://www.airwave.fitness
 CSRF_TRUSTED_ORIGINS=https://airwave.fitness,https://www.airwave.fitness
+PORT=8080
 ```
 
 ### Step 5: SSL/TLS Configuration

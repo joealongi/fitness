@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "fitness-app": {
+    "airwave": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -29,14 +29,7 @@
                 "input": "public"
               }
             ],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            "styles": ["src/styles.scss"]
           },
           "configurations": {
             "production": {
@@ -66,10 +59,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "fitness-app:build:production"
+              "buildTarget": "airwave:build:production"
             },
             "development": {
-              "buildTarget": "fitness-app:build:development"
+              "buildTarget": "airwave:build:development"
             }
           },
           "defaultConfiguration": "development"
