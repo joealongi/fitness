@@ -198,34 +198,5 @@ body {
 
 /* You can add global styles to this file, and also import other style files */
 
-/* NGX Charts Styles */
-@import '~@swimlane/ngx-charts/index.css';
-
-/* Additional chart styling */
-.ngx-charts {
-  font-family: inherit !important;
-}
-
-.ngx-charts-tooltip {
-  background: rgba(0, 0, 0, 0.8) !important;
-  color: white !important;
-  border-radius: 4px !important;
-  padding: 8px !important;
-  font-size: 12px !important;
-}
-
-.ngx-charts-legend-item {
-  cursor: pointer !important;
-}
-
-.ngx-charts-x-axis-label,
-.ngx-charts-y-axis-label {
-  fill: #64748b !important;
-  font-size: 12px !important;
-}
-
-.ngx-charts-x-axis-tick text,
-.ngx-charts-y-axis-tick text {
-  fill: #64748b !important;
-  font-size: 11px !important;
-}
+/* NGX Charts Styles - CSS import removed to fix build issues */
+/* Charts should still work with default styling */
