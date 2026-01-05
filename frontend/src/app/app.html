@@ -19,7 +19,7 @@
           style="
             font-size: 3rem;
             font-weight: 700;
-            color: #0c4a6e;
+            color: #1f2937;
             margin-bottom: 1rem;
             display: flex;
             align-items: center;
@@ -33,7 +33,7 @@
         <p
           style="
             font-size: 1.125rem;
-            color: #0369a1;
+            color: #6b7280;
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.6;
@@ -49,6 +49,7 @@
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
           gap: 2rem;
+          justify-items: center;
         "
       >
         <!-- AI Insights Card -->
@@ -65,17 +66,18 @@
             style="
               font-size: 1.5rem;
               font-weight: 600;
-              color: #0c4a6e;
+              color: #1f2937;
               margin-bottom: 1.5rem;
               display: flex;
               align-items: center;
+              justify-content: center;
               gap: 0.5rem;
             "
           >
             <ng-icon name="heroLightBulb"></ng-icon>
             Key Insights
           </h3>
-          <div style="display: flex; flex-direction: column; gap: 1rem">
+          <div style="display: flex; flex-direction: column; gap: 1rem; text-align: center">
             @if (workoutHistory.length === 0) {
             <div style="color: #64748b; font-style: italic; text-align: center; padding: 2rem">
               Start logging workouts to unlock AI-powered insights about your fitness journey!
@@ -158,7 +160,7 @@
             style="
               font-size: 1.5rem;
               font-weight: 600;
-              color: #0c4a6e;
+              color: #1f2937;
               margin-bottom: 1.5rem;
               display: flex;
               align-items: center;
@@ -242,7 +244,7 @@
             style="
               font-size: 1.5rem;
               font-weight: 600;
-              color: #0c4a6e;
+              color: #1f2937;
               margin-bottom: 1.5rem;
               display: flex;
               align-items: center;
@@ -341,7 +343,15 @@
 
       <!-- Centered Demo Calculator -->
       <div style="max-width: 600px; margin: 0 auto">
-        <div class="card">
+        <div
+          style="
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+          "
+        >
           <h3
             style="
               font-size: 1.5rem;
@@ -1514,7 +1524,15 @@
                 ></div>
               </div>
               } @else {
-              <div style="height: 300px; width: 100%">
+              <div
+                style="
+                  height: 300px;
+                  width: 100%;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                "
+              >
                 <ngx-charts-line-chart
                   [scheme]="colorScheme"
                   [results]="vo2MaxTrend"
@@ -1815,7 +1833,54 @@
       "
     >
       <div style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.5rem">
-        Crafted in by Joe Alongi with warp velocity by Cline and Grok Code Fast
+        Crafted by
+        <a
+          href="https://joealongi.dev/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            color: #ef4444;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+          "
+          onmouseover="this.style.color='#dc2626'"
+          onmouseout="this.style.color='#ef4444'"
+        >
+          Joe Alongi
+        </a>
+        with warp velocity by
+        <a
+          href="https://cline.bot/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+          "
+          onmouseover="this.style.color='#374151'"
+          onmouseout="this.style.color='#6b7280'"
+        >
+          Cline
+        </a>
+        and
+        <a
+          href="https://x.ai/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+          "
+          onmouseover="this.style.color='#374151'"
+          onmouseout="this.style.color='#6b7280'"
+        >
+          Grok Code Fast
+        </a>
       </div>
       <div style="font-size: 0.75rem; color: #9ca3af; margin-bottom: 0.5rem">
         © {{ getCurrentYear() }} Airwave. All rights reserved.

@@ -86,9 +86,9 @@ export class App implements OnInit, OnDestroy {
   // Loading states for charts
   chartsLoading = false;
 
-  // Color scheme for charts - Red, Black, White, Grey theme
+  // Color scheme for charts - Red, Black, Grey theme with accessibility
   colorScheme: any = {
-    domain: ['#ef4444', '#6b7280', '#374151', '#1f2937', '#9ca3af', '#d1d5db'],
+    domain: ['#dc2626', '#1f2937', '#6b7280', '#374151', '#9ca3af', '#d1d5db'],
   };
 
   // Baseline/Industry standard data

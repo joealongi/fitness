@@ -3,29 +3,75 @@
 
 @layer base {
   :root {
-    /* Red, Black, White, Grey Color Palette */
-    --background: 0 0% 100%; /* White */
-    --foreground: 0 0% 9%; /* Black */
-    --card: 0 0% 100%; /* White */
-    --card-foreground: 0 0% 9%; /* Black */
-    --popover: 0 0% 100%; /* White */
-    --popover-foreground: 0 0% 9%; /* Black */
-    --primary: 0 84.2% 60.2%; /* Red */
-    --primary-foreground: 0 0% 98%; /* White */
-    --secondary: 0 0% 96.1%; /* Grey */
-    --secondary-foreground: 0 0% 9%; /* Black */
-    --muted: 0 0% 96.1%; /* Grey */
-    --muted-foreground: 0 0% 45.1%; /* Dark Grey */
-    --accent: 0 0% 96.1%; /* Grey */
-    --accent-foreground: 0 0% 9%; /* Black */
-    --destructive: 0 84.2% 60.2%; /* Red */
-    --destructive-foreground: 0 0% 98%; /* White */
-    --border: 0 0% 89.8%; /* Light Grey */
-    --input: 0 0% 89.8%; /* Light Grey */
-    --ring: 0 84.2% 60.2%; /* Red */
+    /* Consistent Red, Black, Grey Color Palette with WCAG AA Accessibility */
+    --color-red-50: #fef2f2; /* Light red background */
+    --color-red-100: #fee2e2; /* Lighter red */
+    --color-red-200: #fecaca; /* Light red */
+    --color-red-300: #fca5a5; /* Medium light red */
+    --color-red-400: #f87171; /* Medium red */
+    --color-red-500: #ef4444; /* Primary red */
+    --color-red-600: #dc2626; /* Darker red for contrast */
+    --color-red-700: #b91c1c; /* Dark red */
+    --color-red-800: #991b1b; /* Very dark red */
+    --color-red-900: #7f1d1d; /* Darkest red */
+
+    --color-grey-50: #f9fafb; /* Very light grey */
+    --color-grey-100: #f3f4f6; /* Light grey background */
+    --color-grey-200: #e5e7eb; /* Light grey */
+    --color-grey-300: #d1d5db; /* Medium light grey */
+    --color-grey-400: #9ca3af; /* Medium grey */
+    --color-grey-500: #6b7280; /* Dark medium grey */
+    --color-grey-600: #4b5563; /* Dark grey */
+    --color-grey-700: #374151; /* Darker grey */
+    --color-grey-800: #1f2937; /* Very dark grey */
+    --color-grey-900: #111827; /* Almost black */
+
+    /* Semantic Color Variables */
+    --background: var(--color-grey-50); /* White/light background */
+    --foreground: var(--color-grey-900); /* Black text */
+    --card: #ffffff; /* White cards */
+    --card-foreground: var(--color-grey-900); /* Black text on cards */
+    --popover: #ffffff; /* White popovers */
+    --popover-foreground: var(--color-grey-900); /* Black text */
+    --primary: var(--color-red-600); /* Dark red for contrast */
+    --primary-foreground: #ffffff; /* White text on red */
+    --secondary: var(--color-grey-100); /* Light grey */
+    --secondary-foreground: var(--color-grey-800); /* Dark grey text */
+    --muted: var(--color-grey-100); /* Muted background */
+    --muted-foreground: var(--color-grey-600); /* Muted text */
+    --accent: var(--color-grey-200); /* Accent grey */
+    --accent-foreground: var(--color-grey-800); /* Dark text on accent */
+    --destructive: var(--color-red-600); /* Error red */
+    --destructive-foreground: #ffffff; /* White text */
+    --border: var(--color-grey-300); /* Border grey */
+    --input: var(--color-grey-100); /* Input background */
+    --ring: var(--color-red-500); /* Focus ring */
+
+    /* Status Colors */
+    --success-color: #16a34a; /* Green */
+    --warning-color: #d97706; /* Amber */
+    --error-color: var(--color-red-600);
+
+    /* Surface Colors */
+    --surface-color: #ffffff;
+    --surface-secondary: var(--color-grey-50);
+
+    /* Text Colors */
+    --text-primary: var(--color-grey-900);
+    --text-secondary: var(--color-grey-600);
+    --text-muted: var(--color-grey-500);
 
     /* Spacing */
     --radius: 0.5rem;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+    /* Border Radius */
+    --border-radius: 0.375rem;
+    --border-radius-lg: 0.5rem;
   }
 
   .dark {

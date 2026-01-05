@@ -1,13 +1,10 @@
-import { Component, inject } from '@angular/core';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { heroHandRaised } from '@ng-icons/heroicons/outline';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-hero',
-  imports: [NgIconComponent],
+  imports: [],
   templateUrl: './hero.html',
   styleUrl: './hero.scss',
-  providers: [provideIcons({ heroHandRaised })],
 })
 export class Hero {
   // Scroll to authentication section

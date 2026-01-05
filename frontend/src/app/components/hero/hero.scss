@@ -1,7 +1,7 @@
 // Hero Section Styles
 .hero-section {
   min-height: 100vh;
-  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  background: linear-gradient(135deg, var(--color-grey-800) 0%, var(--color-grey-900) 100%);
   position: relative;
   display: flex;
   align-items: center;
@@ -87,20 +87,20 @@
 }
 
 .primary-button {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  color: white;
+  background: linear-gradient(135deg, var(--color-red-500), var(--color-red-600));
+  color: var(--primary-foreground);
   border: none;
   padding: 1rem 2rem;
-  border-radius: 0.75rem;
+  border-radius: var(--border-radius-lg);
   font-size: 1.125rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3);
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
+    box-shadow: 0 15px 35px rgba(220, 38, 38, 0.4);
   }
 }
 
@@ -165,18 +165,18 @@
 // Specific stat colors
 .stat-vo2 {
   .stat-value {
-    color: #ef4444;
+    color: var(--color-red-500);
   }
 }
 
 .stat-risk {
   .stat-value {
-    color: #6b7280;
+    color: var(--color-grey-500);
   }
 }
 
 .stat-weeks {
   .stat-value {
-    color: #9ca3af;
+    color: var(--color-grey-400);
   }
 }
