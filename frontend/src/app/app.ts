@@ -5,7 +5,7 @@ import { Api } from './api';
 import { Subscription } from 'rxjs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { WorkoutWithVO2Max, WorkoutForm, DemoWorkoutForm, LoginForm, RegisterForm } from './types';
-import { provideIcons } from '@ng-icons/core';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import {
   heroCpuChip,
   heroLightBulb,
@@ -14,9 +14,6 @@ import {
   heroHandRaised,
 } from '@ng-icons/heroicons/outline';
 import { Hero } from './components/hero/hero';
-import { AiInsights } from './components/ai-insights/ai-insights';
-import { ExperienceComponent } from './components/experience/experience';
-import { Dashboard } from './components/dashboard/dashboard';
 
 /* TODO: Add NG Icons when available */
 /* Spartan UI - Using CSS-first approach for now */
@@ -24,15 +21,7 @@ import { Dashboard } from './components/dashboard/dashboard';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    CommonModule,
-    FormsModule,
-    NgxChartsModule,
-    Hero,
-    AiInsights,
-    ExperienceComponent,
-    Dashboard,
-  ],
+  imports: [CommonModule, FormsModule, NgxChartsModule, NgIconComponent, Hero],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   providers: [
