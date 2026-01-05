@@ -1,4 +1,5 @@
 <main style="min-height: 100vh; background: #f8fafc; color: #1f2937">
+  @if (!(isAuthenticated$ | async)) {
   <!-- Hero Section -->
   <section
     style="
@@ -219,8 +220,10 @@
       </div>
     </div>
   </section>
+  }
 
   <!-- AI Fitness Insights Section (Standalone) -->
+  @if (!(isAuthenticated$ | async)) {
   <section
     id="ai-insights-section"
     style="
@@ -527,8 +530,7 @@
       </div>
     </div>
   </section>
-
-  @if (!(isAuthenticated$ | async)) {
+  } @if (!(isAuthenticated$ | async)) {
   <!-- Experience Section -->
   <section
     id="experience-section"
@@ -1733,7 +1735,6 @@
               } @else {
               <div style="height: 300px; width: 100%">
                 <ngx-charts-line-chart
-                  [view]="[800, 300]"
                   [scheme]="colorScheme"
                   [results]="vo2MaxTrend"
                   [gradient]="true"
@@ -1742,6 +1743,7 @@
                   [legend]="true"
                   [showXAxisLabel]="false"
                   [showYAxisLabel]="false"
+                  [autoScale]="true"
                 ></ngx-charts-line-chart>
               </div>
               }
@@ -2026,8 +2028,8 @@
         text-align: center;
         margin-top: {{ (isAuthenticated$ | async) ? '0' : '2rem' }};
         padding-top: {{ (isAuthenticated$ | async) ? '0' : '2rem' }};
-        border-top: 1px solid {{
-        (isAuthenticated$ | async) ? 'rgba(0, 0, 0, 0.1)' : 'rgba(255, 255, 255, 0.1)'
+        border-top: {{
+        (isAuthenticated$ | async) ? 'none' : '1px solid rgba(255, 255, 255, 0.1)'
       }};
       "
     >
