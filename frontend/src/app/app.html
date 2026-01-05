@@ -77,7 +77,7 @@
             <ng-icon name="heroLightBulb"></ng-icon>
             Key Insights
           </h3>
-          <div style="display: flex; flex-direction: column; gap: 1rem; text-align: center">
+          <div style="display: flex; flex-direction: column; gap: 1rem">
             @if (workoutHistory.length === 0) {
             <div style="color: #64748b; font-style: italic; text-align: center; padding: 2rem">
               Start logging workouts to unlock AI-powered insights about your fitness journey!
@@ -288,7 +288,7 @@
 
       <!-- CTA for AI Insights -->
       <div style="text-align: center; margin-top: 3rem">
-        <p style="color: #0369a1; font-size: 1.125rem; margin-bottom: 1.5rem">
+        <p style="color: #6b7280; font-size: 1.125rem; margin-bottom: 1.5rem">
           Ready to unlock your full athletic potential?
         </p>
         <button
@@ -1634,7 +1634,15 @@
                 </p>
               </div>
 
-              <div style="height: 300px; width: 100%">
+              <div
+                style="
+                  height: 300px;
+                  width: 100%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
                 <ngx-charts-bar-vertical
                   [view]="[800, 300]"
                   [scheme]="colorScheme"
@@ -1685,7 +1693,15 @@
                 </p>
               </div>
 
-              <div style="height: 300px; width: 100%">
+              <div
+                style="
+                  height: 300px;
+                  width: 100%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                "
+              >
                 <ngx-charts-area-chart-stacked
                   [view]="[800, 300]"
                   [scheme]="colorScheme"
