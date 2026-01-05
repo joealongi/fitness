@@ -1524,18 +1524,20 @@
                 ></div>
               </div>
               } @else {
-              <ngx-charts-line-chart
-                [view]="[800, 300]"
-                [scheme]="colorScheme"
-                [results]="vo2MaxTrend"
-                [gradient]="true"
-                [xAxis]="true"
-                [yAxis]="true"
-                [legend]="true"
-                [showXAxisLabel]="false"
-                [showYAxisLabel]="false"
-                style="height: 300px; width: 100%"
-              ></ngx-charts-line-chart>
+              <div style="display: flex; justify-content: center; align-items: center">
+                <ngx-charts-line-chart
+                  [view]="[800, 300]"
+                  [scheme]="colorScheme"
+                  [results]="vo2MaxTrend"
+                  [gradient]="true"
+                  [xAxis]="true"
+                  [yAxis]="true"
+                  [legend]="true"
+                  [showXAxisLabel]="false"
+                  [showYAxisLabel]="false"
+                  style="height: 300px; width: 100%; max-width: 800px"
+                ></ngx-charts-line-chart>
+              </div>
               }
 
               <div style="margin-top: 0.75rem; text-align: center">
