@@ -120,6 +120,9 @@ export class App implements OnInit, OnDestroy {
   workoutHistory: any[] = [];
 
   ngOnInit() {
+    // Initialize charts as not loading
+    this.chartsLoading = false;
+
     // Subscribe to authentication state changes (only if observables exist)
     if (this.api.isAuthenticated$) {
       this.subscriptions.push(
