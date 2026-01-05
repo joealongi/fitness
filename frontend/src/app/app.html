@@ -231,8 +231,20 @@
   >
     <div style="max-width: 1200px; margin: 0 auto">
       <div style="text-align: center; margin-bottom: 3rem">
-        <h2 style="font-size: 3rem; font-weight: 700; color: #0c4a6e; margin-bottom: 1rem">
-          🤖 AI Fitness Insights
+        <h2
+          style="
+            font-size: 3rem;
+            font-weight: 700;
+            color: #0c4a6e;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+          "
+        >
+          <ng-icon name="heroCpuChip" size="3rem"></ng-icon>
+          AI Fitness Insights
         </h2>
         <p
           style="
@@ -276,7 +288,8 @@
               gap: 0.5rem;
             "
           >
-            💡 Key Insights
+            <ng-icon name="heroLightBulb"></ng-icon>
+            Key Insights
           </h3>
           <div style="display: flex; flex-direction: column; gap: 1rem">
             @if (workoutHistory.length === 0) {
@@ -368,7 +381,8 @@
               gap: 0.5rem;
             "
           >
-            🎯 Smart Recommendations
+            <ng-icon name="heroMagnifyingGlass"></ng-icon>
+            Smart Recommendations
           </h3>
           <div style="display: flex; flex-direction: column; gap: 1rem">
             @if (workoutHistory.length === 0) {
@@ -451,7 +465,8 @@
               gap: 0.5rem;
             "
           >
-            📈 Performance Prediction
+            <ng-icon name="heroChartBar"></ng-icon>
+            Performance Prediction
           </h3>
           <div style="display: flex; flex-direction: column; gap: 1rem">
             @if (workoutHistory.length < 3) {
@@ -1233,8 +1248,19 @@
             />
             <circle cx="40" cy="40" r="3" fill="#ef4444" />
           </svg>
-          <h1 style="font-size: 2rem; font-weight: 700; color: #1f2937; margin: 0">
-            Welcome back, {{ (currentUser$ | async)?.username }}! 👋
+          <h1
+            style="
+              font-size: 2rem;
+              font-weight: 700;
+              color: #1f2937;
+              margin: 0;
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+            "
+          >
+            Welcome back, {{ (currentUser$ | async)?.username }}!
+            <ng-icon name="heroHandRaised"></ng-icon>
           </h1>
         </div>
 

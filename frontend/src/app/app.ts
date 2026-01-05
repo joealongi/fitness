@@ -5,6 +5,14 @@ import { Api } from './api';
 import { Subscription } from 'rxjs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { WorkoutWithVO2Max, WorkoutForm, DemoWorkoutForm, LoginForm, RegisterForm } from './types';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import {
+  heroCpuChip,
+  heroLightBulb,
+  heroMagnifyingGlass,
+  heroChartBar,
+  heroHandRaised,
+} from '@ng-icons/heroicons/outline';
 
 /* TODO: Add NG Icons when available */
 /* Spartan UI - Using CSS-first approach for now */
@@ -12,9 +20,18 @@ import { WorkoutWithVO2Max, WorkoutForm, DemoWorkoutForm, LoginForm, RegisterFor
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, FormsModule, NgxChartsModule],
+  imports: [CommonModule, FormsModule, NgxChartsModule, NgIconComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
+  providers: [
+    provideIcons({
+      heroCpuChip,
+      heroLightBulb,
+      heroMagnifyingGlass,
+      heroChartBar,
+      heroHandRaised,
+    }),
+  ],
 })
 export class App implements OnInit, OnDestroy {
   protected readonly title = signal('Airwave');
