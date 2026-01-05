@@ -1,0 +1,88 @@
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="hero-container">
+    <!-- Logo/Brand -->
+    <div class="logo-section">
+      <!-- SVG Logo -->
+      <div class="logo-svg">
+        <svg
+          width="80"
+          height="80"
+          viewBox="0 0 80 80"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <!-- Outer Ring -->
+          <circle
+            cx="40"
+            cy="40"
+            r="35"
+            stroke="#ef4444"
+            stroke-width="3"
+            fill="none"
+            opacity="0.3"
+          />
+          <!-- Heartbeat Wave -->
+          <path
+            d="M15 40 L25 40 L30 25 L35 55 L40 30 L45 40 L55 40 L60 35 L65 45 L70 40"
+            stroke="#ef4444"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            fill="none"
+          />
+          <!-- Inner Pulse -->
+          <circle cx="40" cy="40" r="8" fill="#ef4444" opacity="0.6">
+            <animate attributeName="r" values="8;12;8" dur="2s" repeatCount="indefinite" />
+            <animate
+              attributeName="opacity"
+              values="0.6;0.2;0.6"
+              dur="2s"
+              repeatCount="indefinite"
+            />
+          </circle>
+          <!-- Center Dot -->
+          <circle cx="40" cy="40" r="3" fill="#ffffff" />
+        </svg>
+      </div>
+
+      <h1 class="main-title">Airwave</h1>
+      <p class="tagline">AI-Powered Fitness Intelligence</p>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="hero-content">
+      <h2 class="hero-subtitle">
+        Unlock Your<br />
+        <span class="accent-text">Athletic Potential</span>
+      </h2>
+      <p class="hero-description">
+        Discover your VO2 max, track progress with AI-powered insights, and optimize your training
+        with advanced analytics.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="cta-buttons">
+        <button class="primary-button" (click)="scrollToAuth()">Start Free Trial</button>
+        <button class="secondary-button" (click)="scrollToAIInsights()">Explore AI Insights</button>
+        <button class="tertiary-button" (click)="scrollToDemo()">Try Demo Calculator</button>
+      </div>
+    </div>
+
+    <!-- VO2 Max Health Stats -->
+    <div class="health-stats">
+      <div class="stat-item stat-vo2">
+        <div class="stat-value">25-35</div>
+        <div class="stat-label">VO2 Max Range (mL/kg/min)</div>
+      </div>
+      <div class="stat-item stat-risk">
+        <div class="stat-value">30%</div>
+        <div class="stat-label">Lower Heart Disease Risk</div>
+      </div>
+      <div class="stat-item stat-weeks">
+        <div class="stat-value">8-12</div>
+        <div class="stat-label">Weeks to See Improvement</div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -13,6 +13,7 @@ import {
   heroChartBar,
   heroHandRaised,
 } from '@ng-icons/heroicons/outline';
+import { Hero } from './components/hero/hero';
 
 /* TODO: Add NG Icons when available */
 /* Spartan UI - Using CSS-first approach for now */
@@ -20,7 +21,7 @@ import {
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, FormsModule, NgxChartsModule, NgIconComponent],
+  imports: [CommonModule, FormsModule, NgxChartsModule, NgIconComponent, Hero],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   providers: [
