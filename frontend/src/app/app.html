@@ -1524,27 +1524,18 @@
                 ></div>
               </div>
               } @else {
-              <div
-                style="
-                  height: 300px;
-                  width: 100%;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                "
-              >
-                <ngx-charts-line-chart
-                  [scheme]="colorScheme"
-                  [results]="vo2MaxTrend"
-                  [gradient]="true"
-                  [xAxis]="true"
-                  [yAxis]="true"
-                  [legend]="true"
-                  [showXAxisLabel]="false"
-                  [showYAxisLabel]="false"
-                  [autoScale]="true"
-                ></ngx-charts-line-chart>
-              </div>
+              <ngx-charts-line-chart
+                [view]="[800, 300]"
+                [scheme]="colorScheme"
+                [results]="vo2MaxTrend"
+                [gradient]="true"
+                [xAxis]="true"
+                [yAxis]="true"
+                [legend]="true"
+                [showXAxisLabel]="false"
+                [showYAxisLabel]="false"
+                style="height: 300px; width: 100%"
+              ></ngx-charts-line-chart>
               }
 
               <div style="margin-top: 0.75rem; text-align: center">
@@ -1865,7 +1856,7 @@
         >
           Joe Alongi
         </a>
-        with warp velocity with
+        with warp velocity from
         <a
           href="https://cline.bot/"
           target="_blank"

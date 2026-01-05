@@ -192,6 +192,8 @@ export class App implements OnInit, OnDestroy {
       next: () => {
         this.loginLoading = false;
         this.loginData = { username: '', password: '' };
+        // Scroll to top after successful login to show dashboard
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       },
       error: (error) => {
         this.loginLoading = false;
@@ -364,8 +366,14 @@ export class App implements OnInit, OnDestroy {
   private resetChartsToDefaults(): void {
     // Show baseline/industry standard data when no user data exists
     this.vo2MaxTrend = [
-      { name: 'Baseline', value: this.baselineVO2Max, series: 'Industry Average' },
-      { name: 'Your Progress', value: 0, series: 'Your Data' },
+      {
+        name: 'Industry Average',
+        series: [{ name: 'Baseline', value: this.baselineVO2Max }],
+      },
+      {
+        name: 'Your Data',
+        series: [{ name: 'Current', value: 0 }],
+      },
     ];
 
     // Show typical activity distribution for fitness enthusiasts
@@ -403,22 +411,50 @@ export class App implements OnInit, OnDestroy {
     // Show baseline comparison with user progress
     const recentWorkouts = this.workoutHistory.slice(-5); // Last 5 workouts
 
-    // Create combined data showing baseline vs user progress
-    const userData = recentWorkouts.map((workout, index) => ({
-      name: `Workout ${index + 1}`,
-      value: workout.vo2max || 0,
-      series: 'Your Data',
+    // Create timeline data points (need at least 2 points for line chart)
+    const dataPoints = ['Start'];
+
+    // Add workout labels
+    recentWorkouts.forEach((_, index) => {
+      dataPoints.push(`Workout ${index + 1}`);
+    });
+
+    if (recentWorkouts.length === 0) {
+      dataPoints.push('Current');
+    }
+
+    // Create industry average series (constant line)
+    const industrySeries = dataPoints.map((point) => ({
+      name: point,
+      value: this.baselineVO2Max,
     }));
 
-    // Add baseline reference point
-    const baselineData = {
-      name: 'Industry Avg',
-      value: this.baselineVO2Max,
-      series: 'Industry Average',
-    };
+    // Create user progress series
+    const userSeries = [];
+    userSeries.push({ name: 'Start', value: 0 }); // Starting point
 
-    // Combine baseline and user data
-    this.vo2MaxTrend = [baselineData, ...userData];
+    recentWorkouts.forEach((workout, index) => {
+      userSeries.push({
+        name: `Workout ${index + 1}`,
+        value: workout.vo2max || 0,
+      });
+    });
+
+    if (recentWorkouts.length === 0) {
+      userSeries.push({ name: 'Current', value: 0 });
+    }
+
+    // Format for ngx-charts multi-series line chart
+    this.vo2MaxTrend = [
+      {
+        name: 'Industry Average',
+        series: industrySeries,
+      },
+      {
+        name: 'Your Progress',
+        series: userSeries,
+      },
+    ];
   }
 
   private updateActivityDistribution(): void {
