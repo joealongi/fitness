@@ -508,14 +508,15 @@
             style="
               margin-top: 1.5rem;
               padding: 1.5rem;
-              background: rgba(15, 23, 42, 0.8);
+              background: #ffffff;
               border-radius: 0.75rem;
-              border: 1px solid rgba(255, 255, 255, 0.1);
+              border: 2px solid #e5e7eb;
+              box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             "
           >
             <h4
               style="
-                color: white;
+                color: #1f2937;
                 margin-bottom: 1rem;
                 font-size: 1.125rem;
                 text-align: center;
@@ -526,21 +527,17 @@
             </h4>
 
             @if (workoutResult.error) {
-            <div style="color: #ef4444; font-size: 0.875rem; text-align: center">
+            <div style="color: #dc2626; font-size: 0.875rem; text-align: center; font-weight: 500">
               {{ workoutResult.error }}
             </div>
             } @else {
             <div style="display: flex; flex-direction: column; gap: 1rem">
               <div
                 style="
-                  background: linear-gradient(
-                    135deg,
-                    rgba(239, 68, 68, 0.1),
-                    rgba(220, 38, 38, 0.1)
-                  );
+                  background: linear-gradient(135deg, #fef2f2, #fee2e2);
                   padding: 1rem;
                   border-radius: 0.5rem;
-                  border: 1px solid rgba(239, 68, 68, 0.2);
+                  border: 2px solid #fecaca;
                   text-align: center;
                 "
               >
@@ -548,45 +545,43 @@
                   style="
                     font-size: 0.875rem;
                     color: #991b1b;
-                    font-weight: 500;
+                    font-weight: 600;
                     margin-bottom: 0.25rem;
                   "
                 >
                   Estimated VO2 Max
                 </div>
-                <div style="font-size: 2rem; font-weight: 700; color: #dc2626">
+                <div style="font-size: 2rem; font-weight: 800; color: #dc2626">
                   {{
                     workoutResult.vo2max_estimate
                       ? (workoutResult.vo2max_estimate | number : '1.1-1')
                       : 'N/A'
                   }}
-                  <span style="font-size: 1rem; color: #7f1d1d">mL/kg/min</span>
+                  <span style="font-size: 1rem; color: #b91c1c">mL/kg/min</span>
                 </div>
               </div>
 
               <div
                 style="
-                  background: linear-gradient(
-                    135deg,
-                    rgba(156, 163, 175, 0.1),
-                    rgba(107, 114, 128, 0.1)
-                  );
+                  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
                   padding: 1rem;
                   border-radius: 0.5rem;
-                  border: 1px solid rgba(156, 163, 175, 0.2);
+                  border: 2px solid #e2e8f0;
                 "
               >
                 <div
                   style="
                     font-size: 0.875rem;
-                    color: #6b7280;
-                    font-weight: 500;
+                    color: #374151;
+                    font-weight: 600;
                     margin-bottom: 0.5rem;
                   "
                 >
                   Health Benefits
                 </div>
-                <div style="color: #374151; font-size: 0.875rem; line-height: 1.4">
+                <div
+                  style="color: #1f2937; font-size: 0.875rem; line-height: 1.4; font-weight: 500"
+                >
                   {{ workoutResult.benefits }}
                 </div>
               </div>
