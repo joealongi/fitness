@@ -1,1 +1,553 @@
-<p>ai-insights works!</p>
+<section
+  id="ai-insights-section"
+  style="padding: 5rem 2rem; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)"
+>
+  <div style="max-width: 1200px; margin: 0 auto">
+    <div style="text-align: center; margin-bottom: 3rem">
+      <h2
+        style="
+          font-size: 3rem;
+          font-weight: 700;
+          color: #1f2937;
+          margin-bottom: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.75rem;
+        "
+      >
+        <ng-icon name="heroCpuChip" size="3rem"></ng-icon>
+        AI Fitness Insights
+      </h2>
+      <p
+        style="
+          font-size: 1.125rem;
+          color: #6b7280;
+          max-width: 600px;
+          margin: 0 auto;
+          line-height: 1.6;
+        "
+      >
+        Unlock personalized fitness intelligence powered by advanced AI. Track your progress,
+        discover patterns, and optimize your training with data-driven insights.
+      </p>
+    </div>
+
+    <div
+      style="
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      "
+    >
+      <!-- AI Insights Card -->
+      <div
+        style="
+          background: white;
+          border-radius: 1rem;
+          padding: 2rem;
+          border: 1px solid rgba(14, 165, 233, 0.2);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <h3
+          style="
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+          "
+        >
+          <ng-icon name="heroLightBulb"></ng-icon>
+          Key Insights
+        </h3>
+        <div style="display: flex; flex-direction: column; gap: 1rem">
+          @if (workoutHistory.length === 0) {
+          <div style="color: #64748b; font-style: italic; text-align: center; padding: 2rem">
+            Start logging workouts to unlock AI-powered insights about your fitness journey!
+          </div>
+          } @if (workoutHistory.length < 3 && workoutHistory.length > 0) {
+          <div style="color: #64748b; font-style: italic; text-align: center; padding: 2rem">
+            Keep logging workouts! AI insights improve with more data points.
+          </div>
+          } @if (workoutHistory.length >= 3) {
+          <div style="display: flex; flex-direction: column; gap: 1rem">
+            <div style="display: flex; align-items: flex-start; gap: 0.75rem">
+              <div
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #10b981;
+                  margin-top: 0.375rem;
+                  flex-shrink: 0;
+                "
+              ></div>
+              <div style="color: #374151">
+                <strong>Consistency</strong>: {{ workoutHistory.length }} workouts logged shows
+                great dedication!
+              </div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 0.75rem">
+              <div
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #f59e0b;
+                  margin-top: 0.375rem;
+                  flex-shrink: 0;
+                "
+              ></div>
+              <div style="color: #374151">
+                <strong>Progress</strong>: Your VO2 max trend indicates
+                {{
+                  vo2MaxTrend.length > 1 &&
+                  vo2MaxTrend[vo2MaxTrend.length - 1]?.value > vo2MaxTrend[0]?.value
+                    ? 'improvement'
+                    : 'consistent performance'
+                }}.
+              </div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 0.75rem">
+              <div
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #8b5cf6;
+                  margin-top: 0.375rem;
+                  flex-shrink: 0;
+                "
+              ></div>
+              <div style="color: #374151">
+                <strong>Balance</strong>: Good mix of workout intensities keeps training effective.
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- AI Recommendations Card -->
+      <div
+        style="
+          background: white;
+          border-radius: 1rem;
+          padding: 2rem;
+          border: 1px solid rgba(14, 165, 233, 0.2);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <h3
+          style="
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+          "
+        >
+          <ng-icon name="heroMagnifyingGlass"></ng-icon>
+          Smart Recommendations
+        </h3>
+        <div style="display: flex; flex-direction: column; gap: 1rem">
+          @if (workoutHistory.length === 0) {
+          <div style="color: #64748b; font-style: italic; text-align: center; padding: 2rem">
+            Complete your first workout to receive personalized AI recommendations!
+          </div>
+          } @if (workoutHistory.length > 0) {
+          <div style="display: flex; flex-direction: column; gap: 1rem">
+            <div style="display: flex; align-items: flex-start; gap: 0.75rem">
+              <div
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #ef4444;
+                  margin-top: 0.375rem;
+                  flex-shrink: 0;
+                "
+              ></div>
+              <div style="color: #374151">
+                <strong>VO2 Max Focus</strong>: Try 2-3 sessions of continuous running at moderate
+                intensity to boost aerobic capacity.
+              </div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 0.75rem">
+              <div
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #10b981;
+                  margin-top: 0.375rem;
+                  flex-shrink: 0;
+                "
+              ></div>
+              <div style="color: #374151">
+                <strong>Recovery Balance</strong>: Include rest days or light activities to optimize
+                performance gains.
+              </div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 0.75rem">
+              <div
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #3b82f6;
+                  margin-top: 0.375rem;
+                  flex-shrink: 0;
+                "
+              ></div>
+              <div style="color: #374151">
+                <strong>Progressive Training</strong>: Gradually increase workout intensity every
+                1-2 weeks for continued improvement.
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+
+      <!-- Performance Prediction Card -->
+      <div
+        style="
+          background: white;
+          border-radius: 1rem;
+          padding: 2rem;
+          border: 1px solid rgba(14, 165, 233, 0.2);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <h3
+          style="
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+          "
+        >
+          <ng-icon name="heroChartBar"></ng-icon>
+          Performance Prediction
+        </h3>
+        <div style="display: flex; flex-direction: column; gap: 1rem">
+          @if (workoutHistory.length < 3) {
+          <div style="color: #64748b; font-style: italic; text-align: center; padding: 2rem">
+            Log 3+ workouts to unlock AI performance predictions and trend analysis.
+          </div>
+          } @if (workoutHistory.length >= 3) {
+          <div style="display: flex; flex-direction: column; gap: 1rem">
+            <div
+              style="
+                text-align: center;
+                padding: 1.5rem;
+                background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+                border-radius: 0.5rem;
+                border: 1px solid #10b981;
+                margin-bottom: 1rem;
+              "
+            >
+              <div style="font-size: 2rem; font-weight: 700; color: #065f46">+2.1 mL/kg</div>
+              <div style="font-size: 0.875rem; color: #047857">
+                Predicted VO2 Max improvement in 4 weeks
+              </div>
+            </div>
+            <div style="color: #374151; font-size: 0.875rem; line-height: 1.5">
+              Based on your current training consistency and progression rate, you can expect
+              measurable improvements with continued training.
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Fitness Insights Carousel -->
+    <div style="margin-top: 4rem">
+      <h2
+        style="
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: #1f2937;
+          margin-bottom: 2rem;
+          text-align: center;
+        "
+      >
+        Personalized Fitness Insights
+      </h2>
+
+      <!-- Swiper Carousel -->
+      <div class="swiper" #swiperContainer style="padding: 2rem 0">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div
+              style="
+                background: white;
+                border-radius: 1rem;
+                padding: 1.5rem;
+                border: 1px solid rgba(14, 165, 233, 0.2);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                height: 100%;
+              "
+            >
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 0.75rem;
+                  background: linear-gradient(135deg, #ef4444, #dc2626);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin-bottom: 1rem;
+                "
+              >
+                <ng-icon name="heroHeart" size="1.5rem" style="color: white"></ng-icon>
+              </div>
+              <h4
+                style="font-size: 1.125rem; font-weight: 600; color: #1f2937; margin-bottom: 0.5rem"
+              >
+                Heart Health Optimization
+              </h4>
+              <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.5">
+                Your resting heart rate has improved by 12% this month. Continue with consistent
+                cardio training to maintain cardiovascular health.
+              </p>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div
+              style="
+                background: white;
+                border-radius: 1rem;
+                padding: 1.5rem;
+                border: 1px solid rgba(14, 165, 233, 0.2);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                height: 100%;
+              "
+            >
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 0.75rem;
+                  background: linear-gradient(135deg, #10b981, #059669);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin-bottom: 1rem;
+                "
+              >
+                <ng-icon name="heroBolt" size="1.5rem" style="color: white"></ng-icon>
+              </div>
+              <h4
+                style="font-size: 1.125rem; font-weight: 600; color: #1f2937; margin-bottom: 0.5rem"
+              >
+                Energy Level Insights
+              </h4>
+              <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.5">
+                Your workout timing correlates with peak energy periods. Try scheduling intense
+                sessions during your natural high-energy windows for better performance.
+              </p>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div
+              style="
+                background: white;
+                border-radius: 1rem;
+                padding: 1.5rem;
+                border: 1px solid rgba(14, 165, 233, 0.2);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                height: 100%;
+              "
+            >
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 0.75rem;
+                  background: linear-gradient(135deg, #3b82f6, #2563eb);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin-bottom: 1rem;
+                "
+              >
+                <ng-icon name="heroClock" size="1.5rem" style="color: white"></ng-icon>
+              </div>
+              <h4
+                style="font-size: 1.125rem; font-weight: 600; color: #1f2937; margin-bottom: 0.5rem"
+              >
+                Recovery Optimization
+              </h4>
+              <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.5">
+                Based on your training load, optimal recovery time between intense sessions is 48-72
+                hours. Consider active recovery activities during rest days.
+              </p>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div
+              style="
+                background: white;
+                border-radius: 1rem;
+                padding: 1.5rem;
+                border: 1px solid rgba(14, 165, 233, 0.2);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                height: 100%;
+              "
+            >
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 0.75rem;
+                  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin-bottom: 1rem;
+                "
+              >
+                <ng-icon name="heroChartBar" size="1.5rem" style="color: white"></ng-icon>
+              </div>
+              <h4
+                style="font-size: 1.125rem; font-weight: 600; color: #1f2937; margin-bottom: 0.5rem"
+              >
+                Progress Analytics
+              </h4>
+              <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.5">
+                Your consistency score is 87%. Maintaining this level will lead to significant
+                improvements in aerobic capacity over the next 8-12 weeks.
+              </p>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div
+              style="
+                background: white;
+                border-radius: 1rem;
+                padding: 1.5rem;
+                border: 1px solid rgba(14, 165, 233, 0.2);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                height: 100%;
+              "
+            >
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 0.75rem;
+                  background: linear-gradient(135deg, #f59e0b, #d97706);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin-bottom: 1rem;
+                "
+              >
+                <ng-icon name="heroTrophy" size="1.5rem" style="color: white"></ng-icon>
+              </div>
+              <h4
+                style="font-size: 1.125rem; font-weight: 600; color: #1f2937; margin-bottom: 0.5rem"
+              >
+                Achievement Unlocked
+              </h4>
+              <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.5">
+                Congratulations! You've completed 15 workouts this month. Your dedication is
+                building a strong foundation for long-term fitness success.
+              </p>
+            </div>
+          </div>
+
+          <div class="swiper-slide">
+            <div
+              style="
+                background: white;
+                border-radius: 1rem;
+                padding: 1.5rem;
+                border: 1px solid rgba(14, 165, 233, 0.2);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                height: 100%;
+              "
+            >
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 0.75rem;
+                  background: linear-gradient(135deg, #ec4899, #db2777);
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin-bottom: 1rem;
+                "
+              >
+                <ng-icon name="heroSparkles" size="1.5rem" style="color: white"></ng-icon>
+              </div>
+              <h4
+                style="font-size: 1.125rem; font-weight: 600; color: #1f2937; margin-bottom: 0.5rem"
+              >
+                Motivation Boost
+              </h4>
+              <p style="color: #6b7280; font-size: 0.875rem; line-height: 1.5">
+                You're 23% closer to your 3-month goal! Keep up the excellent work. Every workout
+                brings you closer to the athlete you want to become.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Swiper Navigation -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+
+        <!-- Swiper Pagination -->
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+
+    <!-- CTA for AI Insights -->
+    <div style="text-align: center; margin-top: 3rem">
+      <p style="color: #6b7280; font-size: 1.125rem; margin-bottom: 1.5rem">
+        Ready to unlock your full athletic potential?
+      </p>
+      <button
+        (click)="scrollToAuth()"
+        style="
+          background: linear-gradient(135deg, #ef4444, #dc2626);
+          color: white;
+          border: none;
+          padding: 1rem 2rem;
+          border-radius: 0.75rem;
+          font-size: 1.125rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+        "
+        onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 15px 35px rgba(239, 68, 68, 0.4)'"
+        onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 25px rgba(239, 68, 68, 0.3)'"
+      >
+        Get Started with AI Insights
+      </button>
+    </div>
+  </div>
+</section>

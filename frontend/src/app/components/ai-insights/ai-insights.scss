@@ -1,0 +1,111 @@
+// Swiper carousel custom styles
+:host {
+  ::ng-deep {
+    .swiper {
+      width: 100%;
+      height: auto;
+      padding-bottom: 3rem;
+    }
+
+    .swiper-wrapper {
+      align-items: stretch;
+    }
+
+    .swiper-slide {
+      height: auto;
+      display: flex;
+
+      > div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: #ef4444;
+      background: rgba(255, 255, 255, 0.9);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border: 2px solid rgba(239, 68, 68, 0.2);
+      transition: all 0.3s ease;
+
+      &::after {
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      &:hover {
+        background: #ef4444;
+        color: white;
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+        transform: scale(1.1);
+      }
+    }
+
+    .swiper-button-next {
+      right: -22px;
+    }
+
+    .swiper-button-prev {
+      left: -22px;
+    }
+
+    .swiper-pagination {
+      bottom: 0 !important;
+
+      .swiper-pagination-bullet {
+        width: 12px;
+        height: 12px;
+        background: rgba(239, 68, 68, 0.3);
+        opacity: 1;
+        transition: all 0.3s ease;
+
+        &-active {
+          background: #ef4444;
+          transform: scale(1.2);
+          box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+        }
+      }
+    }
+
+    // Responsive adjustments
+    @media (max-width: 768px) {
+      .swiper-button-next {
+        right: 10px;
+      }
+
+      .swiper-button-prev {
+        left: 10px;
+      }
+
+      .swiper-button-next,
+      .swiper-button-prev {
+        width: 36px;
+        height: 36px;
+
+        &::after {
+          font-size: 14px;
+        }
+      }
+    }
+
+    @media (max-width: 640px) {
+      .swiper-button-next,
+      .swiper-button-prev {
+        display: none;
+      }
+
+      .swiper-pagination {
+        .swiper-pagination-bullet {
+          width: 10px;
+          height: 10px;
+        }
+      }
+    }
+  }
+}
