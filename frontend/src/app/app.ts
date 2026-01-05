@@ -108,6 +108,10 @@ export class App implements OnInit, OnDestroy {
         this.api.isAuthenticated$.subscribe((isAuth) => {
           this.isAuthenticated = isAuth;
           if (isAuth) {
+            // Load real data from backend when authenticated
+            this.loadWorkoutsFromBackend();
+          } else {
+            // Reset to local/demo data when not authenticated
             this.loadWorkoutHistory();
             this.updateChartsFromHistory();
           }
@@ -255,6 +259,14 @@ export class App implements OnInit, OnDestroy {
     const demoSection = document.querySelector('#experience-section');
     if (demoSection) {
       demoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // Scroll to AI insights section
+  scrollToAIInsights() {
+    const aiSection = document.querySelector('#ai-insights-section');
+    if (aiSection) {
+      aiSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
@@ -496,6 +508,34 @@ export class App implements OnInit, OnDestroy {
         series: peakSeries,
       },
     ];
+  }
+
+  // Load workouts from backend when authenticated
+  private loadWorkoutsFromBackend(): void {
+    this.chartsLoading = true;
+
+    this.api.getWorkouts().subscribe({
+      next: (workouts) => {
+        // Update workout history with backend data
+        this.workoutHistory = workouts.map((workout) => ({
+          ...workout,
+          timestamp: workout.date,
+          date: new Date(workout.date).toLocaleDateString(),
+          vo2max: workout.vo2max_estimate,
+        }));
+
+        // Update charts with backend data
+        this.updateChartsFromHistory();
+        this.chartsLoading = false;
+      },
+      error: (error) => {
+        console.error('Failed to load workouts from backend:', error);
+        // Fallback to local data if backend fails
+        this.loadWorkoutHistory();
+        this.updateChartsFromHistory();
+        this.chartsLoading = false;
+      },
+    });
   }
 
   getCurrentYear(): number {

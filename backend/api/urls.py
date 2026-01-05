@@ -14,7 +14,8 @@ urlpatterns = [
     path('subscription/plans/', views.SubscriptionPlansView.as_view(), name='subscription-plans'),
 
     # Protected endpoints
-    path('workouts/', views.WorkoutView.as_view(), name='workouts'),
+    path('workouts/', views.WorkoutListView.as_view(), name='workouts-list'),
+    path('workouts/submit/', views.WorkoutView.as_view(), name='workouts-submit'),
     path('norse-vo2/', views.NorseVO2View.as_view(), name='norse-vo2'),
 
     # Payment endpoints (protected)

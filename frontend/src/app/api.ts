@@ -152,7 +152,7 @@ export class Api {
   }
 
   postWorkout(workout: any): Observable<any> {
-    return this.http.post(this.baseUrl + 'workouts/', workout, {
+    return this.http.post(this.baseUrl + 'workouts/submit/', workout, {
       headers: this.getAuthHeaders(),
     });
   }

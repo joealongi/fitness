@@ -129,6 +129,40 @@ class NorseVO2View(APIView):
             "confidence": 0.85
         })
 
+class WorkoutListView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            user = request.user
+            workouts = Workout.objects.filter(user=user).order_by('-date')
+
+            workout_data = []
+            for workout in workouts:
+                # Calculate VO2 max for each workout
+                try:
+                    profile = UserProfile.objects.get(user=user)
+                    vo2max = estimate_vo2max_from_workout(workout, profile)
+                except UserProfile.DoesNotExist:
+                    vo2max = None
+
+                workout_data.append({
+                    'id': workout.id,
+                    'activity_type': workout.activity_type,
+                    'duration': workout.duration,
+                    'distance': workout.distance,
+                    'heart_rate_avg': workout.heart_rate_avg,
+                    'heart_rate_max': workout.heart_rate_max,
+                    'intensity': workout.intensity,
+                    'date': workout.date.isoformat(),
+                    'vo2max_estimate': round(vo2max, 1) if vo2max else None,
+                })
+
+            return Response(workout_data)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 class WorkoutView(APIView):
     permission_classes = [IsAuthenticated]
 
