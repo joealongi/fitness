@@ -137,14 +137,21 @@ class WorkoutListView(APIView):
             user = request.user
             workouts = Workout.objects.filter(user=user).order_by('-date')
 
+            # Get or create user profile
+            profile, created = UserProfile.objects.get_or_create(
+                user=user,
+                defaults={
+                    'gender': 'other',
+                    'age': 25,
+                    'weight': '70',
+                    'height': '170'
+                }
+            )
+
             workout_data = []
             for workout in workouts:
                 # Calculate VO2 max for each workout
-                try:
-                    profile = UserProfile.objects.get(user=user)
-                    vo2max = estimate_vo2max_from_workout(workout, profile)
-                except UserProfile.DoesNotExist:
-                    vo2max = None
+                vo2max = estimate_vo2max_from_workout(workout, profile)
 
                 workout_data.append({
                     'id': workout.id,
@@ -155,7 +162,7 @@ class WorkoutListView(APIView):
                     'heart_rate_max': workout.heart_rate_max,
                     'intensity': workout.intensity,
                     'date': workout.date.isoformat(),
-                    'vo2max_estimate': round(vo2max, 1) if vo2max else None,
+                    'vo2max_estimate': round(vo2max, 1) if vo2max else 0,
                 })
 
             return Response(workout_data)

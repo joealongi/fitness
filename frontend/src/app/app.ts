@@ -131,6 +131,10 @@ export class App implements OnInit, OnDestroy {
           if (isAuth) {
             // Load real data from backend when authenticated
             this.loadWorkoutsFromBackend();
+            // Scroll to top when dashboard becomes visible
+            setTimeout(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
           } else {
             // Reset to local/demo data when not authenticated
             this.loadWorkoutHistory();
@@ -291,6 +295,11 @@ export class App implements OnInit, OnDestroy {
     if (aiSection) {
       aiSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  }
+
+  // Scroll to top
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // Calculate weekly total for chart display

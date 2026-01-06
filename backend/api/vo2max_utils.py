@@ -33,24 +33,29 @@ def estimate_vo2max_from_workout(workout, profile):
     """
     Estimate VO2 max from workout data.
     """
-    if workout.distance and workout.activity_type == 'run':
-        distance_m = workout.distance * 1000  # km to m
-        vo2max = estimate_vo2max_cooper(distance_m, workout.duration, profile.gender)
-    elif workout.max_heart_rate and profile.age:
-        # Use actual max HR from workout if available
-        max_hr = workout.max_heart_rate
-        # Assume resting HR 70 if not available
-        resting_hr = 70
-        vo2max = estimate_vo2max_heart_rate(max_hr, resting_hr)
-    elif profile.age:
-        # Estimate max HR as 208 - 0.7 * age if no workout HR data
-        estimated_max_hr = 208 - 0.7 * profile.age
-        resting_hr = 70
-        vo2max = estimate_vo2max_heart_rate(estimated_max_hr, resting_hr)
-    else:
-        vo2max = None
+    try:
+        if workout.distance and workout.activity_type == 'run':
+            distance_m = workout.distance * 1000  # km to m
+            vo2max = estimate_vo2max_cooper(distance_m, workout.duration, profile.gender)
+        elif workout.max_heart_rate and profile.age:
+            # Use actual max HR from workout if available
+            max_hr = workout.max_heart_rate
+            # Assume resting HR 70 if not available
+            resting_hr = 70
+            vo2max = estimate_vo2max_heart_rate(max_hr, resting_hr)
+        elif profile.age:
+            # Estimate max HR as 208 - 0.7 * age if no workout HR data
+            estimated_max_hr = 208 - 0.7 * profile.age
+            resting_hr = 70
+            vo2max = estimate_vo2max_heart_rate(estimated_max_hr, resting_hr)
+        else:
+            # Default to industry average if no data available
+            vo2max = 35.0
 
-    return vo2max
+        return max(15.0, min(80.0, vo2max))  # Clamp between 15-80 mL/kg/min
+    except Exception as e:
+        # Fallback to industry average on any calculation error
+        return 35.0
 
 def get_vo2max_benefits(vo2max):
     """
