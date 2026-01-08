@@ -98,7 +98,7 @@ typer==0.21.0
 typer-slim==0.21.0
 typing-inspection==0.4.2
 typing_extensions==4.15.0
-urllib3==2.3.0
+urllib3==2.6.3
 uvicorn==0.40.0
 uvloop==0.22.1
 watchfiles==1.1.1
